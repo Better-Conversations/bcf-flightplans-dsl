@@ -1,0 +1,7 @@
+- Represent each block as a file
+- Represent each flightplan as a file listing the blocks
+- A block file has some metadata and then the content of the block, possibly in typst format
+- A flightplan file lists the block files in order (can use a glob pattern to list them, which will use file ordering eg `1_*, 2_*`)
+- A block can either be a ruby script or a YAML / typst / content file with a metadata header
+    - This would be where tags and the like go.
+- This way you can also reference common blocks in multiple flightplans, we don't require a particular FS layout, just a list of files

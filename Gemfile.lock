@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rb_sys (0.9.97)
+    rubyzip (2.3.2)
+    typst (0.0.5)
+      rb_sys (>= 0.9.83)
+    zip-zip (0.3)
+      rubyzip (>= 1.0.0)
+
+PLATFORMS
+  arm64-darwin-22
+
+DEPENDENCIES
+  typst (~> 0.0.5)
+  zip-zip (~> 0.3)
+
+BUNDLED WITH
+   2.4.10
