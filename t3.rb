@@ -75,6 +75,33 @@ class Block
   end
 end
 
+class Note; end
+
+class Instruction < Note
+  attr_accessor :content
+
+  def initialize(content)
+    @content = content
+  end
+end
+
+class Chat < Note
+  attr_accessor :content
+
+  def initialize(content)
+    @content = content
+  end
+end
+
+class Spoken < Note
+  attr_accessor :content, :fixed
+
+  def initialize(content, fixed: false)
+    @content = content
+    @fixed = fixed
+  end
+end
+
 class Notes
   attr_accessor :items
 
@@ -84,19 +111,18 @@ class Notes
   end
 
   def instruction(content)
-    items << [:instruction, content]
+    items << Instruction.new(content)
   end
 end
 
 class ProducerNotes < Notes
   def chat(content)
-    items << [:chat, content]
+    items << Chat.new(content)
   end
 end
 
 class FacilitatorNotes < Notes
-  def spoken(content)
-    items << [:spoken, content]
+  def spoken(content, fixed: false)
+    items << Spoken.new(content, fixed:)
   end
 end
-

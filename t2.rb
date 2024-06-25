@@ -33,5 +33,3 @@ module_3 = FlightPlan.new do
     end
   end
 end
-
-p module_3
