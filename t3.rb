@@ -4,7 +4,8 @@ class FlightPlan
   attr_accessor :module_number,
                 :module_title,
                 :blocks,
-                :total_length
+                :total_length,
+                :initial_time
 
   class DSL
     def initialize(flight_plan, &block)
@@ -20,16 +21,20 @@ class FlightPlan
       @flight_plan.module_title = title
     end
 
-    def block(block_instance = nil, &block_constructor)
+    def block(block_instance = nil, speaker: nil, &block_constructor)
       if block_instance and block_instance.is_a? Block
-        @flight_plan.blocks << block_instance
+        @flight_plan.blocks << block_instance.with_speaker(speaker)
       else
-        @flight_plan.blocks << Block.new(&block_constructor)
+        @flight_plan.blocks << Block.new(&block_constructor).with_speaker(speaker)
       end
     end
 
     def total_length(length)
       @flight_plan.total_length = length
+    end
+
+    def initial_time(time)
+      @flight_plan.initial_time = time
     end
   end
 
@@ -43,7 +48,8 @@ class Block
   attr_accessor :name,
                 :length,
                 :facilitator_notes,
-                :producer_notes
+                :producer_notes,
+                :speaker
 
   class DSL
     def initialize(obj, &block)
@@ -60,18 +66,25 @@ class Block
     end
 
     def facilitator(&block)
-      @block.facilitator_notes << FacilitatorNotes.new(&block)
+      @block.facilitator_notes = FacilitatorNotes.new(&block)
     end
 
     def producer(&block)
-      @block.producer_notes << ProducerNotes.new(&block)
+      @block.producer_notes = ProducerNotes.new(&block)
     end
   end
 
   def initialize(&block)
-    @facilitator_notes = []
-    @producer_notes = []
+    @facilitator_notes = nil
+    @producer_notes = nil
     DSL.new(self, &block)
+  end
+
+  def with_speaker(speaker)
+    self.clone.instance_eval do
+      @speaker = speaker
+      self
+    end
   end
 end
 
