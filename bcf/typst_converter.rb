@@ -1,16 +1,33 @@
 require 'tmpdir'
 
 module BCF
+  TableRow = Struct.new(
+    :time,
+    :length,
+    :section_info,
+    :facilitator_content,
+    :producer_content
+  ) do
+    def to_typst
+      [
+        "[#{self.time.to_s.rjust(2, "0")}]",
+        "[#{self.length}]",
+        "[#{self.section_info}]",
+        "[#{self.facilitator_content}]",
+        "[#{self.producer_content}]",
+      ].join(",") + ",\n"
+    end
+  end
+
   class Block
     def to_typst(current_time)
-      return <<TYPST
-    [#{current_time.to_s.rjust(2, '0')}],
-    [#{self.length}],
-    [
-      #{self.name}
-    ],
-    [#{self.facilitator_notes.to_typst}], [#{self.producer_notes.to_typst}],
-TYPST
+      TableRow.new(
+        time: current_time,
+        length: self.length,
+        section_info: "#{self.name}",
+        facilitator_content: self.facilitator_notes.to_typst,
+        producer_content: self.producer_notes.to_typst
+      ).to_typst
     end
   end
 
@@ -117,7 +134,7 @@ TYPST
       typst.join("\n")
     end
 
-    def render_pdf(output_path)
+    def render_pdf(output_path, debug_typst_path = nil)
       Dir.mktmpdir do |dir|
         # Copy all files from ./typst to the temp directory
         Dir.glob(File.join(File.dirname(__FILE__), "..", 'typst', '*')).each do |file|
@@ -125,7 +142,12 @@ TYPST
         end
 
         typst_path = File.join(dir, 'output.typ')
-        File.write(typst_path, self.to_typst)
+        typst_content = self.to_typst
+        File.write(typst_path, typst_content)
+
+        system("typstyle -i #{typst_path}")
+        FileUtils.cp(typst_path, debug_typst_path) if debug_typst_path
+
         system("typst c #{typst_path} #{output_path}")
       end
     end

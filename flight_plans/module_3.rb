@@ -44,4 +44,4 @@ module_3 = ConventionalFlightPlan.new do
   end
 end
 
-module_3.render_pdf('module_3.pdf')
+module_3.render_pdf('module_3.pdf', "module_3.typ")
