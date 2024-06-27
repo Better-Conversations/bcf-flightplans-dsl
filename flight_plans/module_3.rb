@@ -1,5 +1,4 @@
-require_relative './t3'
-require_relative './typst_converter'
+require 'bcf'
 
 module_3 = FlightPlan.new do
   module_title "Context"
