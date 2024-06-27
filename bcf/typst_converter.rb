@@ -110,7 +110,6 @@ TYPST
           current_speaker = next_speaker
         end
 
-        p [current_time, block.length]
         typst << block.to_typst(current_time)
         current_time += block.length
       end
@@ -127,8 +126,6 @@ TYPST
 
         typst_path = File.join(dir, 'output.typ')
         File.write(typst_path, self.to_typst)
-        system("open #{dir} && sleep 10")
-
         system("typst c #{typst_path} #{output_path}")
       end
     end

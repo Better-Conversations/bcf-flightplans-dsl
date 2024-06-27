@@ -1,10 +1,18 @@
 require_relative '../bcf'
 
-module_3 = BCF::FlightPlan.new do
+# An example of using inheritance to specialise an object created in this manner
+class ConventionalFlightPlan < BCF::FlightPlan
+  def initialize(&block)
+    @total_length = 60
+    @initial_time = -30
+
+    super(&block)
+  end
+end
+
+module_3 = ConventionalFlightPlan.new do
   module_title "Context"
   module_number 3
-  total_length 60
-  initial_time -30
 
   block do
     name "Welcome"
