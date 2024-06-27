@@ -36,4 +36,4 @@ module_3 = BCF::FlightPlan.new do
   end
 end
 
-module_3.render_typst('module_3.pdf')
+module_3.render_pdf('module_3.pdf')

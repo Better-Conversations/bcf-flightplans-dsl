@@ -118,7 +118,7 @@ TYPST
       typst.join("\n")
     end
 
-    def render_typst(output_path)
+    def render_pdf(output_path)
       Dir.mktmpdir do |dir|
         # Copy all files from ./typst to the temp directory
         Dir.glob(File.join(File.dirname(__FILE__), "..", 'typst', '*')).each do |file|
