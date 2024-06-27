@@ -1,4 +1,5 @@
-require_relative './/t3'
+require 'tmpdir'
+
 module BCF
   class Block
     def to_typst(current_time)
@@ -115,6 +116,21 @@ TYPST
       end
 
       typst.join("\n")
+    end
+
+    def render_typst(output_path)
+      Dir.mktmpdir do |dir|
+        # Copy all files from ./typst to the temp directory
+        Dir.glob(File.join(File.dirname(__FILE__), "..", 'typst', '*')).each do |file|
+          FileUtils.cp(file, dir)
+        end
+
+        typst_path = File.join(dir, 'output.typ')
+        File.write(typst_path, self.to_typst)
+        system("open #{dir} && sleep 10")
+
+        system("typst c #{typst_path} #{output_path}")
+      end
     end
   end
 end

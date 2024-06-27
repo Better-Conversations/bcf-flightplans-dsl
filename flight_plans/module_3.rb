@@ -1,6 +1,6 @@
-require 'bcf'
+require_relative '../bcf'
 
-module_3 = FlightPlan.new do
+module_3 = BCF::FlightPlan.new do
   module_title "Context"
   module_number 3
   total_length 60
@@ -36,7 +36,4 @@ module_3 = FlightPlan.new do
   end
 end
 
-File.write(
-  'typst/module_3_export.typ',
-  module_3.to_typst
-)
+module_3.render_typst('module_3.pdf')
