@@ -8,6 +8,20 @@ module BCF
                   :total_length,
                   :initial_time
 
+    def validate
+      raise "Module number is required" unless module_number
+      raise "Module title is required" unless module_title
+      raise "Blocks are required" if blocks.empty?
+      raise "Total length is required" unless total_length
+      raise "Initial time is required" unless initial_time
+
+      runtime = self.blocks.reduce(initial_time) do |time, block|
+        time + block.length
+      end
+
+      warn "Total length (#{total_length}) does not match block lengths (#{runtime})" unless runtime == total_length
+    end
+
     class DSL
       def initialize(flight_plan, &block)
         @flight_plan = flight_plan

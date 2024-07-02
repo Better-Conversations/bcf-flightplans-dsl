@@ -159,4 +159,5 @@ TYPST_SPOKEN
   end
 end
 
+module_3.validate
 module_3.render_pdf('module_3.pdf', "module_3.typ")
