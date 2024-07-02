@@ -2,6 +2,7 @@
   ..args
 ) = [
 #show table.cell.where(y: 0): set text(white)
+#show table.cell: set par(leading: 1em)
 #show table.cell.where(x: 2): set par(leading: 1.25em)
 
 #let speaker-swap(body) = table.cell(colspan: 5, fill: rgb(246, 203, 152), pad(y: 6pt, body))

@@ -102,6 +102,60 @@ CHAT
       spoken "Without adding too much detail, when your assumption was/wasn't accurate, then what happened?"
       instruction "Handover to Fx1 for Context model."
     end
+
+    producer do
+      chat <<CHAT
+Think of one conversation you had recently – maybe it was a good conversation, maybe it wasn't.
+
+- Were your assumptions in that conversation accurate?
+- Please answer Yes or No in the chat.
+CHAT
+    end
+  end
+
+  block(lead_by: :fx1) do
+    name "Context model"
+    length 7
+
+    resources do
+      flipchart(:flip_2, "use to explain the model")
+    end
+
+    facilitator do
+      spoken "There is an explanation in the handbook in Section 3 to help you remember the diagram."
+      spoken "In Better Conversations, context means what surrounds the conversation, the setting for the conversation."
+      spoken "Context is important because it defines our subjective experience."
+      spoken "It helps us make meaning of our world. Each of us brings our own context to conversations. And we take it into our future conversations, so our context can change over time."
+      spoken "Context also determines what assumptions we make. We can make different assumptions in different contexts."
+      spoken "As an example, imagine you were in London and you saw people carrying umbrellas. You might think it was going to rain."
+      spoken "Now imagine you are in a country in South Asia. If you saw people carrying umbrellas, they might be wanting to use them as parasols. If it was monsoon season, you might think the umbrella has a dual use."
+      spoken "We have broken context down into 6 overlapping areas to help explain what it is."
+
+      spoken <<TYPST_SPOKEN
+Context can be:
+- #underline[Psychological] (for example, your perception of your state, your personal values)
+- #underline[Social] (for example, relationships and group behaviour)
+- #underline[Cultural] (for example, cultural values and beliefs)
+- #underline[Historical] (for example, what’s happened in the past, what’s documented or recorded)
+- #underline[Environmental] (for example, what’s going in the physical space you are in)
+- #underline[Time]-based (for example, temporal - time zone, whether it’s day or night)
+TYPST_SPOKEN
+
+      spoken <<TYPST_SPOKEN
+Some examples of your context we have already covered so far in this course are:
+- Asking where in the world you are and what time zone you are in (environmental, cultural and time-based context)
+- Asking how you are feeling, when we do the state check-in (psychological context)
+TYPST_SPOKEN
+
+      spoken "We look at psychological, time-based, historical, environmental context in this course."
+      spoken "We aren’t covering social or cultural context in this course in depth – these are beyond the scope of what we are doing here."
+      spoken "What we are going to do now is put you in breakout rooms to find out more about  the impact of knowing someone’s context."
+      instruction "Handover to Fx2 for context exercise."
+    end
+
+    producer do
+      instruction "Prepare BORs in 2/3s for #bcf-nom[6 minutes] if not already done"
+    end
   end
 end
 
