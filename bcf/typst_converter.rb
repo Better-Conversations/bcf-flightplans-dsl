@@ -1,7 +1,14 @@
 require 'tmpdir'
 
-module BCF
+def format_speakers(speakers)
+  if speakers.is_a? Array
+    speakers.map { |s| format_speakers(s) }.join(" and ")
+  else
+    speakers.to_s.capitalize
+  end
+end
 
+module BCF
   # Typst Intermediate Representation
   module TIR
     TableRow = Struct.new(
@@ -23,7 +30,7 @@ module BCF
       TIR::TableRow.new(
         time: current_time.to_s.rjust(2, "0"),
         length: self.length,
-        section_info: "#{self.name}",
+        section_info: "#{self.name}#linebreak()#bcf-nom[#{format_speakers(self.speaker)}]",
         facilitator_content: self.facilitator_notes&.to_typst,
         producer_content: self.producer_notes&.to_typst
       ).to_typst
@@ -87,7 +94,7 @@ module BCF
   class FlightPlan
     def to_typst
       <<TYPST
-#import "template.typ": flight-plan, flight-plan-table, instruction, chat, spoken
+#import "template.typ": flight-plan, flight-plan-table, instruction, chat, spoken, speaker-swap
 #import "helpers.typ": *
 #show: doc => flight-plan(
   module_number: #{self.module_number},
@@ -121,11 +128,15 @@ TYPST
       self.blocks.each do |block|
         next_speaker = block.speaker
 
-        if next_speaker != current_speaker && current_speaker != nil
-          # TODO: Make this cleaner
-          typst << "#speaker-swap[#{current_speaker}],"
-          current_speaker = next_speaker
+        if next_speaker != current_speaker
+          if current_speaker.nil?
+            typst << "speaker-swap[#{format_speakers(next_speaker)}],"
+          else
+            typst << "speaker-swap[Switch to #{format_speakers(next_speaker)}],"
+          end
         end
+
+        current_speaker = next_speaker
 
         typst << block.to_typst(current_time)
         current_time += block.length
