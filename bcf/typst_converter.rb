@@ -1,28 +1,27 @@
 require 'tmpdir'
 
 module BCF
-  TableRow = Struct.new(
-    :time,
-    :length,
-    :section_info,
-    :facilitator_content,
-    :producer_content
-  ) do
-    def to_typst
-      [
-        "[#{self.time.to_s.rjust(2, "0")}]",
-        "[#{self.length}]",
-        "[#{self.section_info}]",
-        "[#{self.facilitator_content}]",
-        "[#{self.producer_content}]",
-      ].join(",") + ",\n"
+
+  # Typst Intermediate Representation
+  module TIR
+    TableRow = Struct.new(
+      :time,
+      :length,
+      :section_info,
+      :facilitator_content,
+      :producer_content
+    ) do
+      def to_typst
+        # Trailing comma is intentional and allowed in Typst even without additional arguments to follow
+        "[#{self.time}], [#{self.length}], [#{self.section_info}], [#{self.facilitator_content}], [#{self.producer_content}],\n"
+      end
     end
   end
 
   class Block
     def to_typst(current_time)
-      TableRow.new(
-        time: current_time,
+      TIR::TableRow.new(
+        time: self.time.to_s.rjust(2, "0"),
         length: self.length,
         section_info: "#{self.name}",
         facilitator_content: self.facilitator_notes.to_typst,
