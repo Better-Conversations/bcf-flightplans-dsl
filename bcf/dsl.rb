@@ -22,11 +22,11 @@ module BCF
         @flight_plan.module_title = title
       end
 
-      def block(block_instance = nil, speaker: nil, &block_constructor)
+      def block(block_instance = nil, lead_by: nil, &block_constructor)
         if block_instance and block_instance.is_a? Block
-          @flight_plan.blocks << block_instance.with_speaker(speaker)
+          @flight_plan.blocks << block_instance.with_speaker(lead_by)
         else
-          @flight_plan.blocks << Block.new(&block_constructor).with_speaker(speaker)
+          @flight_plan.blocks << Block.new(&block_constructor).with_speaker(lead_by)
         end
       end
 
@@ -72,6 +72,10 @@ module BCF
 
       def producer(&block)
         @block.producer_notes = ProducerNotes.new(&block)
+      end
+
+      def resources(&block)
+        puts "TODO: Implement resources"
       end
     end
 

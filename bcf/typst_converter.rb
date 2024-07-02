@@ -21,11 +21,11 @@ module BCF
   class Block
     def to_typst(current_time)
       TIR::TableRow.new(
-        time: self.time.to_s.rjust(2, "0"),
+        time: current_time.to_s.rjust(2, "0"),
         length: self.length,
         section_info: "#{self.name}",
-        facilitator_content: self.facilitator_notes.to_typst,
-        producer_content: self.producer_notes.to_typst
+        facilitator_content: self.facilitator_notes&.to_typst,
+        producer_content: self.producer_notes&.to_typst
       ).to_typst
     end
   end
@@ -35,7 +35,7 @@ module BCF
       # First we group adjacent spoken items together
       groups = []
       self.items.each do |item|
-        if item.is_a?(Spoken) && !groups.empty?
+        if item.is_a?(Spoken)
           last_group = groups.last
 
           if last_group.is_a? Array
@@ -88,6 +88,7 @@ module BCF
     def to_typst
       <<TYPST
 #import "template.typ": flight-plan, flight-plan-table, instruction, chat, spoken
+#import "helpers.typ": *
 #show: doc => flight-plan(
   module_number: #{self.module_number},
   module_name: "#{self.module_title}",
