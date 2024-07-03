@@ -97,6 +97,10 @@ module BCF
         @block.speaker = speaker
       end
 
+      def lead_by(speaker)
+        @block.speaker = speaker
+      end
+
       def section_comment(comment)
         @block.section_comment = comment
       end

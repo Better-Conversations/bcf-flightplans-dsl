@@ -77,7 +77,7 @@ Red – you need to stop, break
 
     producer do
       chat <<CHAT
-State check-in: 
+State check-in:
 
 Green – you’re good to go!
 Amber/Yellow – you need to proceed with caution
@@ -165,12 +165,44 @@ TYPST_SPOKEN
     resources do
       breakout_room(:bor_1)
     end
+
+    producer do
+      instruction "Copy this to chat when you hear the facilitator introduce the questions:"
+
+      # TODO: Add support for messages that are supposed to be copied piecemeal.
+      chat <<CHAT
+We are going to explore what happens when we share our context.
+
+One person will choose ONE of the starter questions below to ask your partner. 
+
+Continue the conversation and ask more questions to improve your understanding of the other person’s context. 
+
+Starter questions:
+
+- Psychological: What would you like to have happen after attending this course? 
+
+- Historical: What have you learned so far on this course?
+
+- Time: What were you doing before you came to the course today? What else do you have on today?
+
+- Environmental: Where are you in the world?
+
+Manage the time so everyone gets a chance to try out one of the starter questions.
+CHAT
+
+      instruction "When the facilitator has finished giving the instructions/answering questions." \
+                    "Tell the group you are going to send them into BORs for 6 minutes"
+
+      instruction "Send into BORs"
+      instruction "Broadcast halfway message:"
+      chat "Halfway, 3 minutes remaining"
+    end
   end
 
   block(lead_by: :fx2) do
     length 6
     name "Unpack Breakout activity"
-    section_comment "Fx2 scribes"
+    section_comment "Fx1 scribes"
 
     resources do
       flipchart(:flip_3, "Add to Flip#3 for up to 3 people and/or use chat.")
@@ -187,14 +219,54 @@ TYPST_SPOKEN
     end
   end
 
-  block(lead_by: :fx2) do
+  block(lead_by: :fx1) do
     length 7
     name "Unpack Breakout#2 activity"
     section_comment "Fx2 scribes"
 
     resources do
-      flipchart(:flip_3, "Add to Flip#3 for up to 3 people and/or use chat.")
+      flipchart(:flip_4, "Add to Flip#4 for up to 3 people and/or use chat.")
       breakout_room(:bor_2)
+    end
+
+    facilitator do
+      spoken "Let’s find out what you just noticed."
+      spoken("
+When preparing for your conversation:
+- What might you have to consider about another person and their context?
+- How might you find out about their context before and during the conversation?
+", fixed: true)
+
+      instruction "Facilitate brief discussion suggesting people can also put their answers in the chat. Aim for 2-3 examples, with one from the chat."
+
+      instruction "If there is time extend the discussion e.g.:"
+
+      spoken "Do you think it is easier to make assumptions about a someone you know well or someone you don’t know?"
+      spoken "What kind of assumptions might you make?"
+      spoken "How easy it to correct your assumptions?"
+      spoken "Just to recap, there are six elements to context that affect each of us in our conversations:  Historical, psychological, social, cultural, environmental, and time-based (temporal)."
+      spoken "State is an important aspect of psychological context."
+      spoken "Context gives us a way of making meaning and understanding a situation.  It helps determine the assumptions we make."
+      spoken "
+We’d like you to consider these questions, #bcf-fixed[thinking about what you know about state, assumptions and context]:
+- #bcf-fixed[What will you do to manage your state before a conversation?]
+- #bcf-fixed[How might your context affect your state]
+"
+
+      instruction "Ask people to put answers in chat. Facilitate brief discussion if time."
+      instruction "Handover to Fx2 for reflection, fieldwork and close."
+    end
+
+    producer do
+      instruction "Copy in chat (when you hear facilitator say these):"
+
+      chat <<CHAT
+When preparing for your conversation:
+
+- What might you have to consider about another person and their context?
+
+- How might you find out about their context before and during the conversation?
+CHAT
     end
   end
 
@@ -202,7 +274,24 @@ TYPST_SPOKEN
     length 5
     name "Link to state"
 
+    facilitator do
+      spoken "Just to recap, there are six elements to context that affect each of us in our conversations:  Historical, psychological, social, cultural, environmental, and time-based (temporal)."
+      spoken "State is an important aspect of psychological context."
+      spoken "Context gives us a way of making meaning and understanding a situation.  It helps determine the assumptions we make."
+
+      spoken <<TYPST
+We’d like you to consider these questions, #bcf-fixed[thinking about what you know about state, assumptions and context]:
+-	#bcf-fixed[What will you do to manage your state before a conversation?]
+-	#bcf-fixed[How might your context affect your state] 
+TYPST
+
+      instruction "Ask people to put answers in chat. Facilitate brief discussion if time."
+      instruction "Handover to Fx2 for reflection, fieldwork and close."
+    end
+
     producer do
+      instruction "Copy in chat (when you hear facilitator say these):"
+
       chat <<CHAT
 6 elements of context: Historical, psychological, social, cultural, environmental, and time-based (temporal)
 
