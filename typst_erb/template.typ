@@ -72,8 +72,6 @@
     organisation: organisation,
   )
   pagebreak()
-  include "./1-page.typ"
-  pagebreak()
 
   doc
 }

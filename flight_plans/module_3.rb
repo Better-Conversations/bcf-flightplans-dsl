@@ -15,6 +15,26 @@ module_3 = ConventionalFlightPlan.new do
   module_title "Context"
   module_number 3
 
+  learning_outcomes <<TYPST
+Learners will be able to:
+
+- Describe the elements of context in conversations
+- Link context, assumptions and state
+
+Suggested learning outcomes for further trainings/interventions
+
+- Describe how social and cultural context affect conversations
+TYPST
+
+  demo <<TYPST
+No demo. 
+
+Alternative example for context:
+
+- Imagine you are watching TV and have muted it for the commercials. The first commercial you see shows a kitchen knife setting on a cutting board on the counter. Around it there are lots of different kinds of vegetables and a stock pot. Given that context, you would likely assume they were advertising a cooking show.
+- The next commercial starts. You see the same kitchen knife. This time it is in the trunk (boot) of car along with some rope, duct tape, a tarp and a shovel.  That context brings up a completely different kind of show! Even though the kitchen knife is exactly the same.
+TYPST
+
   block(BCF::CommonBlocks::PRE_FLIGHT)
 
   block(name: "Greeting", lead_by: [:fx1, :fx2]) do
@@ -33,7 +53,12 @@ module_3 = ConventionalFlightPlan.new do
     length 2
 
     resources do
-      flipchart(:flip_1, "Agenda")
+      flipchart(
+        :flip_1,
+        "Flip#1 for agenda",
+        description: "Use to explain the model",
+        scribed_by: :fx1
+      )
     end
 
     facilitator do
@@ -112,7 +137,12 @@ CHAT
     length 7
 
     resources do
-      flipchart(:flip_2, "use to explain the model")
+      flipchart(
+        :flip_2,
+        "use to explain the model",
+        description: "Context diagram (as on handbook)",
+        scribed_by: :fx1
+      )
     end
 
     facilitator do
@@ -221,7 +251,13 @@ CHAT
     section_comment "Fx1 scribes"
 
     resources do
-      flipchart(:flip_3, "Add to Flip#3 for up to 3 people and/or use chat.")
+      flipchart(
+        :flip_3,
+        "Add to Flip#3 for up to 3 people and/or use chat.",
+        description: "Learnings on context",
+        scribed_by: :fx2
+      )
+
       breakout_room(:bor_1)
     end
 
@@ -304,7 +340,12 @@ CHAT
     section_comment "Fx2 scribes"
 
     resources do
-      flipchart(:flip_4, "Add to Flip#4 for up to 3 people and/or use chat.")
+      flipchart(
+        :flip_4,
+        "Add to Flip#4 for up to 3 people and/or use chat.",
+        description: "Learnings on context",
+        scribed_by: :fx2
+      )
       breakout_room(:bor_2)
     end
 

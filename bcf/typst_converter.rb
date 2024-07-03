@@ -28,11 +28,16 @@ module BCF
   end
 
   class Block
+    def flipchart
+      self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
+    end
+
     def to_typst(current_time)
+      section_info = "#{self.name}#linebreak()#bcf-nom[#{format_speakers(self.speaker)}]#linebreak()#{self.flipchart&.inplace_section_comment}#linebreak()#{self.section_comment}"
       TIR::TableRow.new(
         time: current_time.to_s.rjust(2, "0"),
         length: self.length,
-        section_info: "#{self.name}#linebreak()#bcf-nom[#{format_speakers(self.speaker)}]#linebreak()#{self.section_comment}",
+        section_info: section_info,
         facilitator_content: self.facilitator_notes&.to_typst,
         producer_content: self.producer_notes&.to_typst
       ).to_typst

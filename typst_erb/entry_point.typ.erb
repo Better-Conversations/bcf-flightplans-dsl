@@ -17,6 +17,39 @@
   doc
 )
 
+= Flight Plan
+
+== Learning Outcomes
+
+<%= @learning_outcomes %>
+
+== Flipcharts
+
+#[
+// Bold titles.
+#show table.cell.where(y: 0): set text(weight: "bold")
+
+#table(
+columns: (auto, auto, 1fr),
+rows: 4,
+align: (x, y) =>
+if y > 0 and x == 2 { left }
+else { center },
+
+[Reference], [Who is scribing?], [Contents],
+
+<% flipcharts.each_with_index do |flipchart, index| %>
+  [#("<%= flipchart.pretty_id %>")], [<%= flipchart.pretty_scribed_by %>], [<%= flipchart.description %>],
+<% end %>
+)
+]
+
+== Demo
+
+<%= @demo %>
+
+#pagebreak()
+
 == Time Plan
 
 #flight-plan-table(

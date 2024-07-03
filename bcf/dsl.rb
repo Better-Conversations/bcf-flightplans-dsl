@@ -6,7 +6,9 @@ module BCF
                   :module_title,
                   :blocks,
                   :total_length,
-                  :initial_time
+                  :initial_time,
+                  :learning_outcomes,
+                  :demo
 
     def validate
       raise "Module number is required" unless module_number
@@ -29,6 +31,10 @@ module BCF
 
     def resources
       blocks.map(&:resources).flatten
+    end
+
+    def flipcharts
+      resources.select { |r| r.is_a? BCF::Resource::Flipchart }
     end
 
     class DSL
@@ -60,6 +66,14 @@ module BCF
       def initial_time(time)
         @flight_plan.initial_time = time
       end
+
+      def learning_outcomes(content)
+        @flight_plan.learning_outcomes = content
+      end
+
+      def demo(content)
+        @flight_plan.demo = content
+      end
     end
 
     def initialize(&block)
@@ -86,16 +100,16 @@ module BCF
           instance_eval &block
         end
 
-        def flipchart(id, content)
-          resources << Flipchart.new(id, content)
+        def flipchart(id, inplace_comment, description: nil, scribed_by: nil)
+          resources << Resource::Flipchart.new(id:, description:, inplace_comment:, scribed_by:)
         end
 
         def breakout_room(id)
-          resources << Breakout.new(id)
+          resources << Resource::Breakout.new(id)
         end
 
         def fieldwork(id, description)
-          resources << Fieldwork.new(id, description)
+          resources << Resource::Fieldwork.new(id, description)
         end
       end
 
@@ -121,7 +135,7 @@ module BCF
       end
 
       def resources(&block)
-        @block.resources << ResourcesDSL.new(&block).resources
+        @block.resources.append(*ResourcesDSL.new(&block).resources)
       end
 
       def lead_by(speaker)
@@ -211,7 +225,22 @@ module BCF
     end
   end
 
-  Flipchart = Struct.new(:id, :content)
-  Breakout = Struct.new(:id)
-  Fieldwork = Struct.new(:id, :description)
+  module Resource
+    Flipchart = Struct.new(:id, :inplace_comment, :description, :scribed_by) do
+      def inplace_section_comment
+        "#{id} #{inplace_comment}"
+      end
+
+      def pretty_id
+        self.id.to_s.capitalize.gsub(/_/, '#')
+      end
+
+      def pretty_scribed_by
+        self.scribed_by.to_s.capitalize
+      end
+    end
+
+    Breakout = Struct.new(:id)
+    Fieldwork = Struct.new(:id, :description)
+  end
 end
