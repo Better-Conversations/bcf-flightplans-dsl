@@ -1,5 +1,4 @@
 #import "./flight-plan-table.typ": flight-plan-table
-#import "./helpers.typ": *
 
 #let flight-plan(
   doc,
@@ -35,7 +34,7 @@
 
   // Begin content
 
-  include "./0-front-page.typ"
+  include "./copyright.typ"
   pagebreak()
 
   doc
