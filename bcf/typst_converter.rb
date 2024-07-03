@@ -14,33 +14,29 @@ module BCF
   # Typst Intermediate Representation
   module TIR
     TableRow = Struct.new(
-      :time,
       :length,
       :section_info,
       :facilitator_content,
       :producer_content
-    ) do
-      def to_typst
-        # Trailing comma is intentional and allowed in Typst even without additional arguments to follow
-        "[#{self.time}], [#{self.length}], [#{self.section_info}], [#{self.facilitator_content}], [#{self.producer_content}],\n"
-      end
-    end
+    )
   end
 
   class Block
-    def flipchart
-      self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
-    end
-
-    def to_typst(current_time)
-      section_info = "#{self.name}#linebreak()#bcf-nom[#{format_speakers(self.speaker)}]#linebreak()#{self.flipchart&.inplace_section_comment}#linebreak()#{self.section_comment}"
+    def table_row
       TIR::TableRow.new(
-        time: current_time.to_s.rjust(2, "0"),
         length: self.length,
         section_info: section_info,
         facilitator_content: self.facilitator_notes&.to_typst,
         producer_content: self.producer_notes&.to_typst
-      ).to_typst
+      )
+    end
+
+    def flipchart
+      self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
+    end
+
+    def section_info
+      "#{self.name}#linebreak()#bcf-nom[#{format_speakers(self.speaker)}]#linebreak()#{self.flipchart&.inplace_section_comment}#linebreak()#{self.section_comment}"
     end
   end
 

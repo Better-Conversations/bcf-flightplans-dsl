@@ -59,17 +59,20 @@ else { center },
 %>
 
 <% blocks.each do |block| %>
-  <% next_speaker = block.speaker %>
-
-  <% if next_speaker != current_speaker %>
+  <% table_row = block.table_row %>
+  <% if block.speaker != current_speaker %>
     <% if current_speaker.nil? %>
-      speaker-swap[<%= format_speakers(next_speaker) %>],
+      speaker-swap[<%= format_speakers(block.speaker) %>],
     <% else %>
-      speaker-swap[Switch to <%= format_speakers(next_speaker) %>],
+      speaker-swap[Switch to <%= format_speakers(block.speaker) %>],
     <% end %>
   <% end %>
 
-  <%= block.to_typst(current_time) %>
+  [<%= current_time.to_s.rjust(2, "0") %>],
+  [<%= table_row.length %>],
+  [<%= table_row.section_info %>],
+  [<%= table_row.facilitator_content %>],
+  [<%= table_row.producer_content %>],
 
   <%
     current_speaker = block.speaker
