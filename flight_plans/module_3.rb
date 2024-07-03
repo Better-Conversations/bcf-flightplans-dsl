@@ -4,7 +4,7 @@ require_relative './common_blocks'
 # An example of using inheritance to specialise an object created in this manner
 class ConventionalFlightPlan < BCF::FlightPlan
   def initialize(&block)
-    @total_length = 60
+    @total_length = 90
     @initial_time = -30
 
     super(&block)
@@ -157,6 +157,119 @@ TYPST_SPOKEN
       instruction "Prepare BORs in 2/3s for #bcf-nom[6 minutes] if not already done"
     end
   end
+
+  block(lead_by: :fx2) do
+    length 8
+    name "Breakout#1"
+
+    resources do
+      breakout_room(:bor_1)
+    end
+  end
+
+  block(lead_by: :fx2) do
+    length 6
+    name "Unpack Breakout activity"
+    section_comment "Fx2 scribes"
+
+    resources do
+      flipchart(:flip_3, "Add to Flip#3 for up to 3 people and/or use chat.")
+      breakout_room(:bor_1)
+    end
+  end
+
+  block(lead_by: :fx1) do
+    length 8
+    name "Breakout#2"
+
+    resources do
+      breakout_room(:bor_2)
+    end
+  end
+
+  block(lead_by: :fx2) do
+    length 7
+    name "Unpack Breakout#2 activity"
+    section_comment "Fx2 scribes"
+
+    resources do
+      flipchart(:flip_3, "Add to Flip#3 for up to 3 people and/or use chat.")
+      breakout_room(:bor_2)
+    end
+  end
+
+  block(lead_by: :fx1) do
+    length 5
+    name "Link to state"
+
+    producer do
+      chat <<CHAT
+6 elements of context: Historical, psychological, social, cultural, environmental, and time-based (temporal)
+
+Thinking about what you know about state, assumptions and context:
+
+- What will you do to manage your state before a conversation?
+
+- How might your context affect your state?
+CHAT
+    end
+  end
+
+  block(lead_by: :fx2) do
+    length 5
+    name "Reflect on the learning in this session"
+
+    section_comment "Gather comments in chat and pick out some examples"
+
+    facilitator do
+      spoken "We have covered the context in which our conversations take place today. Let’s reflect on what you know now."
+      spoken("
+Thinking about the conversations you are going to have in the next week, and what we have just learned on this module, please put in the chat:
+- What difference does understanding context make to having Better Conversations?
+- What you will do differently now you know this?
+", fixed: true)
+
+      spoken "There is space in the Course Handbook to capture any more thoughts you might have from today."
+    end
+
+    producer do
+      chat <<CHAT
+Thinking about the conversations you are going to have in the next week, and what we have just learned on this module…
+
+- What difference does understanding context make to having Better Conversations?
+- What will you do differently now you know this?
+CHAT
+    end
+  end
+
+  block(BCF::CommonBlocks::Fieldwork.new(
+    [
+      "Try noticing what context you bring to a conversation",
+      "What do you know about the other person’s context?",
+      "What impact does that have on the conversation?",
+    ],
+    id: :context_fieldwork,
+    description: "",
+    length: 2
+  ), lead_by: :fx2)
+
+  block(lead_by: :fx2) do
+    length 1
+    name "Close"
+
+    facilitator do
+      spoken "If you have any further questions or anything you’d like to share, we will stay on the Zoom call for a few minutes after the session finished."
+      spoken "Otherwise, we will see you next time where we will be exploring listening."
+      instruction "Handover to Sponsor"
+    end
+
+    producer do
+      instruction "If leaving the session early, make facilitator a host first."
+    end
+  end
+
+  block(BCF::CommonBlocks::SPONSOR_CLOSE)
+  block(BCF::CommonBlocks::SPONSOR_DEBRIEF)
 end
 
 module_3.validate

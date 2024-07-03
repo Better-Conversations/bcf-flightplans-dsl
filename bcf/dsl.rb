@@ -64,7 +64,8 @@ module BCF
                   :length,
                   :facilitator_notes,
                   :producer_notes,
-                  :speaker
+                  :speaker,
+                  :section_comment
 
     class DSL
       def initialize(obj, &block)
@@ -91,6 +92,14 @@ module BCF
       def resources(&block)
         puts "TODO: Implement resources"
       end
+
+      def default_leader(speaker)
+        @block.speaker = speaker
+      end
+
+      def section_comment(comment)
+        @block.section_comment = comment
+      end
     end
 
     def initialize(&block)
@@ -100,6 +109,7 @@ module BCF
     end
 
     def with_speaker(speaker)
+      return self.clone unless speaker
       self.clone.instance_eval do
         @speaker = speaker
         self

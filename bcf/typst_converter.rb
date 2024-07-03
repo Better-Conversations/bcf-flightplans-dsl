@@ -30,7 +30,7 @@ module BCF
       TIR::TableRow.new(
         time: current_time.to_s.rjust(2, "0"),
         length: self.length,
-        section_info: "#{self.name}#linebreak()#bcf-nom[#{format_speakers(self.speaker)}]",
+        section_info: "#{self.name}#linebreak()#bcf-nom[#{format_speakers(self.speaker)}]#linebreak()#{self.section_comment}",
         facilitator_content: self.facilitator_notes&.to_typst,
         producer_content: self.producer_notes&.to_typst
       ).to_typst
