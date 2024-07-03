@@ -17,8 +17,7 @@ module_3 = ConventionalFlightPlan.new do
 
   block(BCF::CommonBlocks::PRE_FLIGHT)
 
-  block(lead_by: [:fx1, :fx2]) do
-    name "Greeting"
+  block(name: "Greeting", lead_by: [:fx1, :fx2]) do
     length 5
 
     facilitator do
@@ -30,8 +29,7 @@ module_3 = ConventionalFlightPlan.new do
     end
   end
 
-  block(lead_by: :fx1) do
-    name "Welcome"
+  block(name: "Welcome", lead_by: :fx1) do
     length 2
 
     resources do
@@ -47,8 +45,7 @@ module_3 = ConventionalFlightPlan.new do
     end
   end
 
-  block(lead_by: :fx1) do
-    name "Any Questions?"
+  block(name: "Any Questions", lead_by: :fx1) do
     length 2
 
     facilitator do
@@ -60,8 +57,7 @@ module_3 = ConventionalFlightPlan.new do
     end
   end
 
-  block(lead_by: :fx2) do
-    name "State Check-In"
+  block(name: "State Check-In", lead_by: :fx2) do
     length 2
 
     facilitator do
@@ -88,8 +84,7 @@ CHAT
     end
   end
 
-  block(lead_by: :fx2) do
-    name "Fieldwork reflections"
+  block(name: "Fieldwork reflections", lead_by: :fx2) do
     length 4
 
     facilitator do
@@ -113,8 +108,7 @@ CHAT
     end
   end
 
-  block(lead_by: :fx1) do
-    name "Context model"
+  block(name: "Context model", lead_by: :fx1) do
     length 7
 
     resources do
@@ -158,12 +152,33 @@ TYPST_SPOKEN
     end
   end
 
-  block(lead_by: :fx2) do
+  # TODO: Escape the in strings, Typst uses it as a control character
+  block(name: "Breakout#1", lead_by: :fx2) do
     length 8
-    name "Breakout#1"
 
     resources do
       breakout_room(:bor_1)
+    end
+
+    facilitator do
+      spoken "You will have 6 minutes to do this exercise in breakout rooms."
+      spoken "We are going to explore what happens when we share our context."
+      spoken "Please only ask what is appropriate for this setting and share only what you feel comfortable sharing in the group when we come back into the main room."
+
+      spoken("One person will choose ONE of the starter questions below to ask your partner. Continue the conversation and ask more questions to improve your understanding of the other person’s context.",
+             fixed: true)
+      spoken("Starter questions:
+-	Psychological: What would you like to have happen after attending this course?
+-	Historical: What have you learned so far on this course?
+-	Time: What were you doing before you came to the course today? What else do you have on today?
+-	Environmental: Where are you in the world?
+", fixed: true)
+
+      spoken("Manage the time so everyone gets a chance to try out one of the starter questions. ", fixed: true)
+
+      spoken "We will send a message into the rooms to let you know when you are halfway through the time"
+      spoken "When you come back we will talk about what it’s like when you are asked about your context and know more context about the other person"
+      spoken "Any questions before we send you in?"
     end
 
     producer do
@@ -195,33 +210,97 @@ CHAT
 
       instruction "Send into BORs"
       instruction "Broadcast halfway message:"
+
+      # TODO: Parameterize the time of a breakout room
       chat "Halfway, 3 minutes remaining"
     end
   end
 
-  block(lead_by: :fx2) do
+  block(name: "Unpack Breakout activity", lead_by: :fx2) do
     length 6
-    name "Unpack Breakout activity"
     section_comment "Fx1 scribes"
 
     resources do
       flipchart(:flip_3, "Add to Flip#3 for up to 3 people and/or use chat.")
       breakout_room(:bor_1)
     end
+
+    facilitator do
+      spoken "Let’s find out what you discovered:"
+      spoken_fixed "What happened when you knew more about the other person’s context "
+      spoken_fixed "What was it like for you, when you were asked about your context?"
+
+      instruction "Facilitate brief discussion suggesting people can also put their answers in the chat." \
+                    "Aim for 2-3 examples, with one from the chat."
+
+      instruction "Handover to Fx1 for exercise on improving conversations."
+    end
+
+    producer do
+      instruction "Prepare BORs in same 2/3s for 6 minutes"
+
+      chat <<CHAT
+What happened when you knew more about the other person’s context?
+
+What was it like for you, when you were asked about your context?
+CHAT
+    end
   end
 
-  block(lead_by: :fx1) do
+  block(name: "Breakout#2", lead_by: :fx1) do
     length 8
-    name "Breakout#2"
 
     resources do
       breakout_room(:bor_2)
     end
+
+    facilitator do
+      spoken "We are going to put you in breakouts again for 6 minutes to talk about this."
+      spoken_fixed "We are going to consider improving a conversation using the 6 elements of context: "
+      spoken_fixed "Historical, psychological, social, cultural, environmental, and time-based (temporal). "
+      spoken_fixed "Remember that context helps determine the assumptions we make."
+      spoken_fixed "For a conversation that you want to be better in the future,  "
+      spoken "Take a moment to think about what you would like to have happen in that conversation. "
+
+      instruction "[pause for thinking]"
+
+      spoken_fixed "
+- What might you have to consider about the other persons’ context when preparing for your conversation with them?
+- How would you find out about their context before and during the conversation?
+"
+
+      spoken_fixed "Manage the time so everyone has a chance to answer the questions."
+      spoken "When you’re in your breakout rooms, you don’t need to tell your partner what the conversation is about or who it’s with. "
+      spoken "Keep your answers brief. Please only share what you are comfortable sharing."
+      spoken "Any questions before we send you in? "
+    end
+
+    producer do
+      instruction "Copy to chat when you hear the facilitator giving the instructions:"
+
+      chat <<CHAT
+We are going to consider improving a conversation using the 6 elements of context:
+
+Historical, psychological, social, cultural, environmental, and time-based (temporal)
+
+For a conversation that you want to be better in the future:
+
+- What might you have to consider about the other persons’ context when preparing for your conversation with them?
+- How would you find out about their context before and during the conversation?
+
+Manage the time so everyone has a chance to answer the questions.
+CHAT
+
+      instruction "When the facilitator has finished giving the instructions/answering questions. tell the group you are going to send them into BORs for 6 minutes"
+
+      instruction "Send into BORs"
+      instruction "Broadcast halfway message:"
+      chat "Halfway, 3 minutes remaining"
+    end
   end
 
-  block(lead_by: :fx1) do
+  block(name: "Unpack Breakout#2 activity", lead_by: :fx1) do
     length 7
-    name "Unpack Breakout#2 activity"
     section_comment "Fx2 scribes"
 
     resources do
@@ -231,11 +310,11 @@ CHAT
 
     facilitator do
       spoken "Let’s find out what you just noticed."
-      spoken("
+      spoken_fixed "
 When preparing for your conversation:
 - What might you have to consider about another person and their context?
 - How might you find out about their context before and during the conversation?
-", fixed: true)
+"
 
       instruction "Facilitate brief discussion suggesting people can also put their answers in the chat. Aim for 2-3 examples, with one from the chat."
 
@@ -270,9 +349,8 @@ CHAT
     end
   end
 
-  block(lead_by: :fx1) do
+  block(name: "Link to state", lead_by: :fx1) do
     length 5
-    name "Link to state"
 
     facilitator do
       spoken "Just to recap, there are six elements to context that affect each of us in our conversations:  Historical, psychological, social, cultural, environmental, and time-based (temporal)."
@@ -304,9 +382,8 @@ CHAT
     end
   end
 
-  block(lead_by: :fx2) do
+  block(name: "Reflect on the learning in this session", lead_by: :fx2) do
     length 5
-    name "Reflect on the learning in this session"
 
     section_comment "Gather comments in chat and pick out some examples"
 

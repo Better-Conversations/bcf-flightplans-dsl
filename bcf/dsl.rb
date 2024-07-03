@@ -36,11 +36,11 @@ module BCF
         @flight_plan.module_title = title
       end
 
-      def block(block_instance = nil, lead_by: nil, &block_constructor)
+      def block(block_instance = nil, **kwargs, &block_constructor)
         if block_instance and block_instance.is_a? Block
-          @flight_plan.blocks << block_instance.with_speaker(lead_by)
+          @flight_plan.blocks << block_instance.with_additional(**kwargs)
         else
-          @flight_plan.blocks << Block.new(&block_constructor).with_speaker(lead_by)
+          @flight_plan.blocks << Block.new(&block_constructor).with_additional(**kwargs)
         end
       end
 
@@ -93,13 +93,11 @@ module BCF
         puts "TODO: Implement resources"
       end
 
-      def default_leader(speaker)
-        @block.speaker = speaker
-      end
-
       def lead_by(speaker)
         @block.speaker = speaker
       end
+
+      alias_method :default_leader, :lead_by
 
       def section_comment(comment)
         @block.section_comment = comment
@@ -112,12 +110,16 @@ module BCF
       DSL.new(self, &block)
     end
 
-    def with_speaker(speaker)
-      return self.clone unless speaker
-      self.clone.instance_eval do
-        @speaker = speaker
-        self
+    # FIXME: This is a little hacky
+    def with_additional(**kwargs)
+      new_block = self.clone
+      dsl = DSL.new(new_block, &Proc.new {})
+
+      kwargs.each do |k, v|
+        dsl.send(k, v)
       end
+
+      new_block
     end
   end
 
@@ -170,6 +172,10 @@ module BCF
   class FacilitatorNotes < Notes
     def spoken(content, fixed: false)
       items << Spoken.new(content, fixed:)
+    end
+
+    def spoken_fixed(content)
+      spoken(content, fixed: true)
     end
   end
 end
