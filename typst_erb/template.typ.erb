@@ -1,0 +1,24 @@
+#import "template.typ": flight-plan, flight-plan-table, instruction, chat, spoken, speaker-swap
+#import "helpers.typ": *
+
+#show: doc => flight-plan(
+  module_number: <%= @module_number %>,
+  module_name: "<%= @module_name %>",
+  duration: <%= @total_length %>,
+  when: datetime(
+    year: 2024,
+    month: 6,
+    day: 19,
+    hour: 9,
+    minute: 0,
+    second: 0,
+  ),
+  organisation: "Better Conversations Foundation",
+  doc
+)
+
+== Time Plan
+
+#flight-plan-table(
+  <%= blocks_typst %>
+)

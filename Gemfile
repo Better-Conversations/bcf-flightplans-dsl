@@ -7,3 +7,4 @@ source "https://rubygems.org"
 gem "typst", "~> 0.0.5"
 
 gem 'zip-zip', '~> 0.3'
+gem "tilt", "~> 2.4"

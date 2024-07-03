@@ -1,4 +1,6 @@
 require 'tmpdir'
+require 'tilt'
+require 'tilt/erb'
 
 def format_speakers(speakers)
   if speakers.is_a? Array
@@ -93,31 +95,8 @@ module BCF
 
   class FlightPlan
     def to_typst
-      <<TYPST
-#import "template.typ": flight-plan, flight-plan-table, instruction, chat, spoken, speaker-swap
-#import "helpers.typ": *
-#show: doc => flight-plan(
-  module_number: #{self.module_number},
-  module_name: "#{self.module_title}",
-  duration: #{self.total_length},
-  when: datetime(
-    year: 2024,
-    month: 6,
-    day: 19,
-    hour: 9,
-    minute: 0,
-    second: 0,
-  ),
-  organisation: "Better Conversations Foundation",
-  doc
-)
-
-== Time Plan
-
-#flight-plan-table(
-  #{self.blocks_typst}
-)
-TYPST
+      template = Tilt.new('typst_erb/template.typ.erb')
+      template.render(self)
     end
 
     def blocks_typst

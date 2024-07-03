@@ -3,6 +3,7 @@ GEM
   specs:
     rb_sys (0.9.97)
     rubyzip (2.3.2)
+    tilt (2.4.0)
     typst (0.0.5)
       rb_sys (>= 0.9.83)
     zip-zip (0.3)
@@ -12,6 +13,7 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
+  tilt (~> 2.4)
   typst (~> 0.0.5)
   zip-zip (~> 0.3)
 
