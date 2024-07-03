@@ -1,21 +1,30 @@
-#import "template.typ": flight-plan, flight-plan-table, instruction, chat, spoken, speaker-swap
+#import "styles.typ": flight-plan, flight-plan-table, info-table
 #import "helpers.typ": *
 
-#show: doc => flight-plan(
-module_number: <%= @module_number %>,
-module_name: "<%= @module_name %>",
-duration: <%= @total_length %>,
-when: datetime(
-year: 2024,
-month: 6,
-day: 19,
-hour: 9,
-minute: 0,
-second: 0,
-),
-organisation: "Better Conversations Foundation",
-doc
+#show: flight-plan
+
+= Module <%= @module_number %>: <%= @module_name %>
+
+== Overview
+
+#info-table(
+  date: "19 June 2024",
+  time: "0900 UTC",
+  duration: <%= @total_length %>,
+  organisation: "Better Conversations Foundation",
 )
+
+BOR = breakout rooms, Fx = facilitator, Px = producer
+
+#bcf-nom[Yellow highlighted text] indicates where names, contact details, examples, timings etc. might need to be changed
+
+#bcf-mod[Green highlighted text] indicates modifications to the live/master version for the session
+
+#bcf-atten[Bold text] in time plan draws attention to facilitator script
+
+#bcf-cue[Bold highlighted text] helps provide cues for producer to paste chat text
+
+#pagebreak()
 
 = Flight Plan
 
@@ -38,7 +47,7 @@ else { center },
 
 [Reference], [Who is scribing?], [Contents],
 
-<% flipcharts.each_with_index do |flipchart, index| %>
+<% flipcharts.each do |flipchart| %>
   [#("<%= flipchart.pretty_id %>")], [<%= flipchart.pretty_scribed_by %>], [<%= flipchart.description %>],
 <% end %>
 )
