@@ -2,19 +2,19 @@
 #import "helpers.typ": *
 
 #show: doc => flight-plan(
-  module_number: <%= @module_number %>,
-  module_name: "<%= @module_name %>",
-  duration: <%= @total_length %>,
-  when: datetime(
-    year: 2024,
-    month: 6,
-    day: 19,
-    hour: 9,
-    minute: 0,
-    second: 0,
-  ),
-  organisation: "Better Conversations Foundation",
-  doc
+module_number: <%= @module_number %>,
+module_name: "<%= @module_name %>",
+duration: <%= @total_length %>,
+when: datetime(
+year: 2024,
+month: 6,
+day: 19,
+hour: 9,
+minute: 0,
+second: 0,
+),
+organisation: "Better Conversations Foundation",
+doc
 )
 
 = Flight Plan
@@ -53,5 +53,27 @@ else { center },
 == Time Plan
 
 #flight-plan-table(
-  <%= blocks_typst %>
+<%
+  current_speaker = nil
+  current_time = self.initial_time
+%>
+
+<% blocks.each do |block| %>
+  <% next_speaker = block.speaker %>
+
+  <% if next_speaker != current_speaker %>
+    <% if current_speaker.nil? %>
+      speaker-swap[<%= format_speakers(next_speaker) %>],
+    <% else %>
+      speaker-swap[Switch to <%= format_speakers(next_speaker) %>],
+    <% end %>
+  <% end %>
+
+  <%= block.to_typst(current_time) %>
+
+  <%
+    current_speaker = block.speaker
+    current_time += block.length
+  %>
+<% end %>
 )

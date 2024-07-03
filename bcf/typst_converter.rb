@@ -104,31 +104,6 @@ module BCF
       template.render(self)
     end
 
-    def blocks_typst
-      typst = []
-      current_speaker = nil
-      current_time = self.initial_time || -30
-
-      self.blocks.each do |block|
-        next_speaker = block.speaker
-
-        if next_speaker != current_speaker
-          if current_speaker.nil?
-            typst << "speaker-swap[#{format_speakers(next_speaker)}],"
-          else
-            typst << "speaker-swap[Switch to #{format_speakers(next_speaker)}],"
-          end
-        end
-
-        current_speaker = next_speaker
-
-        typst << block.to_typst(current_time)
-        current_time += block.length
-      end
-
-      typst.join("\n")
-    end
-
     def render_pdf(output_path, debug_typst_path = nil)
       Dir.mktmpdir do |dir|
         # Copy all files from ./typst to the temp directory
