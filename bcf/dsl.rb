@@ -20,6 +20,15 @@ module BCF
       end
 
       warn "Total length (#{total_length}) does not match block lengths (#{runtime})" unless runtime == total_length
+
+      puts "Found resources:"
+      resources.each do |resource|
+        puts "  #{resource}"
+      end
+    end
+
+    def resources
+      blocks.map(&:resources).flatten
     end
 
     class DSL
@@ -65,9 +74,31 @@ module BCF
                   :facilitator_notes,
                   :producer_notes,
                   :speaker,
-                  :section_comment
+                  :section_comment,
+                  :resources
 
     class DSL
+      class ResourcesDSL
+        attr_accessor :resources
+
+        def initialize(&block)
+          @resources = []
+          instance_eval &block
+        end
+
+        def flipchart(id, content)
+          resources << Flipchart.new(id, content)
+        end
+
+        def breakout_room(id)
+          resources << Breakout.new(id)
+        end
+
+        def fieldwork(id, description)
+          resources << Fieldwork.new(id, description)
+        end
+      end
+
       def initialize(obj, &block)
         @block = obj
         instance_eval &block
@@ -90,7 +121,7 @@ module BCF
       end
 
       def resources(&block)
-        puts "TODO: Implement resources"
+        @block.resources << ResourcesDSL.new(&block).resources
       end
 
       def lead_by(speaker)
@@ -107,6 +138,7 @@ module BCF
     def initialize(&block)
       @facilitator_notes = nil
       @producer_notes = nil
+      @resources = []
       DSL.new(self, &block)
     end
 
@@ -178,4 +210,8 @@ module BCF
       spoken(content, fixed: true)
     end
   end
+
+  Flipchart = Struct.new(:id, :content)
+  Breakout = Struct.new(:id)
+  Fieldwork = Struct.new(:id, :description)
 end
