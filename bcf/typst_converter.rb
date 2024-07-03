@@ -95,7 +95,7 @@ module BCF
 
   class FlightPlan
     def to_typst
-      template = Tilt.new('typst_erb/template.typ.erb')
+      template = Tilt.new('typst_erb/entry_point.typ.erb')
       template.render(self)
     end
 
@@ -127,7 +127,7 @@ module BCF
     def render_pdf(output_path, debug_typst_path = nil)
       Dir.mktmpdir do |dir|
         # Copy all files from ./typst to the temp directory
-        Dir.glob(File.join(File.dirname(__FILE__), "..", 'typst', '*')).each do |file|
+        Dir.glob(File.join(File.dirname(__FILE__), "..", 'typst_erb', '*')).each do |file|
           FileUtils.cp(file, dir)
         end
 
