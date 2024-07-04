@@ -4,15 +4,15 @@
 
 #show: flight-plan
 
-= Module <%= module_number %>: <%= module_title %>
+= Module <%= flight_plan.module_number %>: <%= flight_plan.module_title %>
 
 == Overview
 
 #info-table(
   date: "19 June 2024",
   time: "0900 UTC",
-  duration: <%= total_length %>,
-  organisation: "<%= organisation %>",
+  duration: <%= flight_plan.total_length %>,
+  organisation: "<%= flight_plan.organisation %>",
 )
 
 BOR = breakout rooms, Fx = facilitator, Px = producer
@@ -31,7 +31,7 @@ BOR = breakout rooms, Fx = facilitator, Px = producer
 
 == Learning Outcomes
 
-#cmarker.render("<%= learning_outcomes %>")
+#cmarker.render("<%= flight_plan.learning_outcomes %>")
 
 == Flipcharts
 
@@ -48,7 +48,7 @@ else { center },
 
 [Reference], [Who is scribing?], [Contents],
 
-<% flipcharts.each do |flipchart| %>
+<% flight_plan.flipcharts.each do |flipchart| %>
   [#("<%= flipchart.pretty_id %>")], [<%= flipchart.pretty_scribed_by %>], [<%= flipchart.description %>],
 <% end %>
 )
@@ -56,7 +56,7 @@ else { center },
 
 == Demo
 
-#cmarker.render("<%= demo %>")
+#cmarker.render("<%= flight_plan.demo %>")
 
 #pagebreak()
 
@@ -65,10 +65,10 @@ else { center },
 #flight-plan-table(
 <%
   current_speaker = nil
-  current_time = self.initial_time
+  current_time = flight_plan.initial_time
 %>
 
-<% blocks.each do |block| %>
+<% flight_plan.blocks.each do |block| %>
   <% table_row = block.table_row %>
   <% if block.speaker != current_speaker %>
     <% if current_speaker.nil? %>

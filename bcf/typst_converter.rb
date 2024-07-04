@@ -76,10 +76,10 @@ module BCF
 
   SpokenGroup = Struct.new(:lines)
 
-
-  class FlightPlanRenderContext
-    def initialize(flight_plan)
-      @flight_plan = flight_plan
+  class RenderContext
+    def self.render_flight_plan(flight_plan)
+      Tilt.new('typst_erb/entry_point.typ.erb')
+          .render(new, flight_plan: flight_plan)
     end
 
     def render_content(content)
@@ -94,18 +94,9 @@ module BCF
       Tilt.new('typst_erb/render_note.typ.erb')
           .render(self, note: note)
     end
-
-    private def method_missing(name, *args)
-      @flight_plan.send(name, *args)
-    end
   end
 
   class FlightPlan
-    def to_typst
-      template = Tilt.new('typst_erb/entry_point.typ.erb')
-      template.render(FlightPlanRenderContext.new(self))
-    end
-
     def render_pdf(output_path, debug_typst_path = nil)
       Dir.mktmpdir do |dir|
         # Copy all files from ./typst to the temp directory
@@ -114,7 +105,7 @@ module BCF
         end
 
         typst_path = File.join(dir, 'output.typ')
-        typst_content = self.to_typst
+        typst_content = RenderContext.render_flight_plan(self)
         File.write(typst_path, typst_content)
 
         system("typstyle -i #{typst_path}")
