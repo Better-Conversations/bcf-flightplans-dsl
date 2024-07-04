@@ -32,8 +32,8 @@ module BCF
       TIR::TableRow.new(
         length: self.length,
         section_info: section_info,
-        facilitator_content: self.facilitator_notes&.to_typst,
-        producer_content: self.producer_notes&.to_typst
+        facilitator_content: self.facilitator_notes,
+        producer_content: self.producer_notes,
       )
     end
 
@@ -107,7 +107,12 @@ module BCF
       end
 
       def render_content(content)
-        content
+        case content
+        when String then content
+        when Notes then content.to_typst
+        when nil then ""
+        else raise "Unknown content #{content}"
+        end
       end
 
       private def method_missing(name, *args)
