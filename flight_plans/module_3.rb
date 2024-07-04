@@ -1,5 +1,8 @@
 require_relative '../bcf'
 require_relative './common_blocks'
+require 'json'
+require 'json/add/struct'
+# require 'json/add/symbol'
 
 # An example of using inheritance to specialise an object created in this manner
 class ConventionalFlightPlan < BCF::FlightPlan
@@ -482,3 +485,4 @@ end
 
 module_3.validate
 module_3.render_pdf('module_3.pdf', "module_3.typ")
+jj module_3
