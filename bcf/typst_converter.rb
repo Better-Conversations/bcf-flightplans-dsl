@@ -10,6 +10,12 @@ def format_speakers(speakers)
   end
 end
 
+# TODO: It might be good to isolate these into markdown files which we then read back to avoid escaping issues.
+#  Implement this when we move to more ERB
+def render_markdown(md)
+  "cmarker.render(\"#{md}\")"
+end
+
 module BCF
   # Typst Intermediate Representation
   module TIR
@@ -73,7 +79,7 @@ module BCF
 
   class Instruction
     def to_typst
-      "#instruction(cmarker.render(\"#{self.content}\"))"
+      "#instruction(#{render_markdown(self.content)})"
     end
   end
 
@@ -81,23 +87,37 @@ module BCF
     # This is named differently as it provides a code expression not a content string
     def to_typst_expr
       if self.fixed
-        "bcf-cue(cmarker.render(\"#{self.content}\"))"
+        "bcf-cue(#{render_markdown(self.content)})"
       else
-        "cmarker.render(\"#{self.content}\")"
+        render_markdown(self.content)
       end
     end
   end
 
   class Chat
     def to_typst
-      "#chat[#cmarker.render(\"#{self.content}\")]"
+      "#chat(#{render_markdown(self.content)})"
     end
   end
 
   class FlightPlan
+    class FlightPlanRenderContext
+      def initialize(flight_plan)
+        @flight_plan = flight_plan
+      end
+
+      def render_content(content)
+        content
+      end
+
+      private def method_missing(name, *args)
+        @flight_plan.send(name, *args)
+      end
+    end
+
     def to_typst
       template = Tilt.new('typst_erb/entry_point.typ.erb')
-      template.render(self)
+      template.render(FlightPlanRenderContext.new(self))
     end
 
     def render_pdf(output_path, debug_typst_path = nil)

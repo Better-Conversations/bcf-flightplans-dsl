@@ -4,15 +4,15 @@
 
 #show: flight-plan
 
-= Module <%= @module_number %>: <%= @module_name %>
+= Module <%= module_number %>: <%= module_title %>
 
 == Overview
 
 #info-table(
   date: "19 June 2024",
   time: "0900 UTC",
-  duration: <%= @total_length %>,
-  organisation: "<%= @organisation %>",
+  duration: <%= total_length %>,
+  organisation: "<%= organisation %>",
 )
 
 BOR = breakout rooms, Fx = facilitator, Px = producer
@@ -81,8 +81,8 @@ else { center },
   [<%= current_time.to_s.rjust(2, "0") %>],
   [<%= table_row.length %>],
   [<%= table_row.section_info %>],
-  [<%= table_row.facilitator_content %>],
-  [<%= table_row.producer_content %>],
+  [<%= render_content(table_row.facilitator_content) %>],
+  [<%= render_content(table_row.producer_content) %>],
 
   <%
     current_speaker = block.speaker

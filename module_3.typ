@@ -4,7 +4,7 @@
 
 #show: flight-plan
 
-= Module 3:
+= Module 3: Context
 
 == Overview
 
@@ -31,16 +31,7 @@ BOR = breakout rooms, Fx = facilitator, Px = producer
 
 == Learning Outcomes
 
-#cmarker.render("Learners will be able to:
-
-- Describe the elements of context in conversations
-- Link context, assumptions and state
-
-Suggested learning outcomes for further trainings/interventions
-
-- Describe how social and cultural context affect conversations
-    end
-")
+#cmarker.render("")
 
 == Flipcharts
 
@@ -66,13 +57,7 @@ Suggested learning outcomes for further trainings/interventions
 
 == Demo
 
-#cmarker.render("No demo.
-
-Alternative example for context:
-
-- Imagine you are watching TV and have muted it for the commercials. The first commercial you see shows a kitchen knife setting on a cutting board on the counter. Around it there are lots of different kinds of vegetables and a stock pot. Given that context, you would likely assume they were advertising a cooking show.
-- The next commercial starts. You see the same kitchen knife. This time it is in the trunk (boot) of car along with some rope, duct tape, a tarp and a shovel.  That context brings up a completely different kind of show! Even though the kitchen knife is exactly the same.
-")
+#cmarker.render("")
 
 #pagebreak()
 
@@ -179,12 +164,14 @@ Red – you need to stop, break
     #instruction(
       cmarker.render("Accept whatever states are put in chat. Avoid saying that green state is best. If people are in red then ask them to take the time they need, switch their camera off and mute, and join when they are ready."),
     )],
-  [#chat[#cmarker.render("State check-in:
+  [#chat(
+      cmarker.render("State check-in:
 
 Green – you’re good to go!
 Amber/Yellow – you need to proceed with caution
 Red – you need to stop, break
-")]
+"),
+    )
 
     #instruction(
       cmarker.render("Take note of states to help decide BOR participants"),
@@ -217,11 +204,13 @@ Red – you need to stop, break
     )
 
     #instruction(cmarker.render("Handover to Fx1 for Context model."))],
-  [#chat[#cmarker.render("Think of one conversation you had recently – maybe it was a good conversation, maybe it wasn't.
+  [#chat(
+      cmarker.render("Think of one conversation you had recently – maybe it was a good conversation, maybe it wasn't.
 
 - Were your assumptions in that conversation accurate?
 - Please answer Yes or No in the chat.
-")]],
+"),
+    )],
 
 
 
@@ -302,7 +291,8 @@ Red – you need to stop, break
       cmarker.render("Copy this to chat when you hear the facilitator introduce the questions:"),
     )
 
-    #chat[#cmarker.render("We are going to explore what happens when we share our context.
+    #chat(
+      cmarker.render("We are going to explore what happens when we share our context.
 
 One person will choose ONE of the starter questions below to ask your partner.
 
@@ -319,7 +309,8 @@ Starter questions:
 - Environmental: Where are you in the world?
 
 Manage the time so everyone gets a chance to try out one of the starter questions.
-")]
+"),
+    )
 
     #instruction(
       cmarker.render("When the facilitator has finished giving the instructions/answering questions.Tell the group you are going to send them into BORs for 6 minutes"),
@@ -329,7 +320,7 @@ Manage the time so everyone gets a chance to try out one of the starter question
 
     #instruction(cmarker.render("Broadcast halfway message:"))
 
-    #chat[#cmarker.render("Halfway, 3 minutes remaining")]],
+    #chat(cmarker.render("Halfway, 3 minutes remaining"))],
 
 
 
@@ -357,10 +348,12 @@ Manage the time so everyone gets a chance to try out one of the starter question
     )],
   [#instruction(cmarker.render("Prepare BORs in same 2/3s for 6 minutes"))
 
-    #chat[#cmarker.render("What happened when you knew more about the other person’s context?
+    #chat(
+      cmarker.render("What happened when you knew more about the other person’s context?
 
 What was it like for you, when you were asked about your context?
-")]],
+"),
+    )],
 
 
 
@@ -410,7 +403,8 @@ What was it like for you, when you were asked about your context?
       cmarker.render("Copy to chat when you hear the facilitator giving the instructions:"),
     )
 
-    #chat[#cmarker.render("We are going to consider improving a conversation using the 6 elements of context:
+    #chat(
+      cmarker.render("We are going to consider improving a conversation using the 6 elements of context:
 
 Historical, psychological, social, cultural, environmental, and time-based (temporal)
 
@@ -420,7 +414,8 @@ For a conversation that you want to be better in the future:
 - How would you find out about their context before and during the conversation?
 
 Manage the time so everyone has a chance to answer the questions.
-")]
+"),
+    )
 
     #instruction(
       cmarker.render("When the facilitator has finished giving the instructions/answering questions.tell the group you are going to send them into BORs for 6 minutes"),
@@ -430,7 +425,7 @@ Manage the time so everyone has a chance to answer the questions.
 
     #instruction(cmarker.render("Broadcast halfway message:"))
 
-    #chat[#cmarker.render("Halfway, 3 minutes remaining")]],
+    #chat(cmarker.render("Halfway, 3 minutes remaining"))],
 
 
 
@@ -481,12 +476,14 @@ We’d like you to consider these questions, *thinking about what you know about
       cmarker.render("Copy in chat (when you hear facilitator say these):"),
     )
 
-    #chat[#cmarker.render("When preparing for your conversation:
+    #chat(
+      cmarker.render("When preparing for your conversation:
 
 - What might you have to consider about another person and their context?
 
 - How might you find out about their context before and during the conversation?
-")]],
+"),
+    )],
 
 
 
@@ -516,14 +513,16 @@ We’d like you to consider these questions, *thinking about what you know about
       cmarker.render("Copy in chat (when you hear facilitator say these):"),
     )
 
-    #chat[#cmarker.render("6 elements of context: Historical, psychological, social, cultural, environmental, and time-based (temporal)
+    #chat(
+      cmarker.render("6 elements of context: Historical, psychological, social, cultural, environmental, and time-based (temporal)
 
 Thinking about what you know about state, assumptions and context:
 
 - What will you do to manage your state before a conversation?
 
 - How might your context affect your state?
-")]],
+"),
+    )],
 
 
 
@@ -547,11 +546,13 @@ Thinking about the conversations you are going to have in the next week, and wha
       ),
       cmarker.render("There is space in the Course Handbook to capture any more thoughts you might have from today."),
     )],
-  [#chat[#cmarker.render("Thinking about the conversations you are going to have in the next week, and what we have just learned on this module…
+  [#chat(
+      cmarker.render("Thinking about the conversations you are going to have in the next week, and what we have just learned on this module…
 
 - What difference does understanding context make to having Better Conversations?
 - What will you do differently now you know this?
-")]],
+"),
+    )],
 
 
 
@@ -568,10 +569,12 @@ Thinking about the conversations you are going to have in the next week, and wha
 - What impact does that have on the conversation?"),
       ),
     )],
-  [#chat[#cmarker.render("Fieldwork:
+  [#chat(
+      cmarker.render("Fieldwork:
  - Try noticing what context you bring to a conversation
 - What do you know about the other person’s context?
-- What impact does that have on the conversation?")]],
+- What impact does that have on the conversation?"),
+    )],
 
 
 
