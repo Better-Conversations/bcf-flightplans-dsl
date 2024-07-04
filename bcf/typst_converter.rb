@@ -74,36 +74,8 @@ module BCF
     end
   end
 
-  SpokenGroup = Struct.new(:lines) do
-    def to_typst
-      "#spoken(
-          #{self.lines.map(&:to_typst_expr).join(",\n")}
-        )"
-    end
-  end
+  SpokenGroup = Struct.new(:lines)
 
-  class Instruction
-    def to_typst
-      "#instruction(#{render_markdown(self.content)})"
-    end
-  end
-
-  class Spoken
-    # This is named differently as it provides a code expression not a content string
-    def to_typst_expr
-      if self.fixed
-        "bcf-cue(#{render_markdown(self.content)})"
-      else
-        render_markdown(self.content)
-      end
-    end
-  end
-
-  class Chat
-    def to_typst
-      "#chat(#{render_markdown(self.content)})"
-    end
-  end
 
   class FlightPlanRenderContext
     def initialize(flight_plan)

@@ -4,7 +4,13 @@
 <% when BCF::SpokenGroup %>
   #spoken(
   <% note.lines.each do |line| %>
-    <%= line.to_typst_expr %>,
+    <% if line.fixed %>
+      bcf-cue(<%= render_markdown(line.content) %>)
+    <% else %>
+      <%= render_markdown(line.content) %>
+    <% end %>
+    <%# Trailing comma %>
+    ,
   <% end %>
   )
 <% when BCF::Chat %>

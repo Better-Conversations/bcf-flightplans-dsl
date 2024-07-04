@@ -137,7 +137,11 @@ Alternative example for context:
 
     #spoken(
 
+
       cmarker.render("Last time we looked at how quickly and easily we make assumptions, without being aware of them. We will do a quick review of that soon."),
+
+
+
 
       cmarker.render("Then we will begin to explore the context around a conversation. **Context helps us make meaning of the world, and determines what assumptions we make.**"),
     )
@@ -157,7 +161,11 @@ Alternative example for context:
   [
     #spoken(
 
+
       cmarker.render("And is there anything you need to tell us before we begin? For example, if you need to leave early or if you are having any problems with Zoom."),
+
+
+
 
       cmarker.render("**And do you have anything you’d like to ask us about today’s topic?**"),
     )
@@ -185,11 +193,18 @@ Alternative example for context:
   [
     #spoken(
 
+
       cmarker.render("Now, let’s check-in with your state using the Traffic Light Model"),
+
+
+
 
       bcf-cue(
         cmarker.render("Please put in the chat if you are green, amber/yellow or red"),
       ),
+
+
+
 
       bcf-cue(
         cmarker.render("Green – you’re good to go!
@@ -230,15 +245,25 @@ Red – you need to stop, break
   [
     #spoken(
 
+
       cmarker.render("Let’s have a quick recap of the fieldwork. Please share only what you’d like to and put your answers in the chat, so we hear from everyone quickly."),
+
+
+
 
       bcf-cue(
         cmarker.render("Think of one conversation you had recently – maybe it was a good conversation, maybe it wasn't"),
       ),
 
+
+
+
       bcf-cue(
         cmarker.render("Were your assumptions in that conversation accurate?"),
       ),
+
+
+
 
       bcf-cue(cmarker.render("Just quickly put yes or no in the chat")),
     )
@@ -248,6 +273,7 @@ Red – you need to stop, break
     )
 
     #spoken(
+
 
       cmarker.render("Without adding too much detail, when your assumption was/wasn't accurate, then what happened?"),
     )
@@ -280,21 +306,46 @@ Red – you need to stop, break
   [
     #spoken(
 
+
       cmarker.render("There is an explanation in the handbook in Section 3 to help you remember the diagram."),
+
+
+
 
       cmarker.render("In Better Conversations, context means what surrounds the conversation, the setting for the conversation."),
 
+
+
+
       cmarker.render("Context is important because it defines our subjective experience."),
+
+
+
 
       cmarker.render("It helps us make meaning of our world. Each of us brings our own context to conversations. And we take it into our future conversations, so our context can change over time."),
 
+
+
+
       cmarker.render("Context also determines what assumptions we make. We can make different assumptions in different contexts."),
+
+
+
 
       cmarker.render("As an example, imagine you were in London and you saw people carrying umbrellas. You might think it was going to rain."),
 
+
+
+
       cmarker.render("Now imagine you are in a country in South Asia. If you saw people carrying umbrellas, they might be wanting to use them as parasols. If it was monsoon season, you might think the umbrella has a dual use."),
 
+
+
+
       cmarker.render("We have broken context down into 6 overlapping areas to help explain what it is."),
+
+
+
 
       cmarker.render("Context can be:
 - #underline[Psychological] (for example, your perception of your state, your personal values)
@@ -305,14 +356,26 @@ Red – you need to stop, break
 - #underline[Time]-based (for example, temporal - time zone, whether it’s day or night)
 "),
 
+
+
+
       cmarker.render("Some examples of your context we have already covered so far in this course are:
 - Asking where in the world you are and what time zone you are in (environmental, cultural and time-based context)
 - Asking how you are feeling, when we do the state check-in (psychological context)
 "),
 
+
+
+
       cmarker.render("We look at psychological, time-based, historical, environmental context in this course."),
 
+
+
+
       cmarker.render("We aren’t covering social or cultural context in this course in depth – these are beyond the scope of what we are doing here."),
+
+
+
 
       cmarker.render("What we are going to do now is put you in breakout rooms to find out more about  the impact of knowing someone’s context."),
     )
@@ -341,15 +404,28 @@ Red – you need to stop, break
   [
     #spoken(
 
+
       cmarker.render("You will have 6 minutes to do this exercise in breakout rooms."),
+
+
+
 
       cmarker.render("We are going to explore what happens when we share our context."),
 
+
+
+
       cmarker.render("Please only ask what is appropriate for this setting and share only what you feel comfortable sharing in the group when we come back into the main room."),
+
+
+
 
       bcf-cue(
         cmarker.render("One person will choose ONE of the starter questions below to ask your partner. Continue the conversation and ask more questions to improve your understanding of the other person’s context."),
       ),
+
+
+
 
       bcf-cue(
         cmarker.render("Starter questions:
@@ -360,13 +436,25 @@ Red – you need to stop, break
 "),
       ),
 
+
+
+
       bcf-cue(
         cmarker.render("Manage the time so everyone gets a chance to try out one of the starter questions. "),
       ),
 
+
+
+
       cmarker.render("We will send a message into the rooms to let you know when you are halfway through the time"),
 
+
+
+
       cmarker.render("When you come back we will talk about what it’s like when you are asked about your context and know more context about the other person"),
+
+
+
 
       cmarker.render("Any questions before we send you in?"),
     )
@@ -420,11 +508,18 @@ Manage the time so everyone gets a chance to try out one of the starter question
   [
     #spoken(
 
+
       cmarker.render("Let’s find out what you discovered:"),
+
+
+
 
       bcf-cue(
         cmarker.render("What happened when you knew more about the other person’s context "),
       ),
+
+
+
 
       bcf-cue(
         cmarker.render("What was it like for you, when you were asked about your context?"),
@@ -466,23 +561,39 @@ What was it like for you, when you were asked about your context?
   [
     #spoken(
 
+
       cmarker.render("We are going to put you in breakouts again for 6 minutes to talk about this."),
+
+
+
 
       bcf-cue(
         cmarker.render("We are going to consider improving a conversation using the 6 elements of context: "),
       ),
 
+
+
+
       bcf-cue(
         cmarker.render("Historical, psychological, social, cultural, environmental, and time-based (temporal). "),
       ),
+
+
+
 
       bcf-cue(
         cmarker.render("Remember that context helps determine the assumptions we make."),
       ),
 
+
+
+
       bcf-cue(
         cmarker.render("For a conversation that you want to be better in the future,  "),
       ),
+
+
+
 
       cmarker.render("Take a moment to think about what you would like to have happen in that conversation. "),
     )
@@ -491,6 +602,7 @@ What was it like for you, when you were asked about your context?
 
     #spoken(
 
+
       bcf-cue(
         cmarker.render("
 - What might you have to consider about the other persons’ context when preparing for your conversation with them?
@@ -498,13 +610,25 @@ What was it like for you, when you were asked about your context?
 "),
       ),
 
+
+
+
       bcf-cue(
         cmarker.render("Manage the time so everyone has a chance to answer the questions."),
       ),
 
+
+
+
       cmarker.render("When you’re in your breakout rooms, you don’t need to tell your partner what the conversation is about or who it’s with. "),
 
+
+
+
       cmarker.render("Keep your answers brief. Please only share what you are comfortable sharing."),
+
+
+
 
       cmarker.render("Any questions before we send you in? "),
     )
@@ -551,7 +675,11 @@ Manage the time so everyone has a chance to answer the questions.
   [
     #spoken(
 
+
       cmarker.render("Let’s find out what you just noticed."),
+
+
+
 
       bcf-cue(
         cmarker.render("
@@ -570,17 +698,36 @@ When preparing for your conversation:
 
     #spoken(
 
+
       cmarker.render("Do you think it is easier to make assumptions about a someone you know well or someone you don’t know?"),
+
+
+
 
       cmarker.render("What kind of assumptions might you make?"),
 
+
+
+
       cmarker.render("How easy it to correct your assumptions?"),
+
+
+
 
       cmarker.render("Just to recap, there are six elements to context that affect each of us in our conversations:  Historical, psychological, social, cultural, environmental, and time-based (temporal)."),
 
+
+
+
       cmarker.render("State is an important aspect of psychological context."),
 
+
+
+
       cmarker.render("Context gives us a way of making meaning and understanding a situation.  It helps determine the assumptions we make."),
+
+
+
 
       cmarker.render("
 We’d like you to consider these questions, *thinking about what you know about state, assumptions and context*:
@@ -624,11 +771,21 @@ We’d like you to consider these questions, *thinking about what you know about
   [
     #spoken(
 
+
       cmarker.render("Just to recap, there are six elements to context that affect each of us in our conversations:  Historical, psychological, social, cultural, environmental, and time-based (temporal)."),
+
+
+
 
       cmarker.render("State is an important aspect of psychological context."),
 
+
+
+
       cmarker.render("Context gives us a way of making meaning and understanding a situation.  It helps determine the assumptions we make."),
+
+
+
 
       cmarker.render("We’d like you to consider these questions, *thinking about what you know about state, assumptions and context*:
 -	*What will you do to manage your state before a conversation?*
@@ -677,7 +834,11 @@ Thinking about what you know about state, assumptions and context:
   [
     #spoken(
 
+
       cmarker.render("We have covered the context in which our conversations take place today. Let’s reflect on what you know now."),
+
+
+
 
       bcf-cue(
         cmarker.render("
@@ -686,6 +847,9 @@ Thinking about the conversations you are going to have in the next week, and wha
 - What you will do differently now you know this?
 "),
       ),
+
+
+
 
       cmarker.render("There is space in the Course Handbook to capture any more thoughts you might have from today."),
     )
@@ -712,7 +876,11 @@ Thinking about the conversations you are going to have in the next week, and wha
   [
     #spoken(
 
+
       cmarker.render("We will send out the fieldwork by email. The suggested fieldwork for this module is to..."),
+
+
+
 
       bcf-cue(
         cmarker.render("- Try noticing what context you bring to a conversation
@@ -742,7 +910,11 @@ Thinking about the conversations you are going to have in the next week, and wha
   [
     #spoken(
 
+
       cmarker.render("If you have any further questions or anything you’d like to share, we will stay on the Zoom call for a few minutes after the session finished."),
+
+
+
 
       cmarker.render("Otherwise, we will see you next time where we will be exploring listening."),
     )
