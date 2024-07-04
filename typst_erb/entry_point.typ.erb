@@ -1,5 +1,6 @@
 #import "styles.typ": flight-plan, flight-plan-table, info-table
 #import "helpers.typ": *
+#import "@preview/cmarker:0.1.0"
 
 #show: flight-plan
 
@@ -30,7 +31,7 @@ BOR = breakout rooms, Fx = facilitator, Px = producer
 
 == Learning Outcomes
 
-<%= @learning_outcomes %>
+#cmarker.render("<%= @learning_outcomes %>")
 
 == Flipcharts
 
@@ -55,7 +56,7 @@ else { center },
 
 == Demo
 
-<%= @demo %>
+#cmarker.render("<%= @demo %>")
 
 #pagebreak()
 

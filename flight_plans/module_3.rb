@@ -2,7 +2,6 @@ require_relative '../bcf'
 require_relative './common_blocks'
 require 'json'
 require 'json/add/struct'
-# require 'json/add/symbol'
 
 # An example of using inheritance to specialise an object created in this manner
 class ConventionalFlightPlan < BCF::FlightPlan
@@ -19,7 +18,7 @@ module_3 = ConventionalFlightPlan.new do
   module_title "Context"
   module_number 3
 
-  learning_outcomes <<TYPST
+  learning_outcomes <<MD
 Learners will be able to:
 
 - Describe the elements of context in conversations
@@ -28,16 +27,17 @@ Learners will be able to:
 Suggested learning outcomes for further trainings/interventions
 
 - Describe how social and cultural context affect conversations
-TYPST
+    end
+MD
 
-  demo <<TYPST
+  demo <<MD
 No demo. 
 
 Alternative example for context:
 
 - Imagine you are watching TV and have muted it for the commercials. The first commercial you see shows a kitchen knife setting on a cutting board on the counter. Around it there are lots of different kinds of vegetables and a stock pot. Given that context, you would likely assume they were advertising a cooking show.
 - The next commercial starts. You see the same kitchen knife. This time it is in the trunk (boot) of car along with some rope, duct tape, a tarp and a shovel.  That context brings up a completely different kind of show! Even though the kitchen knife is exactly the same.
-TYPST
+MD
 
   block(BCF::CommonBlocks::PRE_FLIGHT)
 
@@ -68,7 +68,7 @@ TYPST
     facilitator do
       instruction "Welcome people and introduce facilitator(s), producer and any observers and briefly explain their roles."
       spoken "Last time we looked at how quickly and easily we make assumptions, without being aware of them. We will do a quick review of that soon."
-      spoken "Then we will begin to explore the context around a conversation. #bcf-mod[Context helps us make meaning of the world, and determines what assumptions we make.]"
+      spoken "Then we will begin to explore the context around a conversation. **Context helps us make meaning of the world, and determines what assumptions we make.**"
 
       instruction "Go through agenda on flip"
     end
@@ -79,7 +79,7 @@ TYPST
 
     facilitator do
       spoken "And is there anything you need to tell us before we begin? For example, if you need to leave early or if you are having any problems with Zoom."
-      spoken "#bcf-mod[And do you have anything you’d like to ask us about today’s topic?]"
+      spoken "**And do you have anything you’d like to ask us about today’s topic?**"
 
       instruction "Respond to any questions/insights but keep it brief."
       instruction "Handover to Fx2 for state check-in."
@@ -169,11 +169,11 @@ Context can be:
 - #underline[Time]-based (for example, temporal - time zone, whether it’s day or night)
 TYPST_SPOKEN
 
-      spoken <<TYPST_SPOKEN
+      spoken <<MD
 Some examples of your context we have already covered so far in this course are:
 - Asking where in the world you are and what time zone you are in (environmental, cultural and time-based context)
 - Asking how you are feeling, when we do the state check-in (psychological context)
-TYPST_SPOKEN
+MD
 
       spoken "We look at psychological, time-based, historical, environmental context in this course."
       spoken "We aren’t covering social or cultural context in this course in depth – these are beyond the scope of what we are doing here."
@@ -182,7 +182,7 @@ TYPST_SPOKEN
     end
 
     producer do
-      instruction "Prepare BORs in 2/3s for #bcf-nom[6 minutes] if not already done"
+      instruction "Prepare BORs in 2/3s for **6 minutes** if not already done"
     end
   end
 
@@ -199,7 +199,8 @@ TYPST_SPOKEN
       spoken "We are going to explore what happens when we share our context."
       spoken "Please only ask what is appropriate for this setting and share only what you feel comfortable sharing in the group when we come back into the main room."
 
-      spoken("One person will choose ONE of the starter questions below to ask your partner. Continue the conversation and ask more questions to improve your understanding of the other person’s context.",
+      spoken("One person will choose ONE of the starter questions below to ask your partner. " \
+             "Continue the conversation and ask more questions to improve your understanding of the other person’s context.",
              fixed: true)
       spoken("Starter questions:
 -	Psychological: What would you like to have happen after attending this course?
@@ -331,7 +332,8 @@ For a conversation that you want to be better in the future:
 Manage the time so everyone has a chance to answer the questions.
 CHAT
 
-      instruction "When the facilitator has finished giving the instructions/answering questions. tell the group you are going to send them into BORs for 6 minutes"
+      instruction "When the facilitator has finished giving the instructions/answering questions." \
+                  "tell the group you are going to send them into BORs for 6 minutes"
 
       instruction "Send into BORs"
       instruction "Broadcast halfway message:"
@@ -372,9 +374,9 @@ When preparing for your conversation:
       spoken "State is an important aspect of psychological context."
       spoken "Context gives us a way of making meaning and understanding a situation.  It helps determine the assumptions we make."
       spoken "
-We’d like you to consider these questions, #bcf-fixed[thinking about what you know about state, assumptions and context]:
-- #bcf-fixed[What will you do to manage your state before a conversation?]
-- #bcf-fixed[How might your context affect your state]
+We’d like you to consider these questions, *thinking about what you know about state, assumptions and context*:
+- *What will you do to manage your state before a conversation?*
+- *How might your context affect your state*
 "
 
       instruction "Ask people to put answers in chat. Facilitate brief discussion if time."
@@ -402,11 +404,11 @@ CHAT
       spoken "State is an important aspect of psychological context."
       spoken "Context gives us a way of making meaning and understanding a situation.  It helps determine the assumptions we make."
 
-      spoken <<TYPST
-We’d like you to consider these questions, #bcf-fixed[thinking about what you know about state, assumptions and context]:
--	#bcf-fixed[What will you do to manage your state before a conversation?]
--	#bcf-fixed[How might your context affect your state] 
-TYPST
+      spoken <<MD
+We’d like you to consider these questions, *thinking about what you know about state, assumptions and context*:
+-	*What will you do to manage your state before a conversation?*
+-	*How might your context affect your state* 
+MD
 
       instruction "Ask people to put answers in chat. Facilitate brief discussion if time."
       instruction "Handover to Fx2 for reflection, fieldwork and close."
@@ -485,4 +487,4 @@ end
 
 module_3.validate
 module_3.render_pdf('module_3.pdf', "module_3.typ")
-jj module_3
+JSON.dump(module_3, File.new('module_3.json', mode='w+'))

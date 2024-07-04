@@ -73,7 +73,7 @@ module BCF
 
   class Instruction
     def to_typst
-      "#instruction[#{self.content}]"
+      "#instruction(cmarker.render(\"#{self.content}\"))"
     end
   end
 
@@ -81,16 +81,16 @@ module BCF
     # This is named differently as it provides a code expression not a content string
     def to_typst_expr
       if self.fixed
-        "bcf-cue[#{self.content}]"
+        "bcf-cue(cmarker.render(\"#{self.content}\"))"
       else
-        "[#{self.content}]"
+        "cmarker.render(\"#{self.content}\")"
       end
     end
   end
 
   class Chat
     def to_typst
-      "#chat[#{self.content}]"
+      "#chat[#cmarker.render(\"#{self.content}\")]"
     end
   end
 

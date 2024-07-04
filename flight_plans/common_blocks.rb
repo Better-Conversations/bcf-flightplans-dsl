@@ -51,7 +51,7 @@ module BCF
           end
 
           facilitator do
-            spoken "We will send out the fieldwork by email. The suggested fieldwork for this module is to…"
+            spoken "We will send out the fieldwork by email. The suggested fieldwork for this module is to..."
             spoken(points_body, fixed: true)
           end
 
