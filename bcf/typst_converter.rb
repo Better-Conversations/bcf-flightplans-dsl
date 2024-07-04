@@ -67,11 +67,6 @@ module BCF
 
       groups
     end
-
-    def to_typst
-      groups = chunk_notes
-      groups.map(&:to_typst).join("\n\n")
-    end
   end
 
   SpokenGroup = Struct.new(:lines)
