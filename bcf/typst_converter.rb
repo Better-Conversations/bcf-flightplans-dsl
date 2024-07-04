@@ -78,7 +78,7 @@ module BCF
 
   class RenderContext
     def self.render_flight_plan(flight_plan)
-      Tilt.new('typst_erb/entry_point.typ.erb')
+      Tilt.new('typst/entry_point.typ.erb')
           .render(new, flight_plan: flight_plan)
     end
 
@@ -86,12 +86,12 @@ module BCF
       return "" if content.nil?
       return content if content.is_a? String
 
-      Tilt.new('typst_erb/render_content.typ.erb')
+      Tilt.new('typst/render_content.typ.erb')
           .render(self, content: content)
     end
 
     def render_note(note)
-      Tilt.new('typst_erb/render_note.typ.erb')
+      Tilt.new('typst/render_note.typ.erb')
           .render(self, note: note)
     end
   end
@@ -100,7 +100,7 @@ module BCF
     def render_pdf(output_path, debug_typst_path = nil)
       Dir.mktmpdir do |dir|
         # Copy all files from ./typst to the temp directory
-        Dir.glob(File.join(File.dirname(__FILE__), "..", 'typst_erb', '*')).each do |file|
+        Dir.glob(File.join(File.dirname(__FILE__), "..", 'typst', '*')).each do |file|
           FileUtils.cp(file, dir)
         end
 
