@@ -1,0 +1,12 @@
+<% case note %>
+<% when BCF::Instruction %>
+  #instruction(<%= render_markdown note.content %>)
+<% when BCF::SpokenGroup %>
+  #spoken(
+  <% note.lines.each do |line| %>
+    <%= line.to_typst_expr %>,
+  <% end %>
+  )
+<% when BCF::Chat %>
+  #chat(<%= render_markdown note.content %>)
+<% end %>

@@ -68,6 +68,7 @@ MD
     facilitator do
       instruction "Welcome people and introduce facilitator(s), producer and any observers and briefly explain their roles."
       spoken "Last time we looked at how quickly and easily we make assumptions, without being aware of them. We will do a quick review of that soon."
+      # TODO: Rewrite **'s as an BCF call. This will involve moving into cmarker
       spoken "Then we will begin to explore the context around a conversation. **Context helps us make meaning of the world, and determines what assumptions we make.**"
 
       instruction "Go through agenda on flip"

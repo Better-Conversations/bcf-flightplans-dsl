@@ -47,33 +47,38 @@ module BCF
   end
 
   class Notes
-    def to_typst
+    def chunk_notes
       # First we group adjacent spoken items together
       groups = []
+
       self.items.each do |item|
         if item.is_a?(Spoken)
           last_group = groups.last
 
-          if last_group.is_a? Array
-            last_group << item
+          if last_group.is_a? SpokenGroup
+            last_group.lines << item
           else
-            groups << [item]
+            groups << SpokenGroup.new(lines: [item])
           end
         else
           groups << item
         end
       end
 
-      # Then we convert the groups to typst
-      groups.map do |group|
-        if group.is_a? Array
-          "#spoken(
-          #{group.map(&:to_typst_expr).join(",\n")}
+      groups
+    end
+
+    def to_typst
+      groups = chunk_notes
+      groups.map(&:to_typst).join("\n\n")
+    end
+  end
+
+  SpokenGroup = Struct.new(:lines) do
+    def to_typst
+      "#spoken(
+          #{self.lines.map(&:to_typst_expr).join(",\n")}
         )"
-        else
-          group.to_typst
-        end
-      end.join("\n\n")
     end
   end
 
@@ -100,26 +105,30 @@ module BCF
     end
   end
 
-  class FlightPlan
-    class FlightPlanRenderContext
-      def initialize(flight_plan)
-        @flight_plan = flight_plan
-      end
-
-      def render_content(content)
-        case content
-        when String then content
-        when Notes then content.to_typst
-        when nil then ""
-        else raise "Unknown content #{content}"
-        end
-      end
-
-      private def method_missing(name, *args)
-        @flight_plan.send(name, *args)
-      end
+  class FlightPlanRenderContext
+    def initialize(flight_plan)
+      @flight_plan = flight_plan
     end
 
+    def render_content(content)
+      return "" if content.nil?
+      return content if content.is_a? String
+
+      Tilt.new('typst_erb/render_content.typ.erb')
+          .render(self, content: content)
+    end
+
+    def render_note(note)
+      Tilt.new('typst_erb/render_note.typ.erb')
+          .render(self, note: note)
+    end
+
+    private def method_missing(name, *args)
+      @flight_plan.send(name, *args)
+    end
+  end
+
+  class FlightPlan
     def to_typst
       template = Tilt.new('typst_erb/entry_point.typ.erb')
       template.render(FlightPlanRenderContext.new(self))
