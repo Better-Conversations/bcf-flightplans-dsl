@@ -8,7 +8,8 @@ module BCF
                   :total_length,
                   :initial_time,
                   :learning_outcomes,
-                  :demo
+                  :demo,
+                  :organisation
 
     def validate
       raise "Module number is required" unless module_number

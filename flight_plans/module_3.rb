@@ -6,6 +6,7 @@ class ConventionalFlightPlan < BCF::FlightPlan
   def initialize(&block)
     @total_length = 90
     @initial_time = -30
+    @organisation = "Better Conversations"
 
     super(&block)
   end
