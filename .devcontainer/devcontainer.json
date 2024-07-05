@@ -19,9 +19,8 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "ruby --version",
 
-	// Is there a better place to put this?
-	// There seems to be a hanging "Configuring..." script in VSC
-	// "postStartCommand": "./bin/watch-and-render.sh",
+	// From https://code.visualstudio.com/remote/advancedcontainers/start-processes
+	"postStartCommand": "nohup bash -c './bin/watch-and-render.sh &'",
 
 	// Configure tool-specific properties.
 	"customizations": {

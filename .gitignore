@@ -2,3 +2,4 @@
 *.pdf
 /output
 .DS_Store
+/nohup.out
