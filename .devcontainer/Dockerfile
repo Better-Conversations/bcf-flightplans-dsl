@@ -5,8 +5,8 @@ RUN chmod +x /usr/bin/typstyle
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        fontconfig # Needed for Source Sans Pro font \
-        fswatch # Needed for auto-reloading \
+        fontconfig \
+        fswatch \
     && rm -rf /var/lib/apt/lists/*
 
 # Add Source Sans Pro font
@@ -18,11 +18,10 @@ set -e
 
 cd $(mktemp -d)
 TEMP_DIR=$(pwd)
-mkdir -p ~/.fonts
 
 wget https://github.com/adobe-fonts/source-sans-pro/archive/2.020R-ro/1.075R-it.zip
 unzip 1.075R-it.zip
-cp source-sans-2.020R-ro-1.075R-it/OTF/*.otf ~/.fonts/
+cp source-sans-2.020R-ro-1.075R-it/OTF/*.otf /usr/local/share/fonts
 
 fc-cache -f -v
 rm -rf $TEMP_DIR

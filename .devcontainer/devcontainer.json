@@ -19,7 +19,9 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "ruby --version",
 
-	"postStartCommand": "./bin/watch-and-render.sh",
+	// Is there a better place to put this?
+	// There seems to be a hanging "Configuring..." script in VSC
+	// "postStartCommand": "./bin/watch-and-render.sh",
 
 	// Configure tool-specific properties.
 	"customizations": {
