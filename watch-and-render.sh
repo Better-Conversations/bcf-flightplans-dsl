@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-fswatch -e '~$' flight_plans/ | xargs -I {} ruby {}
+fswatch --exclude ".rb~$" --include ".rb$" --event Updated ./flight_plans | xargs -I{} ruby {}

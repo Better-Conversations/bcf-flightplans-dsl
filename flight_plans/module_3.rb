@@ -118,7 +118,7 @@ CHAT
     length 4
 
     facilitator do
-      spoken "Let’s have a quick recap of the fieldwork. Please share only what you’d like to and put your answers in the chat, so we hear from everyone quickly."
+      spoken "Let's have a quick recap of the fieldwork. Please share only what you’d like to and put your answers in the chat, so we hear from everyone quickly."
       spoken("Think of one conversation you had recently – maybe it was a good conversation, maybe it wasn't", fixed: true)
       spoken("Were your assumptions in that conversation accurate?", fixed: true)
       spoken("Just quickly put yes or no in the chat", fixed: true)
