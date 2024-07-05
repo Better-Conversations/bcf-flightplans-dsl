@@ -19,7 +19,7 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "ruby --version",
 
-	"postStartCommand": "./watch-and-render.sh",
+	"postStartCommand": "./bin/watch-and-render.sh",
 
 	// Configure tool-specific properties.
 	"customizations": {

@@ -2,10 +2,9 @@ require 'pathname'
 require_relative '../bcf'
 
 file = ARGV[0]
-relative_path = Pathname.new(file).relative_path_from(Pathname.new(Dir.pwd)).to_s
-name = File.basename(file, '.rb')
+name = ARGV[1] || File.basename(file, '.rb')
 
-puts "Compiling #{relative_path}..."
+puts "Compiling #{file}..."
 
 # The path we are provided is absolute so we don't need to
 require_relative File.expand_path(file, Pathname.new(__FILE__).parent.to_s)
