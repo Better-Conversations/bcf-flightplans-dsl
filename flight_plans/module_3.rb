@@ -485,7 +485,3 @@ CHAT
   block(BCF::CommonBlocks::SPONSOR_CLOSE)
   block(BCF::CommonBlocks::SPONSOR_DEBRIEF)
 end
-
-module_3.validate
-module_3.render_pdf('./output/module_3.pdf', "./output/module_3.typ")
-JSON.dump(module_3, File.new('./output/module_3.json', mode='w+'))

@@ -109,5 +109,11 @@ module BCF
         system("typst c #{typst_path} #{output_path}")
       end
     end
+
+    def write_json(output_path)
+      File.open(output_path, 'w') do |f|
+        f.write(self.to_json)
+      end
+    end
   end
 end

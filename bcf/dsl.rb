@@ -1,6 +1,8 @@
 require 'forwardable'
 
 module BCF
+  FLIGHT_PLANS = []
+
   class FlightPlan
     attr_accessor :module_number,
                   :module_title,
@@ -80,6 +82,7 @@ module BCF
     def initialize(&block)
       @blocks = []
       DSL.new(self, &block)
+      BCF::FLIGHT_PLANS << self
     end
   end
 
