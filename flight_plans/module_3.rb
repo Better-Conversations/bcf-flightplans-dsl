@@ -1,5 +1,5 @@
 require_relative '../bcf'
-require_relative './common_blocks'
+require_relative '../common/common_blocks'
 require 'json'
 require 'json/add/struct'
 
@@ -487,5 +487,5 @@ CHAT
 end
 
 module_3.validate
-module_3.render_pdf('module_3.pdf', "module_3.typ")
-JSON.dump(module_3, File.new('module_3.json', mode='w+'))
+module_3.render_pdf('./output/module_3.pdf', "./output/module_3.typ")
+JSON.dump(module_3, File.new('./output/module_3.json', mode='w+'))
