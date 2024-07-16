@@ -1,6 +1,7 @@
 require 'tmpdir'
 require 'tilt'
 require 'tilt/erb'
+require 'redcarpet'
 
 def format_speakers(speakers)
   if speakers.is_a? Array
@@ -8,12 +9,6 @@ def format_speakers(speakers)
   else
     speakers.to_s.capitalize
   end
-end
-
-# TODO: It might be good to isolate these into markdown files which we then read back to avoid escaping issues.
-#  Implement this when we move to more ERB
-def render_markdown(md)
-  "cmarker.render(\"#{md}\")"
 end
 
 module BCF
@@ -71,23 +66,56 @@ module BCF
 
   SpokenGroup = Struct.new(:lines)
 
-  class RenderContext
-    def self.render_flight_plan(flight_plan)
-      Tilt.new('typst/entry_point.typ.erb')
-          .render(new, flight_plan: flight_plan)
+  class FormatRenderContext
+    def initialize(root, extension)
+      @root = Pathname.new(root)
+      @extension = extension
+      @redcarpet = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: false)
     end
 
     def render_content(content)
       return "" if content.nil?
       return content if content.is_a? String
 
-      Tilt.new('typst/render_content.typ.erb')
+      Tilt.new(@root.join("render_content.#{@extension}.erb"))
           .render(self, content: content)
     end
 
     def render_note(note)
-      Tilt.new('typst/render_note.typ.erb')
+      Tilt.new(@root.join("render_note.#{@extension}.erb"))
           .render(self, note: note)
+    end
+
+    def render_markdown(md)
+      @redcarpet.render(md)
+    end
+  end
+
+  class TypstRenderContext < FormatRenderContext
+    def initialize
+      super('typst', 'typ')
+    end
+
+    def self.render_flight_plan(flight_plan)
+      Tilt.new('typst/entry_point.typ.erb')
+          .render(new, flight_plan: flight_plan)
+    end
+
+    # TODO: It might be good to isolate these into markdown files which we then read back to avoid escaping issues.
+    #  Implement this when we move to more ERB
+    def render_markdown(md)
+      "cmarker.render(\"#{md}\")"
+    end
+  end
+
+  class HtmlRenderContext < FormatRenderContext
+    def initialize
+      super("formats/html", "html")
+    end
+
+    def self.render_html_flight_plan(flight_plan)
+      Tilt.new('formats/html/table.html.erb')
+          .render(new, flight_plan: flight_plan)
     end
   end
 
@@ -100,13 +128,17 @@ module BCF
         end
 
         typst_path = File.join(dir, 'output.typ')
-        typst_content = RenderContext.render_flight_plan(self)
+        typst_content = TypstRenderContext.render_flight_plan(self)
         File.write(typst_path, typst_content)
 
         system("typstyle -i #{typst_path}")
         FileUtils.cp(typst_path, debug_typst_path) if debug_typst_path
 
         system("typst c #{typst_path} #{output_path}")
+
+        # Remove pdf extension and add .html
+        html_path = output_path.gsub(/\.pdf$/, '.html')
+        File.write(html_path, HtmlRenderContext.render_html_flight_plan(self))
       end
     end
 
