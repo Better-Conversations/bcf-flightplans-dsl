@@ -80,7 +80,21 @@ else { center },
 
   [<%= current_time.to_s.rjust(2, "0") %>],
   [<%= table_row.length %>],
-  [<%= table_row.section_info %>],
+  [
+    <%= block.name %>
+
+    <% unless block.speaker.nil? %>
+      #bcf-nom[<%= format_speakers(block.speaker) %>]
+    <% end %>
+
+    <% unless block.flipchart&.inplace_section_comment.nil? %>
+      <%= block.flipchart&.inplace_section_comment %>
+    <% end %>
+
+    <% unless block.section_comment %>
+      <%= block.section_comment %>
+    <% end %>
+  ],
   [<%= render_content(table_row.facilitator_content) %>],
   [<%= render_content(table_row.producer_content) %>],
 

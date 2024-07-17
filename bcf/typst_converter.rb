@@ -35,10 +35,6 @@ module BCF
     def flipchart
       self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
     end
-
-    def section_info
-      "#{self.name}#linebreak()#bcf-nom[#{format_speakers(self.speaker)}]#linebreak()#{self.flipchart&.inplace_section_comment}#linebreak()#{self.section_comment}"
-    end
   end
 
   class Notes
