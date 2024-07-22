@@ -27,7 +27,7 @@ module BCF
         name: self.name, # string
         length: self.length, # int
         speaker: self.speaker, # string
-        section_info: self.section_info, # markdown / typst
+        section_comment: self.section_comment, # markdown / typst
         facilitator_notes: self.facilitator_notes, # markdown / typst
         producer_notes: self.producer_notes, # markdown / typst
         resources: self.resources # resources associated with the block

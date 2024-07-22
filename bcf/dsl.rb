@@ -171,6 +171,10 @@ module BCF
 
       new_block
     end
+
+    def flipchart
+      self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
+    end
   end
 
   class Note; end

@@ -26,8 +26,6 @@
   %>
 
   <% flight_plan.blocks.each do |block| %>
-    <% table_row = block.table_row %>
-
     <% if block.speaker != current_speaker %>
       <tr>
         <td colspan="5" class="text-center py-3">
@@ -42,7 +40,7 @@
 
     <tr>
       <td><%= current_time.to_s.rjust(2, "0") %></td>
-      <td><%= table_row.length %></td>
+      <td><%= block.length %></td>
       <td>
         <p><%= block.name %></p>
         <p><%= format_speakers(block.speaker) %></p>
@@ -53,8 +51,8 @@
           <p><%= block.section_comment %></p>
         <% end %>
       </td>
-      <td><%= render_content(table_row.facilitator_content) %></td>
-      <td><%= render_content(table_row.producer_content) %></td>
+      <td><%= render_content(block.facilitator_notes) %></td>
+      <td><%= render_content(block.producer_notes) %></td>
     </tr>
 
     <%

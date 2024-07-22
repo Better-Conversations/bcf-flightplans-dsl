@@ -69,7 +69,6 @@ else { center },
 %>
 
 <% flight_plan.blocks.each do |block| %>
-  <% table_row = block.table_row %>
   <% if block.speaker != current_speaker %>
     <% if current_speaker.nil? %>
       speaker-swap[<%= format_speakers(block.speaker) %>],
@@ -79,7 +78,7 @@ else { center },
   <% end %>
 
   [<%= current_time.to_s.rjust(2, "0") %>],
-  [<%= table_row.length %>],
+  [<%= block.length %>],
   [
     <%= block.name %>
 
@@ -95,8 +94,8 @@ else { center },
       <%= block.section_comment %>
     <% end %>
   ],
-  [<%= render_content(table_row.facilitator_content) %>],
-  [<%= render_content(table_row.producer_content) %>],
+  [<%= render_content(block.facilitator_notes) %>],
+  [<%= render_content(block.producer_notes) %>],
 
   <%
     current_speaker = block.speaker

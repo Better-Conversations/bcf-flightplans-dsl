@@ -12,30 +12,30 @@ def format_speakers(speakers)
 end
 
 module BCF
-  # Typst Intermediate Representation
-  module TIR
-    TableRow = Struct.new(
-      :length,
-      :section_info,
-      :facilitator_content,
-      :producer_content
-    )
-  end
-
-  class Block
-    def table_row
-      TIR::TableRow.new(
-        length: self.length,
-        section_info: section_info,
-        facilitator_content: self.facilitator_notes,
-        producer_content: self.producer_notes,
-      )
-    end
-
-    def flipchart
-      self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
-    end
-  end
+  # # Typst Intermediate Representation
+  # module TIR
+  #   TableRow = Struct.new(
+  #     :length,
+  #     :section_comment,
+  #     :facilitator_content,
+  #     :producer_content
+  #   )
+  # end
+  #
+  # class Block
+  #   def table_row
+  #     TIR::TableRow.new(
+  #       length: self.length,
+  #       section_comment: self.section_comment,
+  #       facilitator_content: self.facilitator_notes,
+  #       producer_content: self.producer_notes,
+  #     )
+  #   end
+  #
+  #   def flipchart
+  #     self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
+  #   end
+  # end
 
   class Notes
     def chunk_notes
@@ -89,11 +89,11 @@ module BCF
 
   class TypstRenderContext < FormatRenderContext
     def initialize
-      super('typst', 'typ')
+      super('formats/typst', 'typ')
     end
 
     def self.render_flight_plan(flight_plan)
-      Tilt.new('typst/entry_point.typ.erb')
+      Tilt.new('formats/typst/entry_point.typ.erb')
           .render(new, flight_plan: flight_plan)
     end
 
@@ -119,7 +119,7 @@ module BCF
     def render_pdf(output_path, debug_typst_path = nil)
       Dir.mktmpdir do |dir|
         # Copy all files from ./typst to the temp directory
-        Dir.glob(File.join(File.dirname(__FILE__), "..", 'typst', '*')).each do |file|
+        Dir.glob(File.join(File.dirname(__FILE__), "..", 'formats/typst', '*')).each do |file|
           FileUtils.cp(file, dir)
         end
 
