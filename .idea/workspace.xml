@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0dfdf8f-3ec5-46e1-a31e-e2bdbb26442f" name="Changes" comment="Rename to FlightPlans">
-      <change beforePath="$PROJECT_DIR$/.idea/bcf-flightplans.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bcf-flightplans.iml" afterDir="false" />
+    <list default="true" id="c0dfdf8f-3ec5-46e1-a31e-e2bdbb26442f" name="Changes" comment="Run IDEA formatter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rakefile" beforeDir="false" afterPath="$PROJECT_DIR$/Rakefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bcf-flightplans.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/bcf-flightplans.gemspec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flight_plans.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/dsl.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flightplans/dsl.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/json.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flightplans/json.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/models.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flightplans/models.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/renderer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flightplans/renderer.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,9 +25,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2jhnV8BJwGZWdZRoJBEgK8U1uLP" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -36,21 +36,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Rake.default: bcf-flightplans.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/Users/joshuacoles/Developer/checkouts/amphora/bcf-flightplans/lib/bcf/flightplans",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ruby.structure.view.model.defaults.configured": "true",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Rake.default: bcf-flightplans.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/joshuacoles/Developer/checkouts/amphora/bcf-flightplans/lib/bcf/flightplans&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/bcf/flightplans" />
@@ -105,6 +105,7 @@
       <option name="presentableId" value="Default" />
       <updated>1721848197407</updated>
       <workItem from="1721848198849" duration="784000" />
+      <workItem from="1721848987629" duration="1359000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -130,7 +131,39 @@
       <option name="project" value="LOCAL" />
       <updated>1721848595514</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Install versions">
+      <option name="closed" value="true" />
+      <created>1721849014946</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1721849014946</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Rename BCF">
+      <option name="closed" value="true" />
+      <created>1721849065275</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1721849065275</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Incorporate existing code">
+      <option name="closed" value="true" />
+      <created>1721849100632</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1721849100632</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Run IDEA formatter">
+      <option name="closed" value="true" />
+      <created>1721849221217</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1721849221217</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,7 +173,11 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Add idea files and required dependencies" />
     <MESSAGE value="Rename to FlightPlans" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rename to FlightPlans" />
+    <MESSAGE value="Install versions" />
+    <MESSAGE value="Rename BCF" />
+    <MESSAGE value="Incorporate existing code" />
+    <MESSAGE value="Run IDEA formatter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Run IDEA formatter" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/bcf_flightplans@default__bcf_flightplans.rcov" NAME="default: bcf-flightplans Coverage Results" MODIFIED="1721848889738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="bcf-flightplans" />
