@@ -5,16 +5,15 @@ require 'json/add/struct'
 
 # An example of using inheritance to specialise an object created in this manner
 class ConventionalFlightPlan < BCF::FlightPlan
-  def initialize(&block)
+  def initialize
+    super
     @total_length = 90
     @initial_time = -30
     @organisation = "Better Conversations"
-
-    super(&block)
   end
 end
 
-module_3 = ConventionalFlightPlan.new do
+module_3 = ConventionalFlightPlan.build do
   module_title "Context"
   module_number 3
 

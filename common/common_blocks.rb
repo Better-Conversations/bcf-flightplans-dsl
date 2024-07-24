@@ -2,7 +2,7 @@ require_relative '../bcf'
 
 module BCF
   module CommonBlocks
-    PRE_FLIGHT = Block.new do
+    PRE_FLIGHT = Block.build do
       length 25
       name "Pre-Flight checklist"
 
@@ -11,7 +11,7 @@ module BCF
       end
     end
 
-    SPONSOR_CLOSE = Block.new do
+    SPONSOR_CLOSE = Block.build do
       length 16
       name "Sponsor Close"
       default_leader :sponsor
@@ -25,7 +25,7 @@ module BCF
       end
     end
 
-    SPONSOR_DEBRIEF = Block.new do
+    SPONSOR_DEBRIEF = Block.build do
       length 15
       name "Debrief"
       default_leader :sponsor
@@ -36,13 +36,12 @@ module BCF
     end
 
     class Fieldwork < Block
-
       # @param [Array<String>] points Points to be covered in the fieldwork
       def initialize(points, id:, description:, length:)
+        super()
         points_body = points.map { |point| "- #{point}" }.join("\n")
 
-        # Note the '()' is required to pass the block to super.
-        super() do
+        BCF::Block::DSL.new(self) do
           name "Fieldwork"
           length length
 

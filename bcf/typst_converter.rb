@@ -12,31 +12,6 @@ def format_speakers(speakers)
 end
 
 module BCF
-  # # Typst Intermediate Representation
-  # module TIR
-  #   TableRow = Struct.new(
-  #     :length,
-  #     :section_comment,
-  #     :facilitator_content,
-  #     :producer_content
-  #   )
-  # end
-  #
-  # class Block
-  #   def table_row
-  #     TIR::TableRow.new(
-  #       length: self.length,
-  #       section_comment: self.section_comment,
-  #       facilitator_content: self.facilitator_notes,
-  #       producer_content: self.producer_notes,
-  #     )
-  #   end
-  #
-  #   def flipchart
-  #     self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
-  #   end
-  # end
-
   class Notes
     def chunk_notes
       # First we group adjacent spoken items together

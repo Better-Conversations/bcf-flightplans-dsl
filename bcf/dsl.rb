@@ -1,46 +1,10 @@
 require 'forwardable'
 
 module BCF
-  FLIGHT_PLANS = []
-
   class FlightPlan
-    attr_accessor :module_number,
-                  :module_title,
-                  :blocks,
-                  :total_length,
-                  :initial_time,
-                  :learning_outcomes,
-                  :demo,
-                  :organisation
-
-    def validate
-      raise "Module number is required" unless module_number
-      raise "Module title is required" unless module_title
-      raise "Blocks are required" if blocks.empty?
-      raise "Total length is required" unless total_length
-      raise "Initial time is required" unless initial_time
-
-      runtime = self.blocks.reduce(initial_time) do |time, block|
-        time + block.length
-      end
-
-      warn "Total length (#{total_length}) does not match block lengths (#{runtime})" unless runtime == total_length
-
-      puts "Found resources:"
-      resources.each do |resource|
-        puts "  #{resource}"
-      end
-    end
-
-    def resources
-      blocks.map(&:resources).flatten
-    end
-
-    def flipcharts
-      resources.select { |r| r.is_a? BCF::Resource::Flipchart }
-    end
-
     class DSL
+      attr_reader :flight_plan
+
       def initialize(flight_plan, &block)
         @flight_plan = flight_plan
         instance_eval &block
@@ -58,7 +22,7 @@ module BCF
         if block_instance and block_instance.is_a? Block
           @flight_plan.blocks << block_instance.with_additional(**kwargs)
         else
-          @flight_plan.blocks << Block.new(&block_constructor).with_additional(**kwargs)
+          @flight_plan.blocks << Block.build(&block_constructor).with_additional(**kwargs)
         end
       end
 
@@ -79,23 +43,17 @@ module BCF
       end
     end
 
-    def initialize(&block)
-      @blocks = []
-      DSL.new(self, &block)
-      BCF::FLIGHT_PLANS << self
+    def self.build(&block)
+      dsl = DSL.new(new, &block)
+      BCF::FLIGHT_PLANS << dsl.flight_plan
+      dsl.flight_plan
     end
   end
 
   class Block
-    attr_accessor :name,
-                  :length,
-                  :facilitator_notes,
-                  :producer_notes,
-                  :speaker,
-                  :section_comment,
-                  :resources
-
     class DSL
+      attr_reader :block
+
       class ResourcesDSL
         attr_accessor :resources
 
@@ -153,102 +111,8 @@ module BCF
       end
     end
 
-    def initialize(&block)
-      @facilitator_notes = nil
-      @producer_notes = nil
-      @resources = []
-      DSL.new(self, &block)
+    def self.build(&block)
+      DSL.new(new, &block).block
     end
-
-    # FIXME: This is a little hacky
-    def with_additional(**kwargs)
-      new_block = self.clone
-      dsl = DSL.new(new_block, &Proc.new {})
-
-      kwargs.each do |k, v|
-        dsl.send(k, v)
-      end
-
-      new_block
-    end
-
-    def flipchart
-      self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
-    end
-  end
-
-  class Note; end
-
-  class Instruction < Note
-    attr_accessor :content
-
-    def initialize(content)
-      @content = content
-    end
-  end
-
-  class Chat < Note
-    attr_accessor :content
-
-    def initialize(content)
-      @content = content
-    end
-  end
-
-  class Spoken < Note
-    attr_accessor :content, :fixed
-
-    def initialize(content, fixed: false)
-      @content = content
-      @fixed = fixed
-    end
-  end
-
-  class Notes
-    attr_accessor :items
-
-    def initialize(&block)
-      @items = []
-      instance_eval &block
-    end
-
-    def instruction(content)
-      items << Instruction.new(content)
-    end
-  end
-
-  class ProducerNotes < Notes
-    def chat(content)
-      items << Chat.new(content)
-    end
-  end
-
-  class FacilitatorNotes < Notes
-    def spoken(content, fixed: false)
-      items << Spoken.new(content, fixed:)
-    end
-
-    def spoken_fixed(content)
-      spoken(content, fixed: true)
-    end
-  end
-
-  module Resource
-    Flipchart = Struct.new(:id, :inplace_comment, :description, :scribed_by) do
-      def inplace_section_comment
-        "#{id} #{inplace_comment}"
-      end
-
-      def pretty_id
-        self.id.to_s.capitalize.gsub(/_/, '#')
-      end
-
-      def pretty_scribed_by
-        self.scribed_by.to_s.capitalize
-      end
-    end
-
-    Breakout = Struct.new(:id)
-    Fieldwork = Struct.new(:id, :description)
   end
 end
