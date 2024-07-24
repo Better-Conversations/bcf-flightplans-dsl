@@ -1,0 +1,18 @@
+<% case note %>
+<% when BCF::Instruction %>
+  #instruction(<%= render_markdown note.content %>)
+<% when BCF::SpokenGroup %>
+  #spoken(
+  <% note.lines.each do |line| %>
+    <% if line.fixed %>
+      bcf-cue(<%= render_markdown(line.content) %>)
+    <% else %>
+      <%= render_markdown(line.content) %>
+    <% end %>
+    <%# Trailing comma %>
+    ,
+  <% end %>
+  )
+<% when BCF::Chat %>
+  #chat(<%= render_markdown note.content %>)
+<% end %>

@@ -1,0 +1,105 @@
+#import "styles.typ": flight-plan, flight-plan-table, info-table
+#import "helpers.typ": *
+#import "@preview/cmarker:0.1.0"
+
+#show: flight-plan
+
+= Module <%= flight_plan.module_number %>: <%= flight_plan.module_title %>
+
+== Overview
+
+#info-table(
+  date: "19 June 2024",
+  time: "0900 UTC",
+  duration: <%= flight_plan.total_length %>,
+  organisation: "<%= flight_plan.organisation %>",
+)
+
+BOR = breakout rooms, Fx = facilitator, Px = producer
+
+#bcf-nom[Yellow highlighted text] indicates where names, contact details, examples, timings etc. might need to be changed
+
+#bcf-mod[Green highlighted text] indicates modifications to the live/master version for the session
+
+#bcf-atten[Bold text] in time plan draws attention to facilitator script
+
+#bcf-cue[Bold highlighted text] helps provide cues for producer to paste chat text
+
+#pagebreak()
+
+= Flight Plan
+
+== Learning Outcomes
+
+#cmarker.render("<%= flight_plan.learning_outcomes %>")
+
+== Flipcharts
+
+#[
+// Bold titles.
+#show table.cell.where(y: 0): set text(weight: "bold")
+
+#table(
+columns: (auto, auto, 1fr),
+rows: 4,
+align: (x, y) =>
+if y > 0 and x == 2 { left }
+else { center },
+
+[Reference], [Who is scribing?], [Contents],
+
+<% flight_plan.flipcharts.each do |flipchart| %>
+  [#("<%= flipchart.pretty_id %>")], [<%= flipchart.pretty_scribed_by %>], [<%= flipchart.description %>],
+<% end %>
+)
+]
+
+== Demo
+
+#cmarker.render("<%= flight_plan.demo %>")
+
+#pagebreak()
+
+== Time Plan
+
+#flight-plan-table(
+<%
+  current_speaker = nil
+  current_time = flight_plan.initial_time
+%>
+
+<% flight_plan.blocks.each do |block| %>
+  <% if block.speaker != current_speaker %>
+    <% if current_speaker.nil? %>
+      speaker-swap[<%= format_speakers(block.speaker) %>],
+    <% else %>
+      speaker-swap[Switch to <%= format_speakers(block.speaker) %>],
+    <% end %>
+  <% end %>
+
+  [<%= current_time.to_s.rjust(2, "0") %>],
+  [<%= block.length %>],
+  [
+    <%= block.name %>
+
+    <% unless block.speaker.nil? %>
+      #bcf-nom[<%= format_speakers(block.speaker) %>]
+    <% end %>
+
+    <% unless block.flipchart&.inplace_section_comment.nil? %>
+      <%= block.flipchart&.inplace_section_comment %>
+    <% end %>
+
+    <% unless block.section_comment %>
+      <%= block.section_comment %>
+    <% end %>
+  ],
+  [<%= render_content(block.facilitator_notes) %>],
+  [<%= render_content(block.producer_notes) %>],
+
+  <%
+    current_speaker = block.speaker
+    current_time += block.length
+  %>
+<% end %>
+)

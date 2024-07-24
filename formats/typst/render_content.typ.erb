@@ -1,0 +1,5 @@
+<% groups = content.chunk_notes %>
+
+<% groups.each do |group| %>
+  <%= render_note(group) %>
+<% end %>

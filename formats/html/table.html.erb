@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<table class="table-auto border-collapse border b-1 border-white">
+  <thead>
+  <tr style="background-color: rgb(93, 187, 168)">
+    <th>Time (Actual)</th>
+    <th>Length</th>
+    <th>Section</th>
+    <th>Facilitator</th>
+    <th>Producer</th>
+  </tr>
+  </thead>
+
+  <tbody style="background-color: rgb(222,  241, 237)" class="p-2">
+  <%
+    current_speaker = nil
+    current_time = flight_plan.initial_time
+  %>
+
+  <% flight_plan.blocks.each do |block| %>
+    <% if block.speaker != current_speaker %>
+      <tr>
+        <td colspan="5" class="text-center py-3">
+          <% if current_speaker.nil? %>
+            <%= format_speakers(block.speaker) %>
+          <% else %>
+            Switch to <%= format_speakers(block.speaker) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td><%= current_time.to_s.rjust(2, "0") %></td>
+      <td><%= block.length %></td>
+      <td>
+        <p><%= block.name %></p>
+        <p><%= format_speakers(block.speaker) %></p>
+        <% unless block.flipchart&.inplace_section_comment.nil? %>
+          <p><%= block.flipchart&.inplace_section_comment %></p>
+        <% end %>
+        <% unless block.section_comment %>
+          <p><%= block.section_comment %></p>
+        <% end %>
+      </td>
+      <td><%= render_content(block.facilitator_notes) %></td>
+      <td><%= render_content(block.producer_notes) %></td>
+    </tr>
+
+    <%
+      current_speaker = block.speaker
+      current_time += block.length
+    %>
+  <% end %>
+  </tbody>
+</table>
+</body>
+</html>
