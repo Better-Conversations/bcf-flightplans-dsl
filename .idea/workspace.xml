@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0dfdf8f-3ec5-46e1-a31e-e2bdbb26442f" name="Changes" comment="Fix module paths and call w/ block">
+    <list default="true" id="c0dfdf8f-3ec5-46e1-a31e-e2bdbb26442f" name="Changes" comment="Stash">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bcf-flightplans.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/bcf-flightplans.gemspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bcf/flight_plans.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/dsl.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/dsl.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/json.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/json.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/models.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/models.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/renderer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/renderer.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/version.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sig/bcf/flightplans.rbs" beforeDir="false" afterPath="$PROJECT_DIR$/sig/bcf/flight_plans.rbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +19,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/sig/bcf/flight_plans.rbs" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -129,7 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1721848197407</updated>
       <workItem from="1721848198849" duration="784000" />
-      <workItem from="1721848987629" duration="2989000" />
+      <workItem from="1721848987629" duration="3317000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -211,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721851094480</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Stash">
+      <option name="closed" value="true" />
+      <created>1721852246559</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1721852246559</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,7 +230,8 @@
     <MESSAGE value="Fix some issues" />
     <MESSAGE value="Centralise require calls" />
     <MESSAGE value="Fix module paths and call w/ block" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix module paths and call w/ block" />
+    <MESSAGE value="Stash" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stash" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/bcf_flightplans@default__bcf_flightplans.rcov" NAME="default: bcf-flightplans Coverage Results" MODIFIED="1721848889738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="bcf-flightplans" />
