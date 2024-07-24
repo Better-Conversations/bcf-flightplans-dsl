@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "lib/bcf/flightplans/version"
+require_relative "lib/bcf/flight_plans/version"
 
 Gem::Specification.new do |spec|
   spec.name = "bcf-flightplans"

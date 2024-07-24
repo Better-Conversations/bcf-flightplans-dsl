@@ -4,11 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0dfdf8f-3ec5-46e1-a31e-e2bdbb26442f" name="Changes" comment="Fix some issues">
+    <list default="true" id="c0dfdf8f-3ec5-46e1-a31e-e2bdbb26442f" name="Changes" comment="Fix module paths and call w/ block">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bcf-flightplans.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/bcf-flightplans.gemspec" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/bcf/flight_plans.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/models.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flightplans/models.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sig/bcf/flightplans.rbs" beforeDir="false" afterPath="$PROJECT_DIR$/sig/bcf/flightplans.rbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/dsl.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/dsl.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/json.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/json.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/models.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/models.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/renderer.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/renderer.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bcf/flightplans/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bcf/flight_plans/version.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sig/bcf/flightplans.rbs" beforeDir="false" afterPath="$PROJECT_DIR$/sig/bcf/flight_plans.rbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,28 +40,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Rake.default: bcf-flightplans.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/joshuacoles/Developer/checkouts/amphora/bcf-flightplans/lib/bcf/flightplans&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Rake.default: bcf-flightplans.executor": "Run",
+    "Ruby.console.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/joshuacoles/Developer/checkouts/amphora/bcf-flightplans/lib/bcf/flightplans",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ruby.structure.view.model.defaults.configured": "true",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/bcf/flightplans" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Ruby.console">
     <configuration name="default: bcf-flightplans" type="RakeRunConfigurationType" factoryName="Rake" temporary="true">
       <module name="bcf-flightplans" />
       <predefined_log_file enabled="true" id="RUBY_RAKE" />
@@ -80,8 +87,27 @@
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TESTOPTS" VALUE="" />
       <method v="2" />
     </configuration>
+    <configuration name="console" type="RubyRunConfigurationType" factoryName="Ruby" temporary="true">
+      <module name="bcf-flightplans" />
+      <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="WORK DIR" VALUE="$MODULE_DIR$" />
+      <RUBY_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov" ENABLE_BRANCH_COVERAGE="true" ENABLE_FORKED_COVERAGE="true">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$MODULE_DIR$/bin/console" />
+      <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Ruby.console" />
         <item itemvalue="Rake.default: bcf-flightplans" />
       </list>
     </recent_temporary>
@@ -103,7 +129,7 @@
       <option name="presentableId" value="Default" />
       <updated>1721848197407</updated>
       <workItem from="1721848198849" duration="784000" />
-      <workItem from="1721848987629" duration="1706000" />
+      <workItem from="1721848987629" duration="2989000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -169,7 +195,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721850587862</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Centralise require calls">
+      <option name="closed" value="true" />
+      <created>1721850943878</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1721850943878</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fix module paths and call w/ block">
+      <option name="closed" value="true" />
+      <created>1721851094480</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1721851094480</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,9 +226,12 @@
     <MESSAGE value="Incorporate existing code" />
     <MESSAGE value="Run IDEA formatter" />
     <MESSAGE value="Fix some issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix some issues" />
+    <MESSAGE value="Centralise require calls" />
+    <MESSAGE value="Fix module paths and call w/ block" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix module paths and call w/ block" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/bcf_flightplans@default__bcf_flightplans.rcov" NAME="default: bcf-flightplans Coverage Results" MODIFIED="1721848889738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="bcf-flightplans" />
+    <SUITE FILE_PATH="coverage/bcf_flightplans@console.rcov" NAME="console Coverage Results" MODIFIED="1721851030086" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="bcf-flightplans" />
   </component>
 </project>

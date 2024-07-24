@@ -5,11 +5,11 @@ require 'tilt/erb'
 require "redcarpet"
 require 'tmpdir'
 
-require_relative "flightplans/version"
-require_relative "flightplans/models"
-require_relative "flightplans/json"
-require_relative "flightplans/renderer"
-require_relative "flightplans/dsl"
+require_relative "flight_plans/version"
+require_relative "flight_plans/models"
+require_relative "flight_plans/json"
+require_relative "flight_plans/renderer"
+require_relative "flight_plans/dsl"
 
 module BCF
   module FlightPlans
