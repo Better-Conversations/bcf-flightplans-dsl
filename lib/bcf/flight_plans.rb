@@ -3,7 +3,7 @@
 require_relative "flightplans/version"
 
 module Bcf
-  module Flightplans
+  module FlightPlans
     class Error < StandardError; end
     # Your code goes here...
   end

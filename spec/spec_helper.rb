@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "bcf/flightplans"
+require "bcf/flight_plans"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
