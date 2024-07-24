@@ -1,5 +1,3 @@
-require 'forwardable'
-
 module BCF
   module FlightPlans
     FLIGHT_PLANS = []

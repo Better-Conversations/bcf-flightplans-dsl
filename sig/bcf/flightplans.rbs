@@ -1,6 +1,9 @@
 module Bcf
   module Flightplans
     VERSION: String
-    # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+    FLIGHT_PLANS: Array[FlightPlan]
+
+    class FlightPlan
+    end
   end
 end

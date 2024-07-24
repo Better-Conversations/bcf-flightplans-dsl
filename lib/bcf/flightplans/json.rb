@@ -1,5 +1,3 @@
-require 'json'
-
 module BCF
   module FlightPlans
     module SimpleJSONSerialization

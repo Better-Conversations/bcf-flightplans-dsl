@@ -1,8 +1,3 @@
-require 'tmpdir'
-require 'tilt'
-require 'tilt/erb'
-require 'redcarpet'
-
 module BCF
   module FlightPlans
     class Notes
