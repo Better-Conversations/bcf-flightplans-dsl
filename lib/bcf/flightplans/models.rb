@@ -40,7 +40,7 @@ module BCF
       end
 
       def flipcharts
-        resources.select { |r| r.is_a? BCF::Resource::Flipchart }
+        resources.select { |r| r.is_a? BCF::FlightPlans::Resource::Flipchart }
       end
     end
 
@@ -70,7 +70,7 @@ module BCF
       end
 
       def flipchart
-        self.resources.find { |r| r.is_a? BCF::Resource::Flipchart }
+        self.resources.find { |r| r.is_a? BCF::FlightPlans::Resource::Flipchart }
       end
     end
 
@@ -109,7 +109,7 @@ module BCF
 
       def initialize(&block)
         @items = []
-        instance_eval &block
+        instance_eval(&block)
       end
 
       def instruction(content)

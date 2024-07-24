@@ -44,7 +44,7 @@ module BCF
 
       def self.build(&block)
         dsl = DSL.new(new, &block)
-        BCF::FLIGHT_PLANS << dsl.flight_plan
+        BCF::FlightPlans::FLIGHT_PLANS << dsl.flight_plan
         dsl.flight_plan
       end
     end
