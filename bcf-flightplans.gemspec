@@ -4,7 +4,7 @@ require_relative "lib/bcf/flightplans/version"
 
 Gem::Specification.new do |spec|
   spec.name = "bcf-flightplans"
-  spec.version = Bcf::FlightPlans::VERSION
+  spec.version = BCF::FlightPlans::VERSION
   spec.authors = ["Joshua Coles"]
   spec.email = ["josh@coles.to"]
 
