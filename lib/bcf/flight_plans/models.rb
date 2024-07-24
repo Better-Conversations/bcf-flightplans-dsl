@@ -107,9 +107,14 @@ module BCF
     class Notes
       attr_accessor :items
 
-      def initialize(&block)
+      def self.build(&block)
+        obj = new
+        obj.instance_eval(&block)
+        obj
+      end
+
+      def initialize
         @items = []
-        instance_eval(&block)
       end
 
       def instruction(content)

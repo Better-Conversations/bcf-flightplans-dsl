@@ -88,11 +88,11 @@ module BCF
         end
 
         def facilitator(&block)
-          @block.facilitator_notes = FacilitatorNotes.new(&block)
+          @block.facilitator_notes = FacilitatorNotes.build(&block)
         end
 
         def producer(&block)
-          @block.producer_notes = ProducerNotes.new(&block)
+          @block.producer_notes = ProducerNotes.build(&block)
         end
 
         def resources(&block)

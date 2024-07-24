@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require "json"
+require "json/add/struct"
 require "tilt"
 require 'tilt/erb'
 require "redcarpet"

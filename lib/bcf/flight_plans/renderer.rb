@@ -26,8 +26,14 @@ module BCF
     SpokenGroup = Struct.new(:lines)
 
     class FormatRenderContext
+      attr_reader :root
+
       def initialize(root, extension)
-        @root = Pathname.new(root)
+        spec = Gem::Specification.find_by_name("bcf-flightplans")
+        gem_root = spec.gem_dir
+        @root = Pathname.new(gem_root).join(root)
+        puts @root
+
         @extension = extension
         @redcarpet = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: false)
       end
@@ -63,9 +69,9 @@ module BCF
         super('formats/typst', 'typ')
       end
 
-      def self.render_flight_plan(flight_plan)
-        Tilt.new('formats/typst/entry_point.typ.erb')
-            .render(new, flight_plan: flight_plan)
+      def render_flight_plan(flight_plan)
+        Tilt.new(self.root.join('entry_point.typ.erb'))
+            .render(self, flight_plan: flight_plan)
       end
 
       # TODO: It might be good to isolate these into markdown files which we then read back to avoid escaping issues.
@@ -88,24 +94,26 @@ module BCF
 
     class FlightPlan
       def render_pdf(output_path, debug_typst_path = nil)
+        puts "A"
+        typst_renderer = TypstRenderContext.new
+        puts "B"
+
         Dir.mktmpdir do |dir|
+          puts "C"
           # Copy all files from ./typst to the temp directory
-          Dir.glob(File.join(File.dirname(__FILE__), "..", 'formats/typst', '*')).each do |file|
+          Dir.glob(File.join(typst_renderer.root, '*')).each do |file|
             FileUtils.cp(file, dir)
           end
+          puts "D"
 
           typst_path = File.join(dir, 'output.typ')
-          typst_content = TypstRenderContext.render_flight_plan(self)
+          typst_content = typst_renderer.render_flight_plan(self)
+          puts "E"
+
           File.write(typst_path, typst_content)
-
-          system("typstyle -i #{typst_path}")
-          FileUtils.cp(typst_path, debug_typst_path) if debug_typst_path
-
+          puts "F"
+          puts "Rendering to #{output_path}"
           system("typst c #{typst_path} #{output_path}")
-
-          # Remove pdf extension and add .html
-          html_path = output_path.gsub(/\.pdf$/, '.html')
-          File.write(html_path, HtmlRenderContext.render_html_flight_plan(self))
         end
       end
 

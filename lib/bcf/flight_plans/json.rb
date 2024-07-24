@@ -21,28 +21,29 @@ module BCF
           obj = new
 
           object.each do |key, value|
+            p [key, value]
             next if key == JSON.create_id
             obj.instance_variable_set("@#{key}", value)
           end
+
+          obj
         end
       end
     end
 
-    module SimpleJSONAdditions
+    class FlightPlan
       include SimpleJSONSerialization
       include SimpleJSONDeserialization
     end
 
-    class FlightPlan
-      include SimpleJSONAdditions
-    end
-
     class Block
-      include SimpleJSONAdditions
+      include SimpleJSONSerialization
+      include SimpleJSONDeserialization
     end
 
     class Note
       include SimpleJSONSerialization
+      include SimpleJSONDeserialization
     end
 
     class Instruction < Note
@@ -64,7 +65,8 @@ module BCF
     end
 
     class Notes
-      include SimpleJSONAdditions
+      include SimpleJSONSerialization
+      include SimpleJSONDeserialization
     end
   end
 end
