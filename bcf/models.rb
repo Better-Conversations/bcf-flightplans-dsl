@@ -116,6 +116,7 @@ module BCF
   end
 
   class ProducerNotes < Notes
+    # TODO: Should this be in the DSL?
     def chat(content)
       items << Chat.new(content)
     end

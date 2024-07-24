@@ -1,52 +1,70 @@
+require 'json'
+
 module BCF
-  class FlightPlan
-    def self.from_json(json_str)
-      json = JSON.parse(json_str)
-      flight_plan = new
-
-      flight_plan.module_number = json['module_number']
-      flight_plan.module_title = json['module_title']
-      flight_plan.total_length = json['total_length']
-      flight_plan.initial_time = json['initial_time']
-      flight_plan.learning_outcomes = json['learning_outcomes']
-      flight_plan.demo = json['demo']
-      flight_plan.blocks = json['blocks']&.map do |block_json|
-
-      end
+  module SimpleJSONSerialization
+    def json_fields
+      instance_variables.map { |var| [var[1..].to_sym, instance_variable_get(var)] }
     end
 
     def to_json(*args)
-      {
-        json_class: self.class.name, # string
-
-        module_number: self.module_number, # int
-        module_name: self.module_title, # string
-        total_length: self.total_length, # int
-        initial_time: self.initial_time, # int
-        learning_outcomes: self.learning_outcomes, # markdown / typst
-        demo: self.demo, # markdown / typst,
-        blocks: self.blocks
-      }.to_json(*args)
-    end
-
-    def self.json_create(object)
-      new(*object['a'])
+      { JSON.create_id => self.class.name }.merge(json_fields.to_h).to_json(*args)
     end
   end
 
-  class Block
-    def to_json(*args)
-      {
-        json_class: self.class.name, # string
-
-        name: self.name, # string
-        length: self.length, # int
-        speaker: self.speaker, # string
-        section_comment: self.section_comment, # markdown / typst
-        facilitator_notes: self.facilitator_notes, # markdown / typst
-        producer_notes: self.producer_notes, # markdown / typst
-        resources: self.resources # resources associated with the block
-      }.to_json(*args)
+  # A mixin to add JSON deserialization to objects with default constructors and all state in instance variables
+  module SimpleJSONDeserialization
+    def self.included(base)
+      base.extend(ClassMethods)
     end
+
+    module ClassMethods
+      def json_create(object)
+        obj = new
+
+        object.each do |key, value|
+          next if key == JSON.create_id
+          obj.instance_variable_set("@#{key}", value)
+        end
+      end
+    end
+  end
+
+  module SimpleJSONAdditions
+    include SimpleJSONSerialization
+    include SimpleJSONDeserialization
+  end
+
+  class FlightPlan
+    include SimpleJSONAdditions
+  end
+
+  class Block
+    include SimpleJSONAdditions
+  end
+
+  class Note
+    include SimpleJSONSerialization
+  end
+
+  class Instruction < Note
+    def self.json_create(object)
+      new(object['content'])
+    end
+  end
+
+  class Chat < Note
+    def self.json_create(object)
+      new(object['content'])
+    end
+  end
+
+  class Spoken < Note
+    def self.json_create(object)
+      new(object['content'], fixed: object['fixed'])
+    end
+  end
+
+  class Notes
+    include SimpleJSONAdditions
   end
 end
