@@ -1,7 +1,7 @@
 <% case note %>
-<% when BCF::Instruction %>
+<% when BCF::FlightPlans::Instruction %>
   #instruction(<%= render_markdown note.content %>)
-<% when BCF::SpokenGroup %>
+<% when BCF::FlightPlans::SpokenGroup %>
   #spoken(
   <% note.lines.each do |line| %>
     <% if line.fixed %>
@@ -13,6 +13,6 @@
     ,
   <% end %>
   )
-<% when BCF::Chat %>
+<% when BCF::FlightPlans::Chat %>
   #chat(<%= render_markdown note.content %>)
 <% end %>

@@ -1,15 +1,15 @@
 <% case note %>
-<% when BCF::Instruction %>
+<% when BCF::FlightPlans::Instruction %>
   <p>
     <%= render_markdown note.content %>
   </p>
-<% when BCF::SpokenGroup %>
+<% when BCF::FlightPlans::SpokenGroup %>
   <ol class="list-disc">
     <% note.lines.each do |line| %>
       <li class="<%= line.fixed ? 'text-cyan-300' : '' %>"><%= render_markdown line.content %></li>
     <% end %>
   </ol>
-<% when BCF::Chat %>
+<% when BCF::FlightPlans::Chat %>
   <div class="p-1 rounded-md bg-blue-100">
     <%= render_markdown note.content %>
   </div>
