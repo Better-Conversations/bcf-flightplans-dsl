@@ -20,11 +20,6 @@ end
 
 absolute_flightplan_path = File.join(root_dir, flightplan_path)
 
-if File.exist?(absolute_flightplan_path)
-  STDERR.puts "Flightplan already exists: #{absolute_flightplan_path}"
-  exit 1
-end
-
 Dir.chdir(root_dir) do
   load(absolute_flightplan_path)
 
