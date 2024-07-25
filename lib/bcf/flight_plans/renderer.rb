@@ -94,25 +94,18 @@ module BCF
 
     class FlightPlan
       def render_pdf(output_path, debug_typst_path = nil)
-        puts "A"
         typst_renderer = TypstRenderContext.new
-        puts "B"
 
         Dir.mktmpdir do |dir|
-          puts "C"
           # Copy all files from ./typst to the temp directory
           Dir.glob(File.join(typst_renderer.root, '*')).each do |file|
             FileUtils.cp(file, dir)
           end
-          puts "D"
 
           typst_path = File.join(dir, 'output.typ')
           typst_content = typst_renderer.render_flight_plan(self)
-          puts "E"
 
           File.write(typst_path, typst_content)
-          puts "F"
-          puts "Rendering to #{output_path}"
           system("typst c #{typst_path} #{output_path}")
         end
       end
