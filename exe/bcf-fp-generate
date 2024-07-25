@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "bcf/flightplans"
+
+args = ARGV
+if args.empty? || args.length != 2
+  STDERR.puts "Usage: bcf-fp-generate <root_dir> <relative_flightplan_path>"
+  exit 1
+end
+
+root_dir = args[0]
+flightplan_path = args[1]
+
+unless Dir.exist?(root_dir)
+  STDERR.puts "Root directory does not exist: #{root_dir}"
+  exit 1
+end
+
+absolute_flightplan_path = File.join(root_dir, flightplan_path)
+
+if File.exist?(absolute_flightplan_path)
+  STDERR.puts "Flightplan already exists: #{absolute_flightplan_path}"
+  exit 1
+end
+
+Dir.chdir(root_dir) do
+  load(absolute_flightplan_path)
+
+  flight_plans = BCF::FlightPlans::FLIGHT_PLANS
+
+  if flight_plans.nil? || flight_plans.empty?
+    STDERR.puts "No flight plans generated in #{absolute_flightplan_path}"
+    exit 1
+  end
+
+  if flight_plans.length != 1
+    STDERR.puts "Only one flight plan is allowed in #{absolute_flightplan_path}"
+    exit 1
+  end
+
+  flight_plan = flight_plans.first
+
+  if flight_plan.nil?
+    STDERR.puts "Flight plan is nil in #{absolute_flightplan_path}"
+    exit 1
+  end
+
+  puts flight_plan.to_json
+end
