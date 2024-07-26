@@ -32,7 +32,6 @@ module BCF
         spec = Gem::Specification.find_by_name("bcf-flightplans")
         gem_root = spec.gem_dir
         @root = Pathname.new(gem_root).join(root)
-        puts @root
 
         @extension = extension
         @redcarpet = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: false)
