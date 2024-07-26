@@ -1,12 +1,24 @@
 module BCF
   module FlightPlans
     module SimpleJSONSerialization
+      # Use to allow helper classes to deserialize into the base class
+      def json_class_name
+        self.class.name
+      end
+
+      def metadata
+        nil
+      end
+
       def json_fields
         instance_variables.map { |var| [var[1..].to_sym, instance_variable_get(var)] }
       end
 
       def to_json(*args)
-        { JSON.create_id => self.class.name }.merge(json_fields.to_h).to_json(*args)
+        {
+          JSON.create_id => self.json_class_name,
+          metadata: self.metadata
+        }.merge(json_fields.to_h).to_json(*args)
       end
     end
 
@@ -34,11 +46,19 @@ module BCF
     class FlightPlan
       include SimpleJSONSerialization
       include SimpleJSONDeserialization
+
+      def json_class_name
+        'BCF::FlightPlans::FlightPlan'
+      end
     end
 
     class Block
       include SimpleJSONSerialization
       include SimpleJSONDeserialization
+
+      def json_class_name
+        "BCF::FlightPlans::Block"
+      end
     end
 
     class Note
