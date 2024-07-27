@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name = "bcf-flightplans"
   spec.version = BCF::FlightPlans::VERSION
   spec.authors = ["Joshua Coles"]
-  spec.email = ["josh@coles.to"]
+  spec.email = ["joshuac@amphora-research.com"]
 
   spec.summary = "Structure and generation of flightplans for BCF"
   spec.license = "MIT"
