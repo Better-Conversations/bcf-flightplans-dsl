@@ -140,7 +140,7 @@ module BCF
     end
 
     module Resource
-      Flipchart = Struct.new(:id, :inplace_comment, :description, :scribed_by) do
+      Flipchart = Struct.new(:id, :inplace_comment, :description, :scribed_by, keyword_init: true) do
         def inplace_section_comment
           "#{id} #{inplace_comment}"
         end
@@ -154,8 +154,8 @@ module BCF
         end
       end
 
-      Breakout = Struct.new(:id)
-      Fieldwork = Struct.new(:id, :description)
+      Breakout = Struct.new(:id, keyword_init: true)
+      Fieldwork = Struct.new(:id, :description, keyword_init: true)
     end
   end
 end
