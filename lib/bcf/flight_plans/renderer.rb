@@ -23,7 +23,7 @@ module BCF
       end
     end
 
-    SpokenGroup = Struct.new(:lines, keyword_init: true)
+    SpokenGroup = Struct.new(:lines)
 
     class FormatRenderContext
       attr_reader :root
