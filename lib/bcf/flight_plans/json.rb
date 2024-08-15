@@ -33,7 +33,6 @@ module BCF
           obj = new
 
           object.each do |key, value|
-            p [key, value]
             next if key == JSON.create_id
             obj.instance_variable_set("@#{key}", value)
           end
