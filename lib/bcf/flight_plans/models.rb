@@ -137,6 +137,8 @@ module BCF
       def spoken_exact(content)
         items << Spoken.new(content, fixed: true)
       end
+
+      alias spoken_fixed spoken_exact
     end
 
     module Resource
