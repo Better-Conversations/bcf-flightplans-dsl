@@ -130,8 +130,8 @@ module BCF
     end
 
     class FacilitatorNotes < Notes
-      def spoken(content)
-        items << Spoken.new(content, fixed: false)
+      def spoken(content, fixed: false)
+        items << Spoken.new(content, fixed: fixed)
       end
 
       def spoken_exact(content)
