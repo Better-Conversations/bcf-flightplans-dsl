@@ -68,9 +68,9 @@ module BCF
         super('formats/typst', 'typ')
       end
 
-      def render_flight_plan(flight_plan)
+      def render_flight_plan(flight_plan, for_user:nil)
         Tilt.new(self.root.join('entry_point.typ.erb'))
-            .render(self, flight_plan: flight_plan)
+            .render(self, flight_plan: flight_plan, for_user: for_user)
       end
 
       # TODO: It might be good to isolate these into markdown files which we then read back to avoid escaping issues.
@@ -92,9 +92,9 @@ module BCF
     end
 
     class FlightPlan
-      def render_pdf(output_path, debug_typst_path = nil)
+      def render_pdf(output_path, debug_typst_path = nil,for_user:nil)
         typst_renderer = TypstRenderContext.new
-
+        
         Dir.mktmpdir do |dir|
           # Copy all files from ./typst to the temp directory
           Dir.glob(File.join(typst_renderer.root, '*')).each do |file|
@@ -102,8 +102,7 @@ module BCF
           end
 
           typst_path = File.join(dir, 'output.typ')
-          typst_content = typst_renderer.render_flight_plan(self)
-
+          typst_content = typst_renderer.render_flight_plan(self, for_user:for_user)
           File.write(typst_path, typst_content)
           system("typst c #{typst_path} #{output_path}")
         end
