@@ -47,7 +47,7 @@ module BCF
       include SimpleJSONDeserialization
 
       def json_class_name
-        'BCF::FlightPlans::FlightPlan'
+        "BCF::FlightPlans::FlightPlan"
       end
     end
 
@@ -67,19 +67,19 @@ module BCF
 
     class Instruction < Note
       def self.json_create(object)
-        new(object['content'])
+        new(object["content"])
       end
     end
 
     class Chat < Note
       def self.json_create(object)
-        new(object['content'])
+        new(object["content"])
       end
     end
 
     class Spoken < Note
       def self.json_create(object)
-        new(object['content'], fixed: object['fixed'])
+        new(object["content"], fixed: object["fixed"])
       end
     end
 

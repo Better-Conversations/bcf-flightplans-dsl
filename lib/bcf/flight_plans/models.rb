@@ -4,13 +4,13 @@ module BCF
 
     class FlightPlan
       attr_accessor :module_number,
-                    :module_title,
-                    :blocks,
-                    :total_length,
-                    :initial_time,
-                    :learning_outcomes,
-                    :demo,
-                    :organisation
+        :module_title,
+        :blocks,
+        :total_length,
+        :initial_time,
+        :learning_outcomes,
+        :demo,
+        :organisation
 
       def initialize
         @blocks = []
@@ -23,7 +23,7 @@ module BCF
         raise "Total length is required" unless total_length
         raise "Initial time is required" unless initial_time
 
-        runtime = self.blocks.reduce(initial_time) do |time, block|
+        runtime = blocks.reduce(initial_time) do |time, block|
           time + block.length
         end
 
@@ -46,12 +46,12 @@ module BCF
 
     class Block
       attr_accessor :name,
-                    :length,
-                    :facilitator_notes,
-                    :producer_notes,
-                    :speaker,
-                    :section_comment,
-                    :resources
+        :length,
+        :facilitator_notes,
+        :producer_notes,
+        :speaker,
+        :section_comment,
+        :resources
 
       def initialize
         @resources = []
@@ -70,7 +70,7 @@ module BCF
       end
 
       def flipchart
-        self.resources.find { |r| r.is_a? BCF::FlightPlans::Resource::Flipchart }
+        resources.find { |r| r.is_a? BCF::FlightPlans::Resource::Flipchart }
       end
     end
 
@@ -138,7 +138,7 @@ module BCF
         items << Spoken.new(content, fixed: true)
       end
 
-      alias spoken_fixed spoken_exact
+      alias_method :spoken_fixed, :spoken_exact
     end
 
     module Resource
@@ -148,11 +148,11 @@ module BCF
         end
 
         def pretty_id
-          self.id.to_s.capitalize.gsub(/_/, '#')
+          id.to_s.capitalize.tr("_", "#")
         end
 
         def pretty_scribed_by
-          self.scribed_by.to_s.capitalize
+          scribed_by.to_s.capitalize
         end
       end
 

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 require "json"
 require "json/add/struct"
 require "tilt"
-require 'tilt/erb'
+require "tilt/erb"
 require "redcarpet"
-require 'tmpdir'
+require "tmpdir"
 
 require_relative "flight_plans/version"
 require_relative "flight_plans/models"

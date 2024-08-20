@@ -4,10 +4,6 @@
   doc,
 ) = {
     // Styling, as true to the original word document as possible
-  set page(
-    flipped: true,
-    margin: (x: 1.27cm, y: 1.27cm),
-  )
 
   set text(font: "Source Sans Pro", size: 12pt)
   show heading: set text(navy)
