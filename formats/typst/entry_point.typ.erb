@@ -5,9 +5,22 @@
 #set page(
   flipped: true,
   margin: (x: 1.27cm, y: 1.27cm),
-  <%if for_user%>
-  footer: "Generated with love for <%=for_user%> on <%= Date.today.strftime('%d/%m/%Y')%>"
-  <%end%>
+  footer: {
+    set align(bottom)
+    block(
+      inset: (bottom: 0.5cm),  // This adds bottom padding
+      width: 100%,
+      grid(
+        columns: (1fr, auto, 1fr),
+        gutter: 1em,
+        [#set align(center)
+         © <%= Date.today.year %> Better Conversations Foundation],
+        [#set align(left)
+         <%if for_user%>Generated with love for <%=for_user%> on <%= Date.today.strftime('%d/%m/%Y')%><%end%>],
+        []
+      )
+    )
+  }
 )
 
 #show: flight-plan
