@@ -15,17 +15,21 @@ GEM
     json (2.7.2)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
+    logger (1.6.0)
     method_source (1.1.0)
     parallel (1.26.2)
     parser (3.3.4.2)
       ast (~> 2.4.1)
       racc
+    prism (0.30.0)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
     racc (1.8.1)
     rainbow (3.1.1)
     rake (13.2.1)
+    rbs (3.5.2)
+      logger
     redcarpet (3.6.0)
     regexp_parser (2.9.2)
     rexml (3.3.5)
@@ -59,7 +63,13 @@ GEM
     rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
+    ruby-lsp (0.17.13)
+      language_server-protocol (~> 3.17.0)
+      prism (>= 0.29.0, < 0.31)
+      rbs (>= 3, < 4)
+      sorbet-runtime (>= 0.5.10782)
     ruby-progressbar (1.13.0)
+    sorbet-runtime (0.5.11528)
     standard (1.40.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -86,6 +96,7 @@ DEPENDENCIES
   pry
   rake (~> 13.0)
   rspec (~> 3.0)
+  ruby-lsp
   standard
 
 BUNDLED WITH
