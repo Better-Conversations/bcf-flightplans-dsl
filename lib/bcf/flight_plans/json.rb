@@ -16,8 +16,8 @@ module BCF
 
       def to_json(*args)
         {
-          JSON.create_id => self.json_class_name,
-          metadata: self.metadata
+          JSON.create_id => json_class_name,
+          :metadata => metadata
         }.merge(json_fields.to_h).to_json(*args)
       end
     end
@@ -34,7 +34,7 @@ module BCF
 
           object.each do |key, value|
             next if key == JSON.create_id
-            obj.instance_variable_set("@#{key}", value)
+            obj.instance_variable_set(:"@#{key}", value)
           end
 
           obj

@@ -59,8 +59,8 @@ module BCF
 
       # FIXME: This is a little hacky
       def with_additional(**kwargs)
-        new_block = self.clone
-        dsl = DSL.new(new_block, &Proc.new {})
+        new_block = clone
+        dsl = DSL.new(new_block, &proc {})
 
         kwargs.each do |k, v|
           dsl.send(k, v)

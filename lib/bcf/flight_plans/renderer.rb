@@ -65,10 +65,10 @@ module BCF
 
     class TypstRenderContext < FormatRenderContext
       def initialize
-        super('formats/typst', 'typ')
+        super("formats/typst", "typ")
 
-        unless Open3.capture3('which typst')[2].success?
-          raise 'Typst is not installed. See https://github.com/typst/typst for instructions'
+        unless Open3.capture3("which typst")[2].success?
+          raise "Typst is not installed. See https://github.com/typst/typst for instructions"
         end
       end
 

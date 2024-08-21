@@ -6,7 +6,7 @@ module BCF
 
         def initialize(flight_plan, &block)
           @flight_plan = flight_plan
-          instance_eval &block
+          instance_eval(&block)
         end
 
         def module_number(number)
@@ -18,10 +18,10 @@ module BCF
         end
 
         def block(block_instance = nil, **kwargs, &block_constructor)
-          if block_instance and block_instance.is_a? Block
-            @flight_plan.blocks << block_instance.with_additional(**kwargs)
+          @flight_plan.blocks << if block_instance.is_a? Block
+            block_instance.with_additional(**kwargs)
           else
-            @flight_plan.blocks << Block.build(&block_constructor).with_additional(**kwargs)
+            Block.build(&block_constructor).with_additional(**kwargs)
           end
         end
 
@@ -58,7 +58,7 @@ module BCF
 
           def initialize(&block)
             @resources = []
-            instance_eval &block
+            instance_eval(&block)
           end
 
           def flipchart(id, inplace_comment, description: nil, scribed_by: nil)
@@ -76,7 +76,7 @@ module BCF
 
         def initialize(obj, &block)
           @block = obj
-          instance_eval &block
+          instance_eval(&block)
         end
 
         def name(name)
