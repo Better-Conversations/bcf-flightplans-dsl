@@ -23,16 +23,16 @@ module BCF
         raise "Total length is required" unless total_length
         raise "Initial time is required" unless initial_time
 
+        blocks.each.with_index do |block, index|
+          raise "Block number #{index + 1} of Module #{module_number} #{module_title} is missing a name." unless block.name
+          raise "Block \"#{block.name}\" is missing a length" unless block.length
+        end
+
         runtime = blocks.reduce(initial_time) do |time, block|
           time + block.length
         end
 
         warn "Total length (#{total_length}) does not match block lengths (#{runtime})" unless runtime == total_length
-
-        puts "Found resources:"
-        resources.each do |resource|
-          puts "  #{resource}"
-        end
       end
 
       def resources
