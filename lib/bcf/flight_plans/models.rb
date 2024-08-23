@@ -29,7 +29,7 @@ module BCF
         end
 
         runtime = blocks.reduce(initial_time) do |time, block|
-          time + block.length
+          time + block.length || 0
         end
 
         warn "Total length (#{total_length}) does not match block lengths (#{runtime})" unless runtime == total_length
