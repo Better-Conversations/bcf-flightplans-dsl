@@ -6,7 +6,9 @@ require "tilt"
 require "tilt/erb"
 require "redcarpet"
 require "tmpdir"
-require 'date'
+require "tempfile"
+require "date"
+require "open3"
 
 require_relative "flight_plans/version"
 require_relative "flight_plans/models"
