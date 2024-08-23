@@ -120,7 +120,7 @@ else { center },
 
   <%
     current_speaker = block.speaker
-    current_time += block.length
+    current_time += block.length || 0
   %>
 <% end %>
 )
