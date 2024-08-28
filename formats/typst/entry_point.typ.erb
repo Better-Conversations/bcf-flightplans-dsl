@@ -111,7 +111,7 @@ else { center },
       <%= block.flipchart&.inplace_section_comment %>
     <% end %>
 
-    <% unless block.section_comment %>
+    <% unless block.section_comment.nil? %>
       <%= block.section_comment %>
     <% end %>
   ],
