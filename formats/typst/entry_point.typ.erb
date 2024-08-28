@@ -111,6 +111,10 @@ else { center },
       <%= block.flipchart&.inplace_section_comment %>
     <% end %>
 
+    <% unless block.flipchart&.pretty_scribed_by.nil? %>
+      Scribed by <%= block.flipchart&.inplace_section_comment %>
+    <% end %>
+
     <% unless block.section_comment.nil? %>
       <%= block.section_comment %>
     <% end %>

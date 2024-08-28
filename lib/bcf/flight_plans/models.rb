@@ -188,6 +188,7 @@ module BCF
         end
 
         def pretty_scribed_by
+          return nil if scribed_by.nil?
           scribed_by.to_s.capitalize
         end
       end
