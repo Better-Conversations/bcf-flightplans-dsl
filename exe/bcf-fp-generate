@@ -42,5 +42,7 @@ Dir.chdir(root_dir) do
     exit 1
   end
 
+  flight_plan.validate!
+
   puts flight_plan.to_json
 end

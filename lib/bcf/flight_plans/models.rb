@@ -16,23 +16,59 @@ module BCF
         @blocks = []
       end
 
+      class Validator
+        def initialize(flight_plan)
+          @errors = []
+          @flight_plan = flight_plan
+
+          run_validations(flight_plan)
+        end
+
+        # @param [BCF::FlightPlans::FlightPlan] flight_plan
+        def run_validations(flight_plan)
+          @errors << "Module number is required" unless flight_plan.module_number
+          @errors << "Module title is required" unless flight_plan.module_title
+          @errors << "Blocks are required" if flight_plan.blocks.empty?
+          @errors << "Total length is required" unless flight_plan.total_length
+          @errors << "Initial time is required" unless flight_plan.initial_time
+
+          flight_plan.blocks.each.with_index do |block, index|
+            @errors << "Block number #{index + 1} of Module #{flight_plan.module_number} #{flight_plan.module_title} is missing a name." unless block.name
+            @errors << "Block \"#{block.name}\" is missing a length" unless block.length
+          end
+
+          runtime = flight_plan.blocks.reduce(flight_plan.initial_time) do |time, block|
+            time + (block.length || 0)
+          end
+
+          @errors << "Total length (#{flight_plan.total_length}) does not match block lengths (#{runtime})" unless runtime == flight_plan.total_length
+        end
+
+        def valid?
+          if @errors.empty?
+            true
+          else
+            @errors.each { |error| warn error }
+            false
+          end
+        end
+
+        def validate!
+          if @errors.empty?
+            true
+          else
+            @errors.each { |error| warn error }
+            raise "Validation failed for FlightPlan #{@flight_plan}"
+          end
+        end
+      end
+
+      def validate!
+        Validator.new(self).validate!
+      end
+
       def validate
-        warn "Module number is required" unless module_number
-        warn "Module title is required" unless module_title
-        warn "Blocks are required" if blocks.empty?
-        warn "Total length is required" unless total_length
-        warn "Initial time is required" unless initial_time
-
-        blocks.each.with_index do |block, index|
-          warn "Block number #{index + 1} of Module #{module_number} #{module_title} is missing a name." unless block.name
-          warn "Block \"#{block.name}\" is missing a length" unless block.length
-        end
-
-        runtime = blocks.reduce(initial_time) do |time, block|
-          time + (block.length || 0)
-        end
-
-        warn "Total length (#{total_length}) does not match block lengths (#{runtime})" unless runtime == total_length
+        Validator.new(self).valid?
       end
 
       def resources

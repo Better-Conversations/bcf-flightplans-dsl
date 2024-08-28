@@ -52,12 +52,12 @@ module BCF
         return content if content.is_a? String
 
         Tilt.new(@root.join("render_content.#{@extension}.erb"))
-            .render(self, content: content)
+          .render(self, content: content)
       end
 
       def render_note(note)
         Tilt.new(@root.join("render_note.#{@extension}.erb"))
-            .render(self, note: note)
+          .render(self, note: note)
       end
 
       def render_markdown(md)
@@ -110,17 +110,17 @@ module BCF
       # @return [String]
       def render_flight_plan(flight_plan, for_user: nil)
         Tilt.new(root.join("entry_point.typ.erb"))
-            .render(self, flight_plan: flight_plan, for_user: for_user)
+          .render(self, flight_plan: flight_plan, for_user: for_user)
       end
 
       # TODO: It might be good to isolate these into markdown files which we then read back to avoid escaping issues.
       #  Implement this when we move to more ERB
       def render_markdown(md)
-        tempfile = Tempfile.create(['md_fragment', '.md'], @build_context)
+        tempfile = Tempfile.create(["md_fragment", ".md"], @build_context)
         File.write(tempfile, md)
-        self.tempfiles << tempfile
+        tempfiles << tempfile
 
-        "cmarker.render(read(\"#{Pathname.new(tempfile.path).relative_path_from(Pathname.new(@build_context)).to_s}\"))"
+        "cmarker.render(read(\"#{Pathname.new(tempfile.path).relative_path_from(Pathname.new(@build_context))}\"))"
       end
     end
 
@@ -135,7 +135,7 @@ module BCF
 
       def self.render_html_flight_plan(flight_plan, temp_dir)
         Tilt.new("formats/html/table.html.erb")
-            .render(new(temp_dir), flight_plan: flight_plan)
+          .render(new(temp_dir), flight_plan: flight_plan)
       end
     end
 
