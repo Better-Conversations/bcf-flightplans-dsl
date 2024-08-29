@@ -2,6 +2,7 @@
   ..args
 ) = [
 #show table.cell.where(y: 0): set text(white)
+#show table.cell: set block(spacing: 1.5em)
 #show table.cell: set par(leading: 1em)
 #show table.cell.where(x: 2): set par(leading: 1.25em)
 
