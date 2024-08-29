@@ -58,7 +58,7 @@ module BCF
             true
           else
             @errors.each { |error| warn error }
-            raise "Validation failed for FlightPlan #{@flight_plan}"
+            raise "Validation failed for FlightPlan Module #{@flight_plan.module_number} #{@flight_plan.module_title}"
           end
         end
       end
