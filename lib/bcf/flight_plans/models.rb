@@ -180,7 +180,7 @@ module BCF
     module Resource
       Flipchart = Struct.new(:id, :inplace_comment, :description, :scribed_by) do
         def inplace_section_comment
-          "#{id} #{inplace_comment}"
+          "#{pretty_id} #{inplace_comment}"
         end
 
         def pretty_id

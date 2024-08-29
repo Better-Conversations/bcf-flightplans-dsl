@@ -107,12 +107,10 @@ else { center },
       #bcf-nom[<%= format_speakers(block.speaker) %>]
     <% end %>
 
-    <% unless block.flipchart&.inplace_section_comment.nil? %>
-      <%= block.flipchart&.inplace_section_comment %>
-    <% end %>
+    <% unless block.flipchart.nil? %>
+      #("<%= block.flipchart.pretty_id %>") <%= block.flipchart.inplace_comment %>
 
-    <% unless block.flipchart&.pretty_scribed_by.nil? %>
-      Scribed by <%= block.flipchart&.inplace_section_comment %>
+      Scribed by <%= block.flipchart.pretty_scribed_by %>
     <% end %>
 
     <% unless block.section_comment.nil? %>
