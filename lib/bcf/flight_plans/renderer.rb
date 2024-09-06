@@ -74,7 +74,7 @@ module BCF
         @debug_print_typ = debug_print_typ
 
         unless Open3.capture3("which typst")[2].success?
-          raise "Typst is not installed. See https://github.com/typst/typst for instructions"
+          raise TypstMissingError
         end
       end
 
@@ -82,19 +82,30 @@ module BCF
         File.join(@build_context, "output.typ")
       end
 
-      def compile_typst
-        Dir.chdir(@build_context) do
-          stout, stderr, status = Open3.capture3("typst c output.typ output.pdf")
+      def compile_typst(pdf_output_path)
+        # As we execute this in a different directory we need to make the path absolute
+        pdf_output_path_absolute = File.expand_path(pdf_output_path)
 
-          unless status.success?
-            raise "Typst compilation failed: #{stderr}"
-          end
+        stdout, stderr, status = Open3.capture3(
+          "typst",
+          "c",
+          "output.typ",
+          pdf_output_path_absolute,
+          chdir: @build_context
+        )
+
+        unless status.success?
+          raise TypstCompileError.new(
+            stdout,
+            stderr,
+            status.exitstatus,
+            File.read(output_typ)
+          )
         end
       end
 
       def render(flight_plan, pdf_output_path, for_user: nil)
         output_typ = File.join(@build_context, "output.typ")
-        output_pdf = File.join(@build_context, "output.pdf")
 
         File.write(output_typ, @render_context.render_flight_plan(flight_plan, for_user: for_user))
 
@@ -103,8 +114,7 @@ module BCF
           puts File.read(output_typ)
         end
 
-        compile_typst
-        FileUtils.cp(output_pdf, pdf_output_path)
+        compile_typst(pdf_output_path)
       end
     end
 

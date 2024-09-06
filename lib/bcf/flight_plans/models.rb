@@ -54,12 +54,9 @@ module BCF
         end
 
         def validate!
-          if @errors.empty?
-            true
-          else
-            @errors.each { |error| warn error }
-            raise "Validation failed for FlightPlan Module #{@flight_plan.module_number} #{@flight_plan.module_title}"
-          end
+          raise ValidationError.new(@flight_plan, @errors) unless @errors.empty?
+
+          true
         end
       end
 
