@@ -66,11 +66,12 @@ module BCF
     end
 
     class TypstRenderer
-      def initialize(build_context)
+      def initialize(build_context, debug_print_typ)
         FileUtils.mkdir_p(build_context) unless Dir.exist?(build_context)
 
         @build_context = build_context
         @render_context = TypstRenderContext.new(build_context)
+        @debug_print_typ = debug_print_typ
 
         unless Open3.capture3("which typst")[2].success?
           raise "Typst is not installed. See https://github.com/typst/typst for instructions"
@@ -96,6 +97,12 @@ module BCF
         output_pdf = File.join(@build_context, "output.pdf")
 
         File.write(output_typ, @render_context.render_flight_plan(flight_plan, for_user: for_user))
+
+        if @debug_print_typ
+          puts "[DEBUG] Typst input:"
+          puts File.read(output_typ)
+        end
+
         compile_typst
         FileUtils.cp(output_pdf, pdf_output_path)
       end
@@ -144,8 +151,8 @@ module BCF
     end
 
     class FlightPlan
-      def render_pdf(output_path, debug_typst_path = nil, for_user: nil)
-        typst_renderer = TypstRenderer.new(Dir.mktmpdir)
+      def render_pdf(output_path, build_context: Dir.mktmpdir, debug_print_typ: false, for_user: nil)
+        typst_renderer = TypstRenderer.new(build_context, debug_print_typ)
         typst_renderer.render(self, output_path, for_user: for_user)
       end
 
