@@ -83,7 +83,11 @@ module BCF
 
       def compile_typst
         Dir.chdir(@build_context) do
-          system("typst c output.typ output.pdf")
+          stout, stderr, status = Open3.capture3("typst c output.typ output.pdf")
+
+          unless status.success?
+            raise "Typst compilation failed: #{stderr}"
+          end
         end
       end
 
