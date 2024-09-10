@@ -17,6 +17,8 @@ module BCF
       end
 
       class Validator
+        attr_reader :errors
+
         def initialize(flight_plan)
           @errors = []
           @flight_plan = flight_plan
