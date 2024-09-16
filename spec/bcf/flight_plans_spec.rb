@@ -5,6 +5,58 @@ RSpec.describe BCF::FlightPlans do
     expect(BCF::FlightPlans::VERSION).not_to be nil
   end
 
+  describe 'page sizing' do
+    let(:json) { Pathname.new(__FILE__).join("..", "..", "fixtures", "module_3.json").read }
+
+    it 'renders the page as A4 by default' do
+      flight_plan = JSON.parse(json, { create_additions: true })
+
+      tf = Tempfile.new(["flightplan", ".pdf"])
+      flight_plan.render_pdf(tf.path)
+
+      pdf = PDF::Reader.new(tf.path)
+
+      pdf.pages.each do |page|
+        # Get the page size
+        page_size = page.attributes[:MediaBox]
+
+        # The MediaBox is typically in the format [llx lly urx ury]
+        # where llx and lly are the coordinates of the lower-left corner,
+        # and urx and ury are the coordinates of the upper-right corner.
+
+        width = page_size[2] - page_size[0]
+        height = page_size[3] - page_size[1]
+
+        expect(height).to be_within(0.1).of(595.28)
+        expect(width).to be_within(0.1).of(841.89)
+      end
+    end
+
+    it 'renders US Letter when specified' do
+      flight_plan = JSON.parse(json, { create_additions: true })
+
+      tf = Tempfile.new(["flightplan", ".pdf"])
+      flight_plan.render_pdf(tf.path, page_size: 'us-letter')
+
+      pdf = PDF::Reader.new(tf.path)
+
+      pdf.pages.each do |page|
+        # Get the page size
+        page_size = page.attributes[:MediaBox]
+
+        # The MediaBox is typically in the format [llx lly urx ury]
+        # where llx and lly are the coordinates of the lower-left corner,
+        # and urx and ury are the coordinates of the upper-right corner.
+
+        width = page_size[2] - page_size[0]
+        height = page_size[3] - page_size[1]
+
+        expect(height).to be_within(0.1).of(612)
+        expect(width).to be_within(0.1).of(792)
+      end
+    end
+  end
+
   describe 'loading the example flight plan' do
     let(:json) { Pathname.new(__FILE__).join("..", "..", "fixtures", "module_3.json").read }
 
