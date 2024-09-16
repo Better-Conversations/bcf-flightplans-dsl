@@ -114,5 +114,23 @@ module BCF
         DSL.new(new, &block).block
       end
     end
+
+    class ProducerNotes
+      def chat(content)
+        items << Chat.new(content)
+      end
+    end
+
+    class FacilitatorNotes < Notes
+      def spoken(content, fixed: false)
+        items << Spoken.new(content, fixed: fixed)
+      end
+
+      def spoken_exact(content)
+        items << Spoken.new(content, fixed: true)
+      end
+
+      alias_method :spoken_fixed, :spoken_exact
+    end
   end
 end
