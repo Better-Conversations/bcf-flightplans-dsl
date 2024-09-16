@@ -12,7 +12,6 @@ module BCF
                     :demo,
                     :organisation,
                     :version
-
       def initialize
         @blocks = []
         @version = BCF::FlightPlans::VERSION

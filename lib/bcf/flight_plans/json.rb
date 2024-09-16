@@ -29,8 +29,12 @@ module BCF
       end
 
       module ClassMethods
+        def new_for_json
+          new
+        end
+
         def json_create(object)
-          obj = new
+          obj = self.new_for_json
 
           object.each do |key, value|
             next if key == JSON.create_id
@@ -48,6 +52,13 @@ module BCF
 
       def json_class_name
         "BCF::FlightPlans::FlightPlan"
+      end
+
+      def self.new_for_json
+        obj = new
+        # Reset the version as we want to use the version from the JSON object
+        obj.version = nil
+        obj
       end
     end
 
