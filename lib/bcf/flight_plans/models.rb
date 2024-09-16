@@ -10,10 +10,12 @@ module BCF
                     :initial_time,
                     :learning_outcomes,
                     :demo,
-                    :organisation
+                    :organisation,
+                    :version
 
       def initialize
         @blocks = []
+        @version = BCF::FlightPlans::VERSION
       end
 
       class Validator
