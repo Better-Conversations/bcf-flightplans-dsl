@@ -104,10 +104,10 @@ module BCF
         end
       end
 
-      def render(flight_plan, pdf_output_path, for_user: nil)
+      def render(flight_plan, pdf_output_path, for_user: nil, page_size: 'a4')
         output_typ = File.join(@build_context, "output.typ")
 
-        File.write(output_typ, @render_context.render_flight_plan(flight_plan, for_user: for_user))
+        File.write(output_typ, @render_context.render_flight_plan(flight_plan, for_user: for_user, page_size: page_size))
 
         if @debug_print_typ
           puts "[DEBUG] Typst input:"
@@ -129,19 +129,19 @@ module BCF
       end
 
       # @return [String]
-      def render_flight_plan(flight_plan, for_user: nil)
+      def render_flight_plan(flight_plan, for_user: nil, page_size: 'a4')
         Tilt.new(root.join("entry_point.typ.erb"))
-          .render(self, flight_plan: flight_plan, for_user: for_user)
+            .render(self, flight_plan: flight_plan, for_user: for_user, page_size: page_size)
       end
 
       # TODO: It might be good to isolate these into markdown files which we then read back to avoid escaping issues.
       #  Implement this when we move to more ERB
       def render_markdown(md)
-        tempfile = Tempfile.create(["md_fragment", ".md"], @build_context)
+        tempfile = Tempfile.create(['md_fragment', '.md'], @build_context)
         File.write(tempfile, md)
-        tempfiles << tempfile
+        self.tempfiles << tempfile
 
-        "cmarker.render(read(\"#{Pathname.new(tempfile.path).relative_path_from(Pathname.new(@build_context))}\"))"
+        "cmarker.render(read(\"#{Pathname.new(tempfile.path).relative_path_from(Pathname.new(@build_context)).to_s}\"))"
       end
     end
 
@@ -161,7 +161,7 @@ module BCF
     end
 
     class FlightPlan
-      def render_pdf(output_path, build_context: Dir.mktmpdir, debug_print_typ: false, for_user: nil)
+      def render_pdf(output_path, build_context: Dir.mktmpdir, debug_print_typ: false, for_user: nil, page_size: 'a4')
         typst_renderer = TypstRenderer.new(build_context, debug_print_typ)
         typst_renderer.render(self, output_path, for_user: for_user)
       end
