@@ -19,9 +19,9 @@ module BCF
 
         def block(block_instance = nil, **kwargs, &block_constructor)
           @flight_plan.blocks << if block_instance.is_a? Block
-            block_instance.with_additional(**kwargs)
+            block_instance.with_additional(**kwargs, index: @flight_plan.blocks.length)
           else
-            Block.build(&block_constructor).with_additional(**kwargs)
+            Block.build(&block_constructor).with_additional(**kwargs, index: @flight_plan.blocks.length)
           end
         end
 

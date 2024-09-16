@@ -82,7 +82,8 @@ module BCF
     end
 
     class Block
-      attr_accessor :name,
+      attr_accessor :index,
+                    :name,
                     :length,
                     :facilitator_notes,
                     :producer_notes,
