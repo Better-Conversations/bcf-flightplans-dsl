@@ -163,7 +163,7 @@ module BCF
     class FlightPlan
       def render_pdf(output_path, build_context: Dir.mktmpdir, debug_print_typ: false, for_user: nil, page_size: 'a4')
         typst_renderer = TypstRenderer.new(build_context, debug_print_typ)
-        typst_renderer.render(self, output_path, for_user: for_user)
+        typst_renderer.render(self, output_path, for_user: for_user, page_size: page_size)
       end
 
       def write_json(output_path)
