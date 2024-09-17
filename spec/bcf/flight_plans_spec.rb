@@ -76,8 +76,29 @@ RSpec.describe BCF::FlightPlans do
     end
   end
 
-  describe "migrations" do
-    describe "from un-versioned" do
+  describe 'abbreviated style' do
+    let(:json) { Pathname.new(__FILE__).join("..", "..", "fixtures", "module_3.json").read }
+
+    it "renders a flight plan with abbreviated style and includes BY-SA 4.0" do
+      flight_plan = JSON.parse(json, { create_additions: true })
+      tf = Tempfile.new(["abbreviated_flightplan", ".pdf"])
+      expect(flight_plan).to be_a(BCF::FlightPlans::FlightPlan)
+
+      expect {
+        flight_plan.render_pdf(tf.path, style: 'abbreviated')
+      }.not_to raise_error
+
+      expect(File.exist?(tf.path)).to be_truthy
+      expect(File.size(tf.path)).to be > 0 if File.exist?(tf.path)
+
+      # Check if the PDF contains the specific copyright text
+      text = PDF::Reader.new(tf.path).pages.map(&:text).join
+      expect(text).to include("CC BY-SA 4.0")
+    end
+  end
+
+  describe 'migrations' do
+    describe 'from un-versioned' do
       let(:json) { Pathname.new(__FILE__).join("..", "..", "fixtures", "module_3.json").read }
 
       it "defaults to version 0.4.4 after migration as it has no version specified" do

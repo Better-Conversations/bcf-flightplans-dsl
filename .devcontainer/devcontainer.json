@@ -10,7 +10,6 @@
 	"features": {
 		"ghcr.io/michidk/devcontainers-features/typst:1": {}
 	},
-   
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
