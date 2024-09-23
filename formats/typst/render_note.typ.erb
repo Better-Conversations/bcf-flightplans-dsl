@@ -14,5 +14,5 @@
   <% end %>
   )
 <% when BCF::FlightPlans::Chat %>
-  #chat(<%= render_markdown note.content %>)
+  #chat(broadcast: <%= note.broadcast %>, <%= render_markdown note.content %>)
 <% end %>
