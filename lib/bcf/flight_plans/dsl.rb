@@ -83,6 +83,10 @@ module BCF
           @block.name = name
         end
 
+        def index(index)
+          @block.index = index
+        end
+
         def length(length)
           @block.length = length
         end
