@@ -119,6 +119,10 @@ module BCF
       def chat(content)
         items << Chat.new(content)
       end
+
+      def broadcast(content)
+        items << Chat.new(content, broadcast: true)
+      end
     end
 
     class FacilitatorNotes < Notes

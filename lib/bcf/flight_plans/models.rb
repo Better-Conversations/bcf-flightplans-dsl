@@ -130,10 +130,12 @@ module BCF
 
     class Chat < Note
       attr_accessor :content
+      attr_accessor :broadcast
 
-      def initialize(content)
+      def initialize(content, broadcast: false)
         super()
         @content = content
+        @broadcast = broadcast
       end
     end
 
