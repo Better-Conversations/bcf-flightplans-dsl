@@ -23,8 +23,8 @@
 #show: flight-plan
 
 <% if style == 'normal' %>
-include "./copyright.typ"
-pagebreak()
+#include "./copyright.typ"
+#pagebreak()
 <% end %>
 
 = Module <%= flight_plan.module_number %>: <%= flight_plan.module_title %>
