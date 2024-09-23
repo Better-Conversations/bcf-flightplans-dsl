@@ -30,9 +30,6 @@
 
   // Begin content
 
-  include "./copyright.typ"
-  pagebreak()
-
   doc
 }
 

@@ -2,7 +2,6 @@
 #import "helpers.typ": *
 #import "@preview/cmarker:0.1.0"
 
-
 #set page(
   paper: "<%= page_size %>",
   flipped: true,
@@ -11,7 +10,7 @@
     columns: (1fr, 1fr, 1fr),
     align: (left, center, right),
     rows: (auto),
-    [© <%= Date.today.year %> Better Conversations Foundation],
+    [<% if style == 'abbreviated' %>© Better Conversations Foundation 2019-<%= Date.today.year %>. This work is openly licensed via CC BY-SA 4.0<% else %>© <%= Date.today.year %> Better Conversations Foundation<% end %>],
     context counter(page).display("1/1",both: true),
     [
       <% if for_user %>
@@ -21,8 +20,12 @@
   ),
 )
 
-
 #show: flight-plan
+
+<% if style == 'normal' %>
+include "./copyright.typ"
+pagebreak()
+<% end %>
 
 = Module <%= flight_plan.module_number %>: <%= flight_plan.module_title %>
 
@@ -106,13 +109,11 @@ else { center },
       #bcf-nom[<%= format_speakers(block.speaker) %>]
     <% end %>
 
-    <% unless block.flipchart.nil? %>
-      #("<%= block.flipchart.pretty_id %>") <%= block.flipchart.inplace_comment %>
-
-      Scribed by <%= block.flipchart.pretty_scribed_by %>
+    <% unless block.flipchart&.inplace_section_comment.nil? %>
+      <%= block.flipchart&.inplace_section_comment %>
     <% end %>
 
-    <% unless block.section_comment.nil? %>
+    <% unless block.section_comment %>
       <%= block.section_comment %>
     <% end %>
   ],
