@@ -34,7 +34,7 @@ module BCF
         end
 
         def json_create(object)
-          obj = self.new_for_json
+          obj = new_for_json
 
           object.each do |key, value|
             next if key == JSON.create_id

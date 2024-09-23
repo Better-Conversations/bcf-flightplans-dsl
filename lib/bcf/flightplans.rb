@@ -9,7 +9,7 @@ require "tmpdir"
 require "tempfile"
 require "date"
 require "open3"
-require 'securerandom'
+require "securerandom"
 
 require_relative "flight_plans/version"
 require_relative "flight_plans/models"

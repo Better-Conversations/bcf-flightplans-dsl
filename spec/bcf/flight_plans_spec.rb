@@ -5,11 +5,11 @@ RSpec.describe BCF::FlightPlans do
     expect(BCF::FlightPlans::VERSION).not_to be nil
   end
 
-  describe 'page sizing' do
+  describe "page sizing" do
     let(:json) { Pathname.new(__FILE__).join("..", "..", "fixtures", "module_3.json").read }
 
-    it 'renders the page as A4 by default' do
-      flight_plan = JSON.parse(json, { create_additions: true })
+    it "renders the page as A4 by default" do
+      flight_plan = JSON.parse(json, {create_additions: true})
 
       tf = Tempfile.new(["flightplan", ".pdf"])
       flight_plan.render_pdf(tf.path)
@@ -32,11 +32,11 @@ RSpec.describe BCF::FlightPlans do
       end
     end
 
-    it 'renders US Letter when specified' do
-      flight_plan = JSON.parse(json, { create_additions: true })
+    it "renders US Letter when specified" do
+      flight_plan = JSON.parse(json, {create_additions: true})
 
       tf = Tempfile.new(["flightplan", ".pdf"])
-      flight_plan.render_pdf(tf.path, page_size: 'us-letter')
+      flight_plan.render_pdf(tf.path, page_size: "us-letter")
 
       pdf = PDF::Reader.new(tf.path)
 
@@ -57,11 +57,11 @@ RSpec.describe BCF::FlightPlans do
     end
   end
 
-  describe 'loading the example flight plan' do
+  describe "loading the example flight plan" do
     let(:json) { Pathname.new(__FILE__).join("..", "..", "fixtures", "module_3.json").read }
 
     it "render a flightplan" do
-      flight_plan = JSON.parse(json, { create_additions: true })
+      flight_plan = JSON.parse(json, {create_additions: true})
 
       tf = Tempfile.new(["flightplan", ".pdf"])
       expect(flight_plan).to be_a(BCF::FlightPlans::FlightPlan)
@@ -76,12 +76,12 @@ RSpec.describe BCF::FlightPlans do
     end
   end
 
-  describe 'migrations' do
-    describe 'from un-versioned' do
+  describe "migrations" do
+    describe "from un-versioned" do
       let(:json) { Pathname.new(__FILE__).join("..", "..", "fixtures", "module_3.json").read }
 
-      it 'defaults to version 0.4.4 after migration as it has no version specified' do
-        flight_plan = JSON.parse(json, { create_additions: true })
+      it "defaults to version 0.4.4 after migration as it has no version specified" do
+        flight_plan = JSON.parse(json, {create_additions: true})
         expect(flight_plan.version).to be_nil
 
         flight_plan.migrate!
@@ -89,8 +89,8 @@ RSpec.describe BCF::FlightPlans do
         expect(flight_plan.version).to eq("0.4.4")
       end
 
-      it 'adds an index to each block' do
-        flight_plan = JSON.parse(json, { create_additions: true })
+      it "adds an index to each block" do
+        flight_plan = JSON.parse(json, {create_additions: true})
         flight_plan.migrate!
 
         flight_plan.blocks.each do |block|
@@ -98,8 +98,8 @@ RSpec.describe BCF::FlightPlans do
         end
       end
 
-      it 'migrates the notes to have a unique id' do
-        flight_plan = JSON.parse(json, { create_additions: true })
+      it "migrates the notes to have a unique id" do
+        flight_plan = JSON.parse(json, {create_additions: true})
         flight_plan.migrate!
 
         ids = flight_plan.blocks.flat_map do |block|
@@ -112,9 +112,9 @@ RSpec.describe BCF::FlightPlans do
         expect(ids.uniq.length).to eq(ids.length)
       end
 
-      it 'has consistent ids across reloads' do
-        flight_plan_1 = JSON.parse(json, { create_additions: true })
-        flight_plan_2 = JSON.parse(json, { create_additions: true })
+      it "has consistent ids across reloads" do
+        flight_plan_1 = JSON.parse(json, {create_additions: true})
+        flight_plan_2 = JSON.parse(json, {create_additions: true})
         flight_plan_1.migrate!
         flight_plan_2.migrate!
 
@@ -135,6 +135,5 @@ RSpec.describe BCF::FlightPlans do
         expect(ids_1).to eq(ids_2)
       end
     end
-
   end
 end

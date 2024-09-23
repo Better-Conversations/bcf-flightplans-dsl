@@ -3,7 +3,7 @@
 require "bcf/flightplans"
 
 # Used for testing page sizes
-require 'pdf-reader'
+require "pdf-reader"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
