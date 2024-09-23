@@ -1,0 +1,21 @@
+name: Ruby CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.4
+          bundler-cache: true
+      - uses: typst-community/setup-typst@v3
+      - name: Standard Ruby
+        uses: standardrb/standard-ruby-action@v1
+      - run: bundle exec rspec spec
