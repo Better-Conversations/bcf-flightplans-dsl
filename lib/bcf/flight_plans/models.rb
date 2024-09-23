@@ -189,7 +189,7 @@ module BCF
         end
       end
 
-      Breakout = Struct.new(:id)
+      Breakout = Struct.new(:id, :default_duration, :notify_halfway)
       Fieldwork = Struct.new(:id, :description)
     end
   end
