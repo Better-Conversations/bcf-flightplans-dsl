@@ -10,6 +10,7 @@ require "tempfile"
 require "date"
 require "open3"
 require "securerandom"
+require "pathname"
 
 require_relative "flight_plans/version"
 require_relative "flight_plans/models"
@@ -20,6 +21,8 @@ require_relative "flight_plans/migrations"
 
 module BCF
   module FlightPlans
+    GEM_ROOT = Pathname.new(__FILE__).join("../../..").expand_path
+
     class Error < StandardError; end
 
     class TypstMissingError < Error

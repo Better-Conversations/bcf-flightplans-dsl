@@ -4,10 +4,13 @@
 	"name": "Ruby",
 
 	// For now we are using the rails ruby dev container as the MS one uses rvm and rbenv in a really weird way.
-	"image": "ghcr.io/rails/devcontainer/images/ruby:3.2.4"
+	"image": "ghcr.io/rails/devcontainer/images/ruby:3.2.4",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+	"features": {
+		"ghcr.io/michidk/devcontainers-features/typst:1": {}
+	},
+   
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

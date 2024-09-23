@@ -29,9 +29,7 @@ module BCF
       attr_reader :root, :tempfiles
 
       def initialize(root, extension, build_context)
-        spec = Gem::Specification.find_by_name("bcf-flightplans")
-        gem_root = spec.gem_dir
-        @root = Pathname.new(gem_root).join(root)
+        @root = Pathname.new(BCF::FlightPlans::GEM_ROOT).join(root)
         @build_context = build_context
         @tempfiles = []
 
