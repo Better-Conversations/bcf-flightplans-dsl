@@ -65,7 +65,7 @@ module BCF
             resources << Resource::Flipchart.new(id:, description:, inplace_comment:, scribed_by:)
           end
 
-          def breakout_room(id, default_duration:, notify_halfway: true)
+          def breakout_room(id, default_duration: nil, notify_halfway: true)
             resources << Resource::Breakout.new(id, default_duration:, notify_halfway:)
           end
 
