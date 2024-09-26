@@ -84,7 +84,7 @@ module BCF
 
     class Chat < Note
       def self.json_create(object)
-        new(object["content"])
+        new(object["content"], broadcast: object["broadcast"])
       end
     end
 
