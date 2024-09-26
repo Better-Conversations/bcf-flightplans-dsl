@@ -12,6 +12,7 @@ gem "rspec", "~> 3.0"
 gem "standard"
 gem "byebug"
 gem "ruby-lsp"
+gem "bump"
 
 group :development, :test do
   gem "pdf-reader"
