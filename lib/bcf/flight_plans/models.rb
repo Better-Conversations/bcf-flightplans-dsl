@@ -130,10 +130,12 @@ module BCF
 
     class Chat < Note
       attr_accessor :content
+      attr_accessor :broadcast
 
-      def initialize(content)
+      def initialize(content, broadcast: false)
         super()
         @content = content
+        @broadcast = broadcast
       end
     end
 
@@ -187,7 +189,7 @@ module BCF
         end
       end
 
-      Breakout = Struct.new(:id)
+      Breakout = Struct.new(:id, :default_duration, :notify_halfway)
       Fieldwork = Struct.new(:id, :description)
     end
   end

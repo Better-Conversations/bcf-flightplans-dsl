@@ -65,8 +65,8 @@ module BCF
             resources << Resource::Flipchart.new(id:, description:, inplace_comment:, scribed_by:)
           end
 
-          def breakout_room(id)
-            resources << Resource::Breakout.new(id)
+          def breakout_room(id, default_duration:, notify_halfway: true)
+            resources << Resource::Breakout.new(id, default_duration:, notify_halfway:)
           end
 
           def fieldwork(id, description)
@@ -81,6 +81,10 @@ module BCF
 
         def name(name)
           @block.name = name
+        end
+
+        def index(index)
+          @block.index = index
         end
 
         def length(length)
@@ -118,6 +122,10 @@ module BCF
     class ProducerNotes
       def chat(content)
         items << Chat.new(content)
+      end
+
+      def broadcast(content)
+        items << Chat.new(content, broadcast: true)
       end
     end
 
