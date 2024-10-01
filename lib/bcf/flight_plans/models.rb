@@ -185,7 +185,7 @@ module BCF
       end
 
       def instruction(content)
-        items << Instruction.new(content)
+        items << Instruction.new(content:)
       end
     end
 

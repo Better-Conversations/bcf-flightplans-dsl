@@ -121,21 +121,21 @@ module BCF
 
     class ProducerNotes
       def chat(content)
-        items << Chat.new(content)
+        items << Chat.new(content:)
       end
 
       def broadcast(content)
-        items << Chat.new(content, broadcast: true)
+        items << Chat.new(content:, broadcast: true)
       end
     end
 
     class FacilitatorNotes < Notes
       def spoken(content, fixed: false)
-        items << Spoken.new(content, fixed: fixed)
+        items << Spoken.new(content:, fixed: fixed)
       end
 
       def spoken_exact(content)
-        items << Spoken.new(content, fixed: true)
+        items << Spoken.new(content:, fixed: true)
       end
 
       alias_method :spoken_fixed, :spoken_exact
