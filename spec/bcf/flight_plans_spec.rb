@@ -164,8 +164,8 @@ RSpec.describe BCF::FlightPlans do
     end
   end
 
-  describe 'json ser/de' do
-    it 'is round-trippable' do
+  describe "json ser/de" do
+    it "is round-trippable" do
       json_text = Pathname.new(__FILE__).join("..", "..", "fixtures", "m1.json").read
       fp = JSON.parse(json_text, { create_additions: true})
       expect(fp).to be_a(BCF::FlightPlans::FlightPlan)
