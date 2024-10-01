@@ -11,17 +11,15 @@ require "date"
 require "open3"
 require "securerandom"
 require "pathname"
-
-require_relative "flight_plans/version"
-require_relative "flight_plans/models"
-require_relative "flight_plans/json"
-require_relative "flight_plans/renderer"
-require_relative "flight_plans/dsl"
-require_relative "flight_plans/migrations"
+require "dry-struct"
 
 module BCF
   module FlightPlans
     GEM_ROOT = Pathname.new(__FILE__).join("../../..").expand_path
+
+    module Types
+      include Dry.Types()
+    end
 
     class Error < StandardError; end
 
@@ -60,3 +58,10 @@ module BCF
     end
   end
 end
+
+require_relative "flight_plans/version"
+require_relative "flight_plans/models"
+require_relative "flight_plans/json"
+require_relative "flight_plans/renderer"
+require_relative "flight_plans/dsl"
+require_relative "flight_plans/migrations"

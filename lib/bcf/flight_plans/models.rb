@@ -111,42 +111,64 @@ module BCF
       end
     end
 
-    class Note
-      attr_accessor :id
+    class BCFStruct < Dry::Struct
+      transform_keys(&:to_sym)
 
-      def initialize
-        @id = SecureRandom.uuid
+      def self.json_create(object)
+        new(object)
       end
+
+      def json_class_name
+        self.class.name
+      end
+
+      # This is a lift from to_h and Hashify in dry-struct which adds a JSON.create_id key to the hash.
+      def as_json
+        handle_item = lambda do |value|
+          if value.is_a?(BCFStruct)
+            value.as_json
+          elsif value.is_a?(Dry::Struct)
+            value.to_h.transform_values { |current| handle_item.call(current) }
+          elsif value.respond_to?(:to_hash)
+            value.to_hash.transform_values { |current| handle_item.call(current) }
+          elsif value.respond_to?(:to_ary)
+            value.to_ary.map { |item| handle_item.call(item) }
+          else
+            value
+          end
+        end
+
+        base = self.class.schema.each_with_object({}) do |key, result|
+          next unless attributes.key?(key.name)
+          result[key.name] = handle_item.call(self[key.name])
+        end
+
+        base.merge(
+          JSON.create_id => json_class_name
+        )
+      end
+
+      def to_json(...)
+        as_json.to_json(...)
+      end
+    end
+
+    class Note < BCFStruct
+      attribute :id, BCF::FlightPlans::Types::String.default { SecureRandom.uuid }
     end
 
     class Instruction < Note
-      attr_accessor :content
-
-      def initialize(content)
-        super()
-        @content = content
-      end
+      attribute :content, BCF::FlightPlans::Types::String
     end
 
     class Chat < Note
-      attr_accessor :content
-      attr_accessor :broadcast
-
-      def initialize(content, broadcast: false)
-        super()
-        @content = content
-        @broadcast = broadcast
-      end
+      attribute :content, BCF::FlightPlans::Types::String
+      attribute :broadcast, BCF::FlightPlans::Types::Bool.default { false }
     end
 
     class Spoken < Note
-      attr_accessor :content, :fixed
-
-      def initialize(content, fixed: false)
-        super()
-        @content = content
-        @fixed = fixed
-      end
+      attribute :content, BCF::FlightPlans::Types::String
+      attribute :fixed, BCF::FlightPlans::Types::Bool.default { false }
     end
 
     class Notes

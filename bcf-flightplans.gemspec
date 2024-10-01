@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "tilt", "~> 2.4"
   spec.add_dependency "redcarpet", "~> 3.6"
+  spec.add_dependency "dry-struct", "~> 1.6"
 end

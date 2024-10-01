@@ -71,29 +71,6 @@ module BCF
       end
     end
 
-    class Note
-      include SimpleJSONSerialization
-      include SimpleJSONDeserialization
-    end
-
-    class Instruction < Note
-      def self.json_create(object)
-        new(object["content"])
-      end
-    end
-
-    class Chat < Note
-      def self.json_create(object)
-        new(object["content"], broadcast: object["broadcast"])
-      end
-    end
-
-    class Spoken < Note
-      def self.json_create(object)
-        new(object["content"], fixed: object["fixed"])
-      end
-    end
-
     class Notes
       include SimpleJSONSerialization
       include SimpleJSONDeserialization
