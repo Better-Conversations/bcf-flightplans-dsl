@@ -11,12 +11,12 @@ module BCF
           blocks.each_with_index do |block, index|
             block.index = index
 
-            block.facilitator_notes&.items&.each_with_index do |note, note_index|
-              note.id = "block-#{index}-facilitator-note-#{note_index}"
+            block.facilitator_notes&.items = block.facilitator_notes&.items&.map&.with_index do |note, note_index|
+              note.new(id: "block-#{index}-facilitator-note-#{note_index}")
             end
 
-            block.producer_notes&.items&.each_with_index do |resource, resource_index|
-              resource.id = "block-#{index}-producer-note-#{resource_index}"
+            block.producer_notes&.items = block.producer_notes&.items&.map&.with_index do |note, note_index|
+              note.new(id: "block-#{index}-producer-note-#{note_index}")
             end
           end
         end
