@@ -13,6 +13,9 @@ require "securerandom"
 require "pathname"
 require "dry-struct"
 
+# This is used by the validation code, it is not a mistake
+require "rspec"
+
 module BCF
   module FlightPlans
     GEM_ROOT = Pathname.new(__FILE__).join("../../..").expand_path
@@ -79,3 +82,4 @@ require_relative "flight_plans/json"
 require_relative "flight_plans/renderer"
 require_relative "flight_plans/dsl"
 require_relative "flight_plans/migrations"
+require_relative "flight_plans/validation"
