@@ -67,15 +67,6 @@ module BCF
     end
 
     class ValidationError < Error
-      attr_accessor :flight_plan
-      attr_accessor :errors
-
-      def initialize(flight_plan, errors)
-        super("Flightplan #{flight_plan.module_number} #{flight_plan.module_title} failed validation. Errors: #{errors}")
-
-        @flight_plan = flight_plan
-        @errors = errors
-      end
     end
   end
 end

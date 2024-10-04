@@ -44,7 +44,7 @@ module BCF
       def perform(subject)
         validate(subject)
         nil
-      rescue RSpec::Expectations::ExpectationNotMetError => e
+      rescue RSpec::Expectations::ExpectationNotMetError, ValidationError => e
         e
       end
 
