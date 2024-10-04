@@ -17,6 +17,20 @@ module BCF
   module FlightPlans
     GEM_ROOT = Pathname.new(__FILE__).join("../../..").expand_path
 
+    def self.define_course(title, modules)
+      Course.new(title, modules)
+    end
+
+    class Course
+      attr_accessor :title
+      attr_accessor :modules
+
+      def initialize(title, modules)
+        @title = title
+        @modules = modules
+      end
+    end
+
     module Types
       include Dry.Types()
     end
