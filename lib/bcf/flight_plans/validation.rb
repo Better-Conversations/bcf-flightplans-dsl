@@ -24,11 +24,13 @@ module BCF
 
       def validate_node(node)
         @validators.select { _1.should_apply?(node) }.each do |validation|
-          errors = validation.validate(node)
+          errors = validation.perform(node)
           @errors << errors if errors
         end
 
-        node.children.each { validate_node(_1) }
+        if node.respond_to?(:children)
+          node.children.each { validate_node(_1) }
+        end
       end
     end
 
@@ -41,6 +43,7 @@ module BCF
 
       def perform(subject)
         validate(subject)
+        nil
       rescue RSpec::Expectations::ExpectationNotMetError => e
         e
       end

@@ -32,6 +32,10 @@ module BCF
         @title = title
         @modules = modules
       end
+
+      def children
+        modules
+      end
     end
 
     module Types
