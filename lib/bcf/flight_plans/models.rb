@@ -4,14 +4,14 @@ module BCF
 
     class FlightPlan
       attr_accessor :module_number,
-                    :module_title,
-                    :blocks,
-                    :total_length,
-                    :initial_time,
-                    :learning_outcomes,
-                    :demo,
-                    :organisation,
-                    :version
+        :module_title,
+        :blocks,
+        :total_length,
+        :initial_time,
+        :learning_outcomes,
+        :demo,
+        :organisation,
+        :version
 
       def initialize
         @blocks = []
@@ -33,13 +33,13 @@ module BCF
 
     class Block
       attr_accessor :index,
-                    :name,
-                    :length,
-                    :facilitator_notes,
-                    :producer_notes,
-                    :speaker,
-                    :section_comment,
-                    :resources
+        :name,
+        :length,
+        :facilitator_notes,
+        :producer_notes,
+        :speaker,
+        :section_comment,
+        :resources
 
       def initialize
         @resources = []
