@@ -4,14 +4,14 @@ module BCF
 
     class FlightPlan
       attr_accessor :module_number,
-        :module_title,
-        :blocks,
-        :total_length,
-        :initial_time,
-        :learning_outcomes,
-        :demo,
-        :organisation,
-        :version
+                    :module_title,
+                    :blocks,
+                    :total_length,
+                    :initial_time,
+                    :learning_outcomes,
+                    :demo,
+                    :organisation,
+                    :version
 
       def initialize
         @blocks = []
@@ -33,13 +33,13 @@ module BCF
 
     class Block
       attr_accessor :index,
-        :name,
-        :length,
-        :facilitator_notes,
-        :producer_notes,
-        :speaker,
-        :section_comment,
-        :resources
+                    :name,
+                    :length,
+                    :facilitator_notes,
+                    :producer_notes,
+                    :speaker,
+                    :section_comment,
+                    :resources
 
       def initialize
         @resources = []
@@ -161,6 +161,19 @@ module BCF
         attribute :description, BCF::FlightPlans::Types::String
         attribute :scribed_by, BCF::FlightPlans::Types::Coercible::Symbol
 
+        def self.json_create(object)
+          if object.has_key?("v")
+            new(
+              id: object["v"][0],
+              inplace_comment: object["v"][1],
+              description: object["v"][2],
+              scribed_by: object["v"][3]
+            )
+          else
+            new(object)
+          end
+        end
+
         def inplace_section_comment
           "#{pretty_id} #{inplace_comment}"
         end
@@ -179,11 +192,40 @@ module BCF
         attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
         attribute :default_duration, BCF::FlightPlans::Types::Integer.optional
         attribute :notify_halfway, BCF::FlightPlans::Types::Bool.optional
+
+        def self.json_create(object)
+          if object.has_key?("v")
+            id = object["v"][0]
+
+            if object["v"][1].is_a?(Hash)
+              notify_halfway = object["v"][1]["notify_halfway"]
+              default_duration = object["v"][1]["default_duration"]
+            else
+              notify_halfway = nil
+              default_duration = nil
+            end
+
+            new(id:, default_duration:, notify_halfway:)
+          else
+            new(object)
+          end
+        end
       end
 
       class Fieldwork < BCFStruct
         attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
         attribute :description, BCF::FlightPlans::Types::String
+
+        def self.json_create(object)
+          if object.has_key?("v")
+            new(
+              id: object["v"][0],
+              description: object["v"][1]
+            )
+          else
+            new(object)
+          end
+        end
       end
     end
   end
