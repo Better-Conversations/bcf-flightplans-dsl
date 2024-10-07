@@ -13,9 +13,30 @@ require "securerandom"
 require "pathname"
 require "dry-struct"
 
+# This is used by the validation code, it is not a mistake
+require "rspec"
+
 module BCF
   module FlightPlans
     GEM_ROOT = Pathname.new(__FILE__).join("../../..").expand_path
+
+    def self.define_course(title, modules)
+      Course.new(title, modules)
+    end
+
+    class Course
+      attr_accessor :title
+      attr_accessor :modules
+
+      def initialize(title, modules)
+        @title = title
+        @modules = modules
+      end
+
+      def children
+        modules
+      end
+    end
 
     module Types
       include Dry.Types()
@@ -46,15 +67,6 @@ module BCF
     end
 
     class ValidationError < Error
-      attr_accessor :flight_plan
-      attr_accessor :errors
-
-      def initialize(flight_plan, errors)
-        super("Flightplan #{flight_plan.module_number} #{flight_plan.module_title} failed validation. Errors: #{errors}")
-
-        @flight_plan = flight_plan
-        @errors = errors
-      end
     end
   end
 end
@@ -65,3 +77,4 @@ require_relative "flight_plans/json"
 require_relative "flight_plans/renderer"
 require_relative "flight_plans/dsl"
 require_relative "flight_plans/migrations"
+require_relative "flight_plans/validation"

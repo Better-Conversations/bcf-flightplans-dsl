@@ -12,63 +12,10 @@ module BCF
         :demo,
         :organisation,
         :version
+
       def initialize
         @blocks = []
         @version = BCF::FlightPlans::VERSION
-      end
-
-      class Validator
-        attr_reader :errors
-
-        def initialize(flight_plan)
-          @errors = []
-          @flight_plan = flight_plan
-
-          run_validations(flight_plan)
-        end
-
-        # @param [BCF::FlightPlans::FlightPlan] flight_plan
-        def run_validations(flight_plan)
-          @errors << "Module number is required" unless flight_plan.module_number
-          @errors << "Module title is required" unless flight_plan.module_title
-          @errors << "Blocks are required" if flight_plan.blocks.empty?
-          @errors << "Total length is required" unless flight_plan.total_length
-          @errors << "Initial time is required" unless flight_plan.initial_time
-
-          flight_plan.blocks.each.with_index do |block, index|
-            @errors << "Block number #{index + 1} of Module #{flight_plan.module_number} #{flight_plan.module_title} is missing a name." unless block.name
-            @errors << "Block \"#{block.name}\" is missing a length" unless block.length
-          end
-
-          runtime = flight_plan.blocks.reduce(flight_plan.initial_time) do |time, block|
-            time + (block.length || 0)
-          end
-
-          @errors << "Total length (#{flight_plan.total_length}) does not match block lengths (#{runtime})" unless runtime == flight_plan.total_length
-        end
-
-        def valid?
-          if @errors.empty?
-            true
-          else
-            @errors.each { |error| warn error }
-            false
-          end
-        end
-
-        def validate!
-          raise ValidationError.new(@flight_plan, @errors) unless @errors.empty?
-
-          true
-        end
-      end
-
-      def validate!
-        Validator.new(self).validate!
-      end
-
-      def validate
-        Validator.new(self).valid?
       end
 
       def resources
@@ -77,6 +24,10 @@ module BCF
 
       def flipcharts
         resources.select { |r| r.is_a? BCF::FlightPlans::Resource::Flipchart }
+      end
+
+      def children
+        blocks
       end
     end
 
@@ -108,6 +59,10 @@ module BCF
 
       def flipchart
         resources.find { |r| r.is_a? BCF::FlightPlans::Resource::Flipchart }
+      end
+
+      def children
+        [facilitator_notes, producer_notes, *resources].compact
       end
     end
 
@@ -187,6 +142,10 @@ module BCF
       def instruction(content)
         items << Instruction.new(content:)
       end
+
+      def children
+        items
+      end
     end
 
     class ProducerNotes < Notes
@@ -196,7 +155,25 @@ module BCF
     end
 
     module Resource
-      Flipchart = Struct.new(:id, :inplace_comment, :description, :scribed_by) do
+      class Flipchart < BCFStruct
+        attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
+        attribute :inplace_comment, BCF::FlightPlans::Types::String
+        attribute :description, BCF::FlightPlans::Types::String
+        attribute :scribed_by, BCF::FlightPlans::Types::Coercible::Symbol
+
+        def self.json_create(object)
+          if object.has_key?("v")
+            new(
+              id: object["v"][0],
+              inplace_comment: object["v"][1],
+              description: object["v"][2],
+              scribed_by: object["v"][3]
+            )
+          else
+            new(object)
+          end
+        end
+
         def inplace_section_comment
           "#{pretty_id} #{inplace_comment}"
         end
@@ -211,8 +188,45 @@ module BCF
         end
       end
 
-      Breakout = Struct.new(:id, :default_duration, :notify_halfway)
-      Fieldwork = Struct.new(:id, :description)
+      class Breakout < BCFStruct
+        attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
+        attribute :default_duration, BCF::FlightPlans::Types::Integer.optional
+        attribute :notify_halfway, BCF::FlightPlans::Types::Bool.optional
+
+        def self.json_create(object)
+          if object.has_key?("v")
+            id = object["v"][0]
+
+            if object["v"][1].is_a?(Hash)
+              notify_halfway = object["v"][1]["notify_halfway"]
+              default_duration = object["v"][1]["default_duration"]
+            else
+              notify_halfway = nil
+              default_duration = nil
+            end
+
+            new(id:, default_duration:, notify_halfway:)
+          else
+            new(object)
+          end
+        end
+      end
+
+      class Fieldwork < BCFStruct
+        attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
+        attribute :description, BCF::FlightPlans::Types::String
+
+        def self.json_create(object)
+          if object.has_key?("v")
+            new(
+              id: object["v"][0],
+              description: object["v"][1]
+            )
+          else
+            new(object)
+          end
+        end
+      end
     end
   end
 end

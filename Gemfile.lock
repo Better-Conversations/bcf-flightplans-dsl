@@ -4,6 +4,7 @@ PATH
     bcf-flightplans (0.7.0)
       dry-struct (~> 1.6)
       redcarpet (~> 3.6)
+      rspec (~> 3)
       tilt (~> 2.4)
 
 GEM
