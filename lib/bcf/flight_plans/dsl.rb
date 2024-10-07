@@ -70,7 +70,7 @@ module BCF
           end
 
           def fieldwork(id, description)
-            resources << Resource::Fieldwork.new(id, description)
+            resources << Resource::Fieldwork.new(id:, description:)
           end
         end
 

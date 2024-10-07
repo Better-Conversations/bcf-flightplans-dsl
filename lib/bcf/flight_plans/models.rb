@@ -155,7 +155,12 @@ module BCF
     end
 
     module Resource
-      Flipchart = Struct.new(:id, :inplace_comment, :description, :scribed_by) do
+      class Flipchart < BCFStruct
+        attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
+        attribute :inplace_comment, BCF::FlightPlans::Types::String
+        attribute :description, BCF::FlightPlans::Types::String
+        attribute :scribed_by, BCF::FlightPlans::Types::Coercible::Symbol
+
         def inplace_section_comment
           "#{pretty_id} #{inplace_comment}"
         end
@@ -170,8 +175,16 @@ module BCF
         end
       end
 
-      Breakout = Struct.new(:id, :default_duration, :notify_halfway)
-      Fieldwork = Struct.new(:id, :description)
+      class Breakout < BCFStruct
+        attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
+        attribute :default_duration, BCF::FlightPlans::Types::Integer.optional
+        attribute :notify_halfway, BCF::FlightPlans::Types::Bool.optional
+      end
+
+      class Fieldwork < BCFStruct
+        attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
+        attribute :description, BCF::FlightPlans::Types::String
+      end
     end
   end
 end
