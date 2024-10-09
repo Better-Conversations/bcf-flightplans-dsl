@@ -14,11 +14,15 @@ module BCF
         instance_variables.map { |var| [var[1..].to_sym, instance_variable_get(var)] }
       end
 
-      def to_json(*args)
+      def as_json
         {
           JSON.create_id => json_class_name,
           :metadata => metadata
-        }.merge(json_fields.to_h).to_json(*args)
+        }.merge(json_fields.to_h)
+      end
+
+      def to_json(*args)
+        as_json.to_json(*args)
       end
     end
 
