@@ -190,8 +190,18 @@ module BCF
 
       class Breakout < BCFStruct
         attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
-        attribute :default_duration, BCF::FlightPlans::Types::Integer.optional
-        attribute :notify_halfway, BCF::FlightPlans::Types::Bool.optional
+
+        # The default duration of the breakout room timer, this can be overridden in the delivery console.
+        attribute :default_duration, BCF::FlightPlans::Types::Integer.optional.default(nil)
+
+        # If the timer should ping halfway through the timer
+        attribute :notify_halfway, BCF::FlightPlans::Types::Bool.optional.default(nil)
+
+        # The halfway message is the text that should be broadcast halfway through the timer. It can either be:
+        #   - nil, no message will be included
+        #   - true, the default message of "Halfway, % minutes remaining"
+        #   - A String, the '%' character will be replaced with half the duration of the timer in decimal form (e.g. 15 minutes -> 7.5 minutes).
+        attribute :halfway_message, (BCF::FlightPlans::Types::String | BCF::FlightPlans::Types::True).optional.default(nil)
 
         def self.json_create(object)
           if object.has_key?("v")
@@ -205,7 +215,7 @@ module BCF
               default_duration = nil
             end
 
-            new(id:, default_duration:, notify_halfway:)
+            new(id:, default_duration:, notify_halfway:, halfway_message: nil)
           else
             new(object)
           end
