@@ -11,7 +11,9 @@ module BCF
         :learning_outcomes,
         :demo,
         :organisation,
-        :version
+        :version,
+        :instruction_starts,
+        :instruction_ends
 
       def initialize
         @blocks = []

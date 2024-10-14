@@ -17,6 +17,14 @@ module BCF
           @flight_plan.module_title = title
         end
 
+        def instruction_starts
+          @flight_plan.instruction_starts = @flight_plan.blocks.sum { _1.length }
+        end
+
+        def instruction_ends
+          @flight_plan.instruction_ends = @flight_plan.blocks.sum { _1.length }
+        end
+
         def block(block_instance = nil, **kwargs, &block_constructor)
           @flight_plan.blocks << if block_instance.is_a? Block
             block_instance.with_additional(**kwargs, index: @flight_plan.blocks.length)
