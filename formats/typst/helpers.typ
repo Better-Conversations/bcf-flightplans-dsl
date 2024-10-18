@@ -5,15 +5,12 @@
 #let bcf-fixed = bcf-cue
 
 #let spoken(..args) = list(..args.pos().map(arg => text(weight: "bold", arg)))
-#let chat(broadcast: false, body) = box(
-  fill: rgb(93, 187, 168).lighten(20%),
-  radius: 10pt,
-  pad(10pt, [
-    #{if broadcast {[=== Broadcast]} else {[=== Copy to chat]}}
+#let chat(broadcast: false, body) = [
+                                        #{if broadcast {[=== Broadcast]} else {[=== Copy to chat]}}
 
-    #body
-  ])
-)
+                                        #body
+                                      ]
+
 #let speaker-swap(body) = table.cell(colspan: 5, fill: rgb(246, 203, 152), pad(y: 6pt, body))
 
 #let instruction(body) = body
