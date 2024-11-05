@@ -161,7 +161,7 @@ module BCF
         attribute :id, BCF::FlightPlans::Types::Coercible::Symbol
         attribute :inplace_comment, BCF::FlightPlans::Types::String
         attribute :description, BCF::FlightPlans::Types::String
-        attribute :scribed_by, BCF::FlightPlans::Types::Coercible::Symbol
+        attribute :scribed_by, BCF::FlightPlans::Types::Coercible::Symbol.optional
 
         def self.json_create(object)
           if object.has_key?("v")

@@ -69,8 +69,8 @@ module BCF
             instance_eval(&block)
           end
 
-          def flipchart(id, inplace_comment, description: nil, scribed_by: nil)
-            resources << Resource::Flipchart.new(id:, description:, inplace_comment:, scribed_by:)
+          def flipchart(id, comment:, description: nil, scribed_by: nil)
+            resources << Resource::Flipchart.new(id:, description:, inplace_comment: comment, scribed_by:)
           end
 
           def breakout_room(id, **kwargs)

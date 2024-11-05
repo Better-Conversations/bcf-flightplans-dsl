@@ -105,16 +105,20 @@ else { center },
   [
     <%= block.name %>
 
+    <% if (section_comment = block.section_comment) %>
+      <%= section_comment %>
+    <% end %>
+
     <% unless block.speaker.nil? %>
       #bcf-nom[<%= format_speakers(block.speaker) %>]
     <% end %>
 
-    <% unless block.flipchart&.inplace_section_comment.nil? %>
-      <%= block.flipchart&.inplace_section_comment %>
-    <% end %>
+    <% if (flipchart = block.flipchart) %>
+      #("<%= flipchart.pretty_id %>") #("<%= flipchart.scribed_by ? "scribed by #{flipchart.pretty_scribed_by}" : "" %>}" : %>")
 
-    <% unless block.section_comment %>
-      <%= block.section_comment %>
+      <% if flipchart.inplace_comment %>
+        #("<%= block.flipchart.inplace_comment %>")
+      <% end %>
     <% end %>
   ],
   [<%= render_content(block.facilitator_notes) %>],
