@@ -20,6 +20,10 @@ module BCF
         @version = BCF::FlightPlans::VERSION
       end
 
+      def speakers
+        blocks.map { Array.wrap(_1.speaker) }.flatten.compact.uniq
+      end
+
       def resources
         blocks.map(&:resources).flatten
       end
