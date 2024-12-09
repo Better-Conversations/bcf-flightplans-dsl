@@ -32,6 +32,10 @@ module BCF
         resources.select { |r| r.is_a? BCF::FlightPlans::Resource::Flipchart }
       end
 
+      def breakout_rooms
+        resources.select { |r| r.is_a? BCF::FlightPlans::Resource::Breakout }
+      end
+
       def children
         blocks
       end
