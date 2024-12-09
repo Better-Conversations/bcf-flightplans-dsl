@@ -132,6 +132,10 @@ module BCF
       attribute :fixed, BCF::FlightPlans::Types::Bool.default { false }
     end
 
+    class SendIntoBOR < Note
+      attribute :bor_id, BCF::FlightPlans::Types::Coercible::Symbol
+    end
+
     class Notes
       attr_accessor :items
 

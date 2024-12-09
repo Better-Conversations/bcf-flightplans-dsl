@@ -135,6 +135,10 @@ module BCF
       def broadcast(content)
         items << Chat.new(content:, broadcast: true)
       end
+
+      def send_into_bor(bor_id)
+        items << SendIntoBOR.new(bor_id:)
+      end
     end
 
     class FacilitatorNotes < Notes
