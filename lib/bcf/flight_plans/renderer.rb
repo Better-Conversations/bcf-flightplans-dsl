@@ -26,7 +26,7 @@ module BCF
     SpokenGroup = Struct.new(:lines)
 
     class PDFRenderer
-      def initialize(flight_plan, output_path, build_context: Dir.mktmpdir, for_user:, page_size: "a4", style: "normal")
+      def initialize(flight_plan, output_path, for_user:, build_context: Dir.mktmpdir, page_size: "a4", style: "normal")
         @flight_plan = flight_plan
         @output_path = output_path
         @build_context = build_context
@@ -51,13 +51,13 @@ module BCF
         compile_typst
       end
 
-      private
-
       def self.validate_typst!
         unless Open3.capture3("which typst")[2].success?
           raise TypstMissingError
         end
       end
+
+      private
 
       def assemble_typst
         template_context = TypstTemplateContext.new(
@@ -117,7 +117,7 @@ module BCF
       end
 
       def assemble
-        template('entry_point').render(self)
+        template("entry_point").render(self)
       end
 
       # From here in are methods which are called within the
@@ -142,14 +142,18 @@ module BCF
         File.write(tempfile, md)
         @tempfiles << tempfile
 
-        %Q{cmarker.render(read("#{Pathname.new(tempfile.path).relative_path_from(Pathname.new(@build_context))}"))}
-      end
-
-      private def method_missing(symbol, *args)
-        @vars[symbol] || super
+        %{cmarker.render(read("#{Pathname.new(tempfile.path).relative_path_from(Pathname.new(@build_context))}"))}
       end
 
       private
+
+      def method_missing(symbol, *args)
+        @vars[symbol] || super
+      end
+
+      def respond_to_missing?(symbol, include_private = false)
+        @vars.has_key?(symbol) || super
+      end
 
       def template(name)
         Tilt.new(@build_context.join("#{name}.typ.erb"))
@@ -159,7 +163,7 @@ module BCF
     class FlightPlan
       def render_pdf(output_path, **kwargs)
         PDFRenderer.new(self, output_path, **kwargs)
-                   .render
+          .render
       end
 
       def write_json(output_path)
