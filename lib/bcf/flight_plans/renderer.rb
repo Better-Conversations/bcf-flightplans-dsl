@@ -30,16 +30,16 @@ module BCF
         @flight_plan = flight_plan
         @output_path = output_path
         @build_context = if build_context.is_a? Pathname
-                           build_context
-                         else
-                           Pathname.new(build_context)
-                         end
+          build_context
+        else
+          Pathname.new(build_context)
+        end
         @page_size = page_size
         @style = style
         @for_user = for_user
 
         # Copy resources from within the gem root to the build context
-        in_gem_resource_root = Pathname.new(BCF::FlightPlans::GEM_ROOT).join('formats/typst/.')
+        in_gem_resource_root = Pathname.new(BCF::FlightPlans::GEM_ROOT).join("formats/typst/.")
         FileUtils.cp_r(in_gem_resource_root, @build_context)
 
         PDFRenderer.validate_typst!
@@ -172,7 +172,7 @@ module BCF
     class FlightPlan
       def render_pdf(output_path, **kwargs)
         PDFRenderer.new(self, output_path, **kwargs)
-                   .render
+          .render
       end
 
       def write_json(output_path)
