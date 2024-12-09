@@ -15,4 +15,18 @@
   )
 <% when BCF::FlightPlans::Chat %>
   #chat(broadcast: <%= note.broadcast %>, <%= render_markdown note.content %>)
+<% when BCF::FlightPlans::SendIntoBOR %>
+  <% unless note.no_output %>
+    <% breakout = find_breakout_room(note.bor_id) %>)
+    #instruction("Send into BORs")
+    <% if breakout.notify_halfway %>
+      #instruction("Broadcast halfway message")
+
+      <% if breakout.halfway_message.is_a? String %>
+        #chat(broadcast: true, "<%= breakout.halfway_message.sub('%', breakout.default_duration / 2) %>")
+      <% elsif breakout.halfway_messagebreakout.halfway_message %>
+        #chat(broadcast: true, "Halfway, <%= breakout.default_duration / 2 %> minutes remaining")
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
