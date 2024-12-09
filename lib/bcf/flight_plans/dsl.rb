@@ -136,8 +136,8 @@ module BCF
         items << Chat.new(content:, broadcast: true)
       end
 
-      def send_into_bor(bor_id)
-        items << SendIntoBOR.new(bor_id:)
+      def send_into_bor(bor_id, no_output: false)
+        items << SendIntoBOR.new(bor_id:, no_output:)
       end
     end
 

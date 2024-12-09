@@ -134,6 +134,9 @@ module BCF
 
     class SendIntoBOR < Note
       attribute :bor_id, BCF::FlightPlans::Types::Coercible::Symbol
+
+      # If true no instruction or broadcast items will be rendered in the output.
+      attribute :no_output, BCF::FlightPlans::Types::Bool.default { false }
     end
 
     class Notes
