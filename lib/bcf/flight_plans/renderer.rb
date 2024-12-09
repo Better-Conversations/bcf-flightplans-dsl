@@ -25,64 +25,57 @@ module BCF
 
     SpokenGroup = Struct.new(:lines)
 
-    class FormatRenderContext
-      attr_reader :root, :tempfiles
-
-      def initialize(root, extension, build_context)
-        @root = Pathname.new(BCF::FlightPlans::GEM_ROOT).join(root)
+    class PDFRenderer
+      def initialize(flight_plan, output_path, build_context: Dir.mktmpdir, for_user:, page_size: "a4", style: "normal")
+        @flight_plan = flight_plan
+        @output_path = output_path
         @build_context = build_context
-        @tempfiles = []
+        @page_size = page_size
+        @style = style
+        @for_user = for_user
 
-        @extension = extension
-        @redcarpet = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: false)
+        # Copy resources from within the gem root to the build context
+        in_gem_resource_root = Pathname.new(BCF::FlightPlans::GEM_ROOT).join(root)
+        FileUtils.cp_r(in_gem_resource_root, @build_context)
+
+        validate_typst!
       end
 
-      def format_speakers(speakers)
-        if speakers.is_a? Array
-          speakers.map { |s| format_speakers(s) }.join(" and ")
-        else
-          speakers.to_s.capitalize
-        end
+      # Helper method to get the path of the assembled Typst document
+      def output_typ
+        File.join(@build_context, "output.typ")
       end
 
-      def render_content(content)
-        return "" if content.nil?
-        return content if content.is_a? String
-
-        Tilt.new(@root.join("render_content.#{@extension}.erb"))
-          .render(self, content: content)
+      def render
+        assemble_typst
+        compile_typst
       end
 
-      def render_note(note)
-        Tilt.new(@root.join("render_note.#{@extension}.erb"))
-          .render(self, note: note)
-      end
+      private
 
-      def render_markdown(md)
-        raise "Not implemented"
-      end
-    end
-
-    class TypstRenderer
-      def initialize(build_context, debug_print_typ)
-        FileUtils.mkdir_p(build_context) unless Dir.exist?(build_context)
-
-        @build_context = build_context
-        @render_context = TypstRenderContext.new(build_context)
-        @debug_print_typ = debug_print_typ
-
+      def self.validate_typst!
         unless Open3.capture3("which typst")[2].success?
           raise TypstMissingError
         end
       end
 
-      def output_typ
-        File.join(@build_context, "output.typ")
+      def assemble_typst
+        template_context = TypstTemplateContext.new(
+          build_context: @build_context,
+          flight_plan: @flight_plan,
+          vars: {
+            for_user: @for_user,
+            page_size: @page_size,
+            style: @style
+          }
+        )
+
+        File.write(output_typ, template_context.assemble)
       end
 
-      def compile_typst(pdf_output_path)
+      def compile_typst
         # As we execute this in a different directory we need to make the path absolute
-        pdf_output_path_absolute = File.expand_path(pdf_output_path)
+        pdf_output_path_absolute = File.expand_path(@output_path)
 
         stdout, stderr, status = Open3.capture3(
           "typst",
@@ -101,67 +94,72 @@ module BCF
           )
         end
       end
+    end
 
-      def render(flight_plan, pdf_output_path, for_user: nil, page_size: "a4", style: "normal")
-        output_typ = File.join(@build_context, "output.typ")
-
-        File.write(output_typ, @render_context.render_flight_plan(flight_plan, for_user: for_user, page_size: page_size, style: style))
-
-        if @debug_print_typ
-          puts "[DEBUG] Typst input:"
-          puts File.read(output_typ)
+    module RenderHelpers
+      def format_speakers(speakers)
+        if speakers.is_a? Array
+          speakers.map { |s| format_speakers(s) }.join(" and ")
+        else
+          speakers.to_s.capitalize
         end
-
-        compile_typst(pdf_output_path)
       end
     end
 
-    class TypstRenderContext < FormatRenderContext
-      def initialize(build_context)
-        super("formats/typst", "typ", build_context)
+    class TypstTemplateContext
+      attr_accessor :flight_plan
 
-        # Copy all files from ./typst to the temp directory
-        Dir.glob(File.join(root, "*")).each do |file|
-          FileUtils.cp(file, build_context)
-        end
+      def initialize(build_context:, flight_plan:, vars: {})
+        @build_context = build_context
+        @tempfiles = []
+        @flight_plan = flight_plan
+        @vars = vars
       end
 
-      # @return [String]
-      def render_flight_plan(flight_plan, for_user: nil, page_size: "a4", style: "normal")
-        Tilt.new(root.join("entry_point.typ.erb"))
-          .render(self, flight_plan: flight_plan, for_user: for_user, page_size: page_size, style: style)
+      def assemble
+        template('entry_point').render(self)
       end
 
-      # TODO: It might be good to isolate these into markdown files which we then read back to avoid escaping issues.
-      #  Implement this when we move to more ERB
+      # From here in are methods which are called within the
+
+      def find_breakout_room(breakout_room_id)
+        @flight_plan.breakout_rooms.find { |br| br.id == breakout_room_id }
+      end
+
+      def render_content(content)
+        return "" if content.nil?
+        return content if content.is_a? String
+
+        template("render_content").render(self, content: content)
+      end
+
+      def render_note(note)
+        template("render_note").render(self, note: note)
+      end
+
       def render_markdown(md)
         tempfile = Tempfile.create(["md_fragment", ".md"], @build_context)
         File.write(tempfile, md)
-        tempfiles << tempfile
+        @tempfiles << tempfile
 
-        "cmarker.render(read(\"#{Pathname.new(tempfile.path).relative_path_from(Pathname.new(@build_context))}\"))"
-      end
-    end
-
-    class HtmlRenderContext < FormatRenderContext
-      def initialize(temp_dir)
-        super("formats/html", "html", temp_dir)
+        %Q{cmarker.render(read("#{Pathname.new(tempfile.path).relative_path_from(Pathname.new(@build_context))}"))}
       end
 
-      def render_markdown(md)
-        @redcarpet.render(md)
+      private def method_missing(symbol, *args)
+        @vars[symbol] || super
       end
 
-      def self.render_html_flight_plan(flight_plan, temp_dir)
-        Tilt.new("formats/html/table.html.erb")
-          .render(new(temp_dir), flight_plan: flight_plan)
+      private
+
+      def template(name)
+        Tilt.new(@build_context.join("#{name}.typ.erb"))
       end
     end
 
     class FlightPlan
-      def render_pdf(output_path, build_context: Dir.mktmpdir, debug_print_typ: false, for_user: nil, page_size: "a4", style: "normal")
-        typst_renderer = TypstRenderer.new(build_context, debug_print_typ)
-        typst_renderer.render(self, output_path, for_user: for_user, page_size: page_size, style: style)
+      def render_pdf(output_path, **kwargs)
+        PDFRenderer.new(self, output_path, **kwargs)
+                   .render
       end
 
       def write_json(output_path)
