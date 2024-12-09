@@ -26,19 +26,23 @@ module BCF
     SpokenGroup = Struct.new(:lines)
 
     class PDFRenderer
-      def initialize(flight_plan, output_path, for_user:, build_context: Dir.mktmpdir, page_size: "a4", style: "normal")
+      def initialize(flight_plan, output_path, for_user: nil, build_context: Dir.mktmpdir, page_size: "a4", style: "normal")
         @flight_plan = flight_plan
         @output_path = output_path
-        @build_context = build_context
+        @build_context = if build_context.is_a? Pathname
+                           build_context
+                         else
+                           Pathname.new(build_context)
+                         end
         @page_size = page_size
         @style = style
         @for_user = for_user
 
         # Copy resources from within the gem root to the build context
-        in_gem_resource_root = Pathname.new(BCF::FlightPlans::GEM_ROOT).join(root)
+        in_gem_resource_root = Pathname.new(BCF::FlightPlans::GEM_ROOT).join('formats/typst/.')
         FileUtils.cp_r(in_gem_resource_root, @build_context)
 
-        validate_typst!
+        PDFRenderer.validate_typst!
       end
 
       # Helper method to get the path of the assembled Typst document
@@ -107,6 +111,7 @@ module BCF
     end
 
     class TypstTemplateContext
+      include RenderHelpers
       attr_accessor :flight_plan
 
       def initialize(build_context:, flight_plan:, vars: {})
@@ -148,7 +153,11 @@ module BCF
       private
 
       def method_missing(symbol, *args)
-        @vars[symbol] || super
+        if @vars.has_key? symbol
+          @vars[symbol]
+        else
+          super
+        end
       end
 
       def respond_to_missing?(symbol, include_private = false)
@@ -163,7 +172,7 @@ module BCF
     class FlightPlan
       def render_pdf(output_path, **kwargs)
         PDFRenderer.new(self, output_path, **kwargs)
-          .render
+                   .render
       end
 
       def write_json(output_path)
