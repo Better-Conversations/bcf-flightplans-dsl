@@ -74,6 +74,10 @@ module BCF
           end
 
           def breakout_room(id, **kwargs)
+            if kwargs.key?(:halfway_message) && !kwargs.key?(:notify_halfway)
+              kwargs[:notify_halfway] = true
+            end
+
             resources << Resource::Breakout.new(id:, **kwargs)
           end
 
