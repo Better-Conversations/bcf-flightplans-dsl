@@ -19,7 +19,7 @@
   <% unless note.no_output %>
     <% breakout = find_breakout_room(note.bor_id) %>
     #instruction("Send into BORs")
-    <% if breakout.notify_halfway %>
+    <% if breakout&.notify_halfway %>
       #instruction("Broadcast halfway message")
 
       <% if breakout.halfway_message.is_a? String %>
