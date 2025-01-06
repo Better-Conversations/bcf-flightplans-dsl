@@ -27,10 +27,10 @@ module BCF
 
         def block(block_instance = nil, **kwargs, &block_constructor)
           @flight_plan.blocks << if block_instance.is_a? Block
-            block_instance.with_additional(**kwargs, index: @flight_plan.blocks.length)
-          else
-            Block.build(&block_constructor).with_additional(**kwargs, index: @flight_plan.blocks.length)
-          end
+                                   block_instance.with_additional(**kwargs, index: @flight_plan.blocks.length)
+                                 else
+                                   Block.build(&block_constructor).with_additional(**kwargs, index: @flight_plan.blocks.length)
+                                 end
         end
 
         def total_length(length)
@@ -76,6 +76,12 @@ module BCF
           def breakout_room(id, **kwargs)
             if kwargs.key?(:halfway_message) && !kwargs.key?(:notify_halfway)
               kwargs[:notify_halfway] = true
+            end
+
+            if (existing_breakout = resources.find { |res| res.is_a?(Resource::Breakout && res.id == id) })
+              caller_info = caller_locations(1,1).first
+              warn "Breakout room with id #{id} already exists, this is probably a typo. Skipping... (Called from #{caller_info.path}:#{caller_info.lineno})"
+              return
             end
 
             resources << Resource::Breakout.new(id:, **kwargs)
