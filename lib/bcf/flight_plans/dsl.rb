@@ -125,6 +125,10 @@ module BCF
           @block.speaker = speaker
         end
 
+        def handover(comment)
+          @block.handover_comment = comment
+        end
+
         alias_method :default_leader, :lead_by
 
         def section_comment(comment)
