@@ -94,9 +94,9 @@ else { center },
 <% flight_plan.blocks.each do |block| %>
   <% if block.speaker != current_speaker %>
     <% if current_speaker.nil? %>
-      speaker-swap[<%= format_speakers(block.speaker) %>],
+      speaker-swap[<%= format_speakers(block.speaker) %><%= block.handover_comment ? ": #{block.handover_comment}" : nil %>],
     <% else %>
-      speaker-swap[Switch to <%= format_speakers(block.speaker) %>],
+      speaker-swap[Handover to <%= format_speakers(block.speaker) %><%= block.handover_comment ? ": #{block.handover_comment}" : nil %>],
     <% end %>
   <% end %>
 
