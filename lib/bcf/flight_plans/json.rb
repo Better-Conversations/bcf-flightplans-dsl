@@ -78,6 +78,12 @@ module BCF
     class Notes
       include SimpleJSONSerialization
       include SimpleJSONDeserialization
+
+      def json_fields
+        super.reject do |k, v|
+          k == :containing_block
+        end
+      end
     end
   end
 end

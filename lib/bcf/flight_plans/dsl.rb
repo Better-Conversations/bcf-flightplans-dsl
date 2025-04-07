@@ -110,11 +110,11 @@ module BCF
         end
 
         def facilitator(&block)
-          @block.facilitator_notes = FacilitatorNotes.build(&block)
+          @block.facilitator_notes = FacilitatorNotes.build(@block, &block)
         end
 
         def producer(&block)
-          @block.producer_notes = ProducerNotes.build(&block)
+          @block.producer_notes = ProducerNotes.build(@block, &block)
         end
 
         def resources(&block)
@@ -162,6 +162,11 @@ module BCF
 
       def spoken_exact(content)
         items << Spoken.new(content:, fixed: true)
+      end
+
+      # Calling this with no args will have no effect but we occasionally do it for consistency
+      def handover(message = nil)
+        @containing_block.handover_comment = message
       end
 
       alias_method :spoken_fixed, :spoken_exact

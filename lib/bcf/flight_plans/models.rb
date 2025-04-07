@@ -147,8 +147,9 @@ module BCF
     class Notes
       attr_accessor :items
 
-      def self.build(&block)
+      def self.build(containing_block, &block)
         obj = new
+        obj.instance_variable_set(:@containing_block, containing_block)
         obj.instance_eval(&block)
         obj
       end
