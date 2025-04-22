@@ -14,7 +14,7 @@ module BCF
         instance_variables.map { |var| [var[1..].to_sym, instance_variable_get(var)] }
       end
 
-      def as_json
+      def as_json(_options = nil)
         {
           JSON.create_id => json_class_name,
           :metadata => metadata
